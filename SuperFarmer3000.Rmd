@@ -1,7 +1,7 @@
 ---
 title: "SuperFarmer3000"
 author: "Hanna Kranas, Joanna Zbijewska"
-date: "21 października 2016"
+date: "21 pa�dziernika 2016"
 output: html_document
 ---
 
@@ -11,20 +11,71 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, echo=FALSE}
 cat("Funkcje gry")
-##to ma być tylko napis na ekranie na koniec żeby było ładnie
+##to tylko napis na ekranie na koniec zeby bylo czytelnie
 
 ```
 
 ```{r}
 ##tu wpisujemy funkcje gry
+inicjalizuj <- function(){
+  ##funkcja start - inicjalizacja wektorow
+}
+
+losuj_rzut_kostek <- function(){
+  ##funkcja rzucajaca kostkami i zwracajaca wynik rzutu (wektor 2 pola)
+}
+
+licz_ile_otrzyma <- function(){
+  ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
+  ##opcja wymiana i opcja rzut
+  ##zwraca wektor z iloscia zwierzat na odpowiednich polach
+}
+
+zdecyduj <- function(){
+ ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
+}
+
+wymien <- function(){
+  ##funkcja dokonujaca wymiany
+}
+
+rzuc <- function(){
+  ##funkcja dokonujaca rzutu i reagujaca
+}
+
+atak_drapieznika <- function(){
+  ##funkcja przyjmujaca argument lis=True/False i wilk True/False
+  ## sprawdza czy mamy psa/psy
+  ##robi wykonaj_czynnosc i reaguje odpowiednio
+}
+
+wykonaj_czynnosc <- function(){
+  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
+  ##symultanicznie robi operacje na banku i naszym stadzie
+  ## sprawdza czy bank+stado sie sumuje odpowiednio
+}
+
+
 ```
 
 ```{r, echo=FALSE}
 cat("Funkcje statystyk gry")
-##to ma być tylko napis na ekranie na koniec żeby było ładnie
+##to tylko napis na ekranie na koniec zeby bylo czytelnie
 
 ```
 
 ```{r}
 ##tu wpisujemy funkcje statystyk gry
+mierz_czas <- function(){
+  ##funkcja mierzaca czas gry
+}
+
+generuj_rozklad <- function(){
+  ##funkcja powtarzajaca iles razy i zapisujaca na wektor wyniki
+}
+
+narysuj_wykres <- function(){
+  ##funkcja rysujaca rozklad czasu gry
+}
+
 ```
