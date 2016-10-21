@@ -1,0 +1,30 @@
+---
+title: "SuperFarmer3000"
+author: "Hanna Kranas, Joanna Zbijewska"
+date: "21 października 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+cat("Funkcje gry")
+##to ma być tylko napis na ekranie na koniec żeby było ładnie
+
+```
+
+```{r}
+##tu wpisujemy funkcje gry
+```
+
+```{r, echo=FALSE}
+cat("Funkcje statystyk gry")
+##to ma być tylko napis na ekranie na koniec żeby było ładnie
+
+```
+
+```{r}
+##tu wpisujemy funkcje statystyk gry
+```
