@@ -1,2 +1,2 @@
 # SuperFarmer3000
-nasz super projekt faza wstęna
+nasz super projekt faza wstępna
