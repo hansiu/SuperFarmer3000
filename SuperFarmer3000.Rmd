@@ -19,16 +19,21 @@ cat("Funkcje gry")
 ##tu wpisujemy funkcje gry
 inicjalizuj <- function(){
   ##funkcja start - inicjalizacja wektorow
+  ## R,S,P,C,H,L,B
+  stado_glowne <- c(60,24,20,12,6,4,2)
+  stado <- c(0,0,0,0,0,0,0)
+  kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
+  kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 }
 
 losuj_rzut_kostek <- function(){
-  ##funkcja rzucajaca kostkami i zwracajaca wynik rzutu (wektor 2 pola)
+  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
 }
 
 licz_ile_otrzyma <- function(){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
-  ##zwraca wektor z iloscia zwierzat na odpowiednich polach
+  ##tworzy wektor z iloscia zwierzat na odpowiednich polach
 }
 
 zdecyduj <- function(){

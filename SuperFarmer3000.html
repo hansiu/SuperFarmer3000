@@ -127,16 +127,21 @@ $(document).ready(function () {
 <pre class="r"><code>##tu wpisujemy funkcje gry
 inicjalizuj &lt;- function(){
   ##funkcja start - inicjalizacja wektorow
+  ## R,S,P,C,H,L,B
+  stado_glowne &lt;- c(60,24,20,12,6,4,2)
+  stado &lt;- c(0,0,0,0,0,0,0)
+  kostka_zielona &lt;- c('R','R','R','R','R','R','S','S','S','P','C','W')
+  kostka_czerwona &lt;- c('R','R','R','R','R','R','S','S','P','P','H','F')
 }
 
 losuj_rzut_kostek &lt;- function(){
-  ##funkcja rzucajaca kostkami i zwracajaca wynik rzutu (wektor 2 pola)
+  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
 }
 
 licz_ile_otrzyma &lt;- function(){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
-  ##zwraca wektor z iloscia zwierzat na odpowiednich polach
+  ##tworzy wektor z iloscia zwierzat na odpowiednich polach
 }
 
 zdecyduj &lt;- function(){
