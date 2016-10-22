@@ -134,9 +134,16 @@ kostka_zielona &lt;- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona &lt;- c('R','R','R','R','R','R','S','S','P','P','H','F')
 ##gdzie: W - wilk, F - lis; jeszta jak wyzej
 
+##Wektory wymian o takiej samej strukturze jak stado i stado_glowne:
+kon &lt;- c(72,12,6,2,1,12,2)
+krowa &lt;- c(36,6,3,1,0,6,1)
+swinia &lt;- c(12,2,1,0,0,2,0)
+owca &lt;- c(6,1,0,0,0,1,0)
+maly_pies &lt;- c(6,1,0,0,0,1,0)
+duzy_pies &lt;- c(36,6,3,1,0,6,1)
+
 ## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
 ## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
-
 
 losuj_rzut_kostek &lt;- function(a=kostka_zielona,b=kostka_czerwona){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
@@ -157,7 +164,7 @@ licz_ile_otrzyma &lt;- function(a=losuj_rzut_kostek(),b=stado){
 }
 
 zdecyduj &lt;- function(){
- ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
+  ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
 }
 
 wymien &lt;- function(){
@@ -209,9 +216,14 @@ wykonaj_czynnosc &lt;- function(co, jak='+'){
   ## sprawdza czy bank+stado sie sumuje odpowiednio
 }
 
-zakoncz &lt;- function(){
+zakoncz &lt;- function(x=stado){
   ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
-}</code></pre>
+  if(x &gt;= c(1,1,1,1,1,0,0)){
+    cat(&quot;Wygrales! Koniec gry!&quot;)
+  }
+}
+##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
+##ale fajnie jak cos sie wyswietli na koniec</code></pre>
 <pre><code>## Funkcje statystyk gry</code></pre>
 <pre class="r"><code>##tu wpisujemy funkcje statystyk gry
 mierz_czas &lt;- function(){
@@ -230,7 +242,7 @@ narysuj_wykres &lt;- function(){
 
 ##
 losuj_rzut_kostek()</code></pre>
-<pre><code>## [1] &quot;W&quot; &quot;H&quot;</code></pre>
+<pre><code>## [1] &quot;S&quot; &quot;R&quot;</code></pre>
 <pre class="r"><code>####################
 
 ## test wykonywania czynnosci i drapieznikow
