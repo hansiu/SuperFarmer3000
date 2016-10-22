@@ -62,7 +62,24 @@ rzuc <- function(){
 }
 
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
+  if (wilk == TRUE ){
+    if (stado[7]>0){
+      ##to sie u nas nie zdarza
+      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-')
+      ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1:4],0,0,0))
+      ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
+  }
   if (lis == TRUE ){
+    if (stado[6]>0){
+      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-')
+      ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-')
+      ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
   }
   ##funkcja przyjmujaca argument lis=True/False i wilk True/False
   ## sprawdza czy mamy psa/psy
@@ -70,7 +87,16 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }
 
-wykonaj_czynnosc <- function(){
+wykonaj_czynnosc <- function(co, jak='+'){
+  if (jak=='+'){
+    stado=stado+co
+    stado_glowne=stado-co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  } else {
+    stado=stado-co
+    stado_glowne=stado+co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  }
   ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
   ##symultanicznie robi operacje na banku i naszym stadzie
   ## sprawdza czy bank+stado sie sumuje odpowiednio
