@@ -26,6 +26,14 @@ kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 ##gdzie: W - wilk, F - lis; jeszta jak wyzej
 
+##Wektory wymian o takiej samej strukturze jak stado i stado_glowne:
+kon <- c(72,12,6,2,1,12,2)
+krowa <- c(36,6,3,1,0,6,1)
+swinia <- c(12,2,1,0,0,2,0)
+owca <- c(6,1,0,0,0,1,0)
+maly_pies <- c(6,1,0,0,0,1,0)
+duzy_pies <- c(36,6,3,1,0,6,1)
+
 ## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
 ## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
 
@@ -35,6 +43,7 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   wynik <- c(sample(a, 1), sample(b, 1))
   print(wynik)
 }
+losuj_rzut_kostek()
 
 ##alternatywnie moznaby zapisac po prostu:
 ##wynik <- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
@@ -42,7 +51,8 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
 ##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
 ##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
 
-licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado){
+licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado_glowne){
+  
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
@@ -60,50 +70,26 @@ rzuc <- function(){
   ##funkcja dokonujaca rzutu i reagujaca
 }
 
-atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
-  if (wilk == TRUE ){
-    if (stado[7]>0){
-      ##to sie u nas nie zdarza
-      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-')
-      ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
-    } else {
-      wykonaj_czynnosc(c(stado[1:4],0,0,0))
-      ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
-    }
-  }
-  if (lis == TRUE ){
-    if (stado[6]>0){
-      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-')
-      ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
-    } else {
-      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-')
-      ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
-    }
-  }
+atak_drapieznika <- function(){
   ##funkcja przyjmujaca argument lis=True/False i wilk True/False
   ## sprawdza czy mamy psa/psy
-  ##odejmuje psa/psy
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }
 
-wykonaj_czynnosc <- function(co, jak='+'){
-  if (jak=='+'){
-    stado <<- stado + co
-    stado_glowne <<- stado_glowne - co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  } else {
-    stado <<- stado - co
-    stado_glowne <<- stado_glowne + co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  }
+wykonaj_czynnosc <- function(){
   ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
   ##symultanicznie robi operacje na banku i naszym stadzie
   ## sprawdza czy bank+stado sie sumuje odpowiednio
 }
 
-zakoncz <- function(){
+zakoncz <- function(x=stado){
   ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
+  if(x >= c(1,1,1,1,1,0,0)){
+    cat("Wygrales! Koniec gry!")
+  }
 }
+##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
+##ale fajnie jak cos sie wyswietli na koniec
 
 ```
 
@@ -126,43 +112,5 @@ generuj_rozklad <- function(){
 narysuj_wykres <- function(){
   ##funkcja rysujaca rozklad czasu gry
 }
-
-```
-
-```{r}
-##tu wpisujemy testy
-####################
-
-##
-losuj_rzut_kostek()
-####################
-
-## test wykonywania czynnosci i drapieznikow
-cat(stado)
-cat(stado_glowne)
-wykonaj_czynnosc(c(1,2,0,0,0,0,0),'+')
-cat(stado)
-cat(stado_glowne)
-atak_drapieznika(TRUE)
-cat(stado)
-cat(stado_glowne)
-wykonaj_czynnosc(c(5,3,1,0,0,2,0),'+')
-cat(stado)
-cat(stado_glowne)
-atak_drapieznika(TRUE)
-cat(stado)
-cat(stado_glowne)
-wykonaj_czynnosc(c(2,3,5,2,1,0,1),'+')
-cat(stado)
-cat(stado_glowne)
-atak_drapieznika(wilk = TRUE)
-cat(stado)
-cat(stado_glowne)
-##to nizej nie dziala, ale mozna sie umowic na to ze nigdy tak nie wywolujemy, tylko jak sa oba to robimy dwa razy atak_drapieznika
-atak_drapieznika(TRUE,TRUE)
-cat(stado)
-cat(stado_glowne)
-##################
-
 
 ```
