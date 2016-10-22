@@ -49,7 +49,7 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
 ##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
 ##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
 
-licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado){
+licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado_glowne){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
