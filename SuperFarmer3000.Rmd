@@ -1,7 +1,7 @@
 ---
 title: "SuperFarmer3000"
 author: "Hanna Kranas, Joanna Zbijewska"
-date: "21 paüdziernika 2016"
+date: "21 pa≈∫dziernika 2016"
 output: html_document
 ---
 
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, echo=FALSE}
 cat("Funkcje gry")
-##to tylko napis na ekranie na koniec zeby bylo czytelnie
+##to tylko napis na ekranie na poczatek zeby bylo czytelnie
 
 ```
 
@@ -19,12 +19,16 @@ cat("Funkcje gry")
 ##tu wpisujemy funkcje gry
 inicjalizuj <- function(){
   ##funkcja start - inicjalizacja wektorow
-  ## R,S,P,C,H,L,B
+  ## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
   stado_glowne <- c(60,24,20,12,6,4,2)
   stado <- c(0,0,0,0,0,0,0)
   kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
   kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
+  ##gdzie: W - wilk, F - lis; jeszta jak wyzej
 }
+
+## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
+## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
 
 losuj_rzut_kostek <- function(){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
@@ -60,6 +64,9 @@ wykonaj_czynnosc <- function(){
   ## sprawdza czy bank+stado sie sumuje odpowiednio
 }
 
+zakoncz <- function(){
+  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
+}
 
 ```
 
