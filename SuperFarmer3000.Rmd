@@ -103,6 +103,10 @@ wykonaj_czynnosc <- function(co, jak='+'){
     stado_glowne <<- stado_glowne + co
     ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
   }
+  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
+    cat('!!!! BLAD - STADA SIE NIE SUMUJA !!!!')
+    break
+  }
   ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
   ##symultanicznie robi operacje na banku i naszym stadzie
   ## sprawdza czy bank+stado sie sumuje odpowiednio
@@ -110,7 +114,7 @@ wykonaj_czynnosc <- function(co, jak='+'){
 
 zakoncz <- function(x=stado){
   ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
-  if(x >= c(1,1,1,1,1,0,0)){
+  if(all(x >= c(1,1,1,1,1,0,0))){
     cat("Wygrales! Koniec gry!")
   }
 }
