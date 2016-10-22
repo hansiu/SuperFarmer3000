@@ -24,9 +24,10 @@ stado_glowne <- c(60,24,20,12,6,4,2)
 stado <- c(0,0,0,0,0,0,0)
 kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
-##gdzie: W - wilk, F - lis; jeszta jak wyzej
+##gdzie: W - wilk, F - lis; reszta jak wyzej
 
-##Wektory wymian o takiej samej strukturze jak stado i stado_glowne:
+##Wektory wymian o takiej samej strukturze jak stado i stado_glowne
+##Mowia o tym, ile innych zwierza trzeba aby wymienic na dane zwierze
 kon <- c(72,12,6,2,1,12,2)
 krowa <- c(36,6,3,1,0,6,1)
 swinia <- c(12,2,1,0,0,2,0)
@@ -34,8 +35,6 @@ owca <- c(6,1,0,0,0,1,0)
 maly_pies <- c(6,1,0,0,0,1,0)
 duzy_pies <- c(36,6,3,1,0,6,1)
 
-## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
-## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
 
 losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
@@ -43,22 +42,214 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   print(wynik)
 }
 
-##alternatywnie moznaby zapisac po prostu:
-##wynik <- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
-##print(wynik)
-##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
-##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
+##Funkcje "wymiana_cos" maja na celu sprawdzic mozliwosc wymiany
+##i zwrocic wartosc mozliwa do wykorzystania dalej
+wymiana_owca <- function(b){
+  ##funkcja sprawdza, czy podane zwierze mozna wymienic na owce
+  ##i czy zwierzat w stadzie tego typu jest wystarczajaco duzo
+  ##jesli tak, to podaje jednoelemenowy wektor odpowiadajacy owcy
+  switch(b,
+         krolik={if(stado[1]>=owca[1]){
+           wymiana <- c('S')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=owca[6]){
+           wymiana <- c('S')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=owca[2]){
+           wymiana <- c('S')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         ##jesli nie, to wyrzuca komunikat
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
 
-licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado_glowne){
-  ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
-  ##opcja wymiana i opcja rzut
+wymiana_maly_pies <- function(b){
+  ##funkcja jest co do zasady taka sama jak dla wymiana_owca
+  switch(b,
+         krolik={if(stado[1]>=maly_pies[1]){
+           wymiana <- c('L')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=maly_pies[6]){
+           wymiana <- c('L')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=maly_pies[2]){
+           wymiana <- c('L')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
+
+wymiana_swinia <- function(b){
+  ##analogiczna do wymiana_owca
+  switch(b,
+         krolik={if(stado[1]>=swinia[1]){
+           wymiana <- c('P')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=swinia[6]){
+           wymiana <- c('P')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=swinia[2]){
+           wymiana <- c('P')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         swinia={if(stado[3]>=swinia[3]){
+           wymiana <- c('P')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
+
+wymiana_krowa <- function(b){
+  ##analogiczna do wymiana_owca i wymiana_swinia
+  switch(b,
+         krolik={if(stado[1]>=krowa[1]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=krowa[6]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=krowa[2]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         swinia={if(stado[3]>=krowa[3]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         krowa={if(stado[4]>=krowa[4]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         duzy_pies={if(stado[7]>=krowa[7]){
+           wymiana <- c('C')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
+
+wymiana_duzy_pies <- function(b){
+  ##funkcja co do zasady taka sama jak wymiana_krowa
+  switch(b,
+         krolik={if(stado[1]>=duzy_pies[1]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=duzy_pies[6]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=duzy_pies[2]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         swinia={if(stado[3]>=duzy_pies[3]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         krowa={if(stado[4]>=duzy_pies[4]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         duzy_pies={if(stado[7]>=duzy_pies[7]){
+           wymiana <- c('B')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
+
+wymiana_kon <- function(b){
+  ##analogiczna do wymiana_owca, wymiana_swinia i wymiana_krowa
+  switch(b,
+         krolik={if(stado[1]>=kon[1]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         maly_pies={if(stado[6]>=kon[6]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         owca={if(stado[2]>=kon[2]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         swinia={if(stado[3]>=kon[3]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         krowa={if(stado[4]>=kon[4]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         kon={if(stado[5]>=kon[5]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         duzy_pies={if(stado[7]>=kon[7]){
+           wymiana <- c('H')
+           cat(wymiana)
+           }else{cat("Za malo zwierzat na wymiane!")}},
+         cat("Nie istnieje mozliwosc wymiany!"))
+}
+
+zmiana_na_wektor <- function(w=wynik){
+  ##Funkcja sprawdz wynik rzutu i zamienia go na wektor analogiczny do wektora stada
+  ##Najpierw wynik z pierwszej kosci
+  switch(wynik[1],
+         R={c1 <- c(1,0,0,0,0,0,0)},
+         S={c1 <- c(0,1,0,0,0,0,0)},
+         P={c1 <- c(0,0,1,0,0,0,0)},
+         C={c1 <- c(0,0,0,1,0,0,0)}
+         )
+  ##Pozniej wynik z drugiej kosci
+  switch(wynik[2],
+         R={c2 <- c(1,0,0,0,0,0,0)},
+         S={c2 <- c(0,1,0,0,0,0,0)},
+         P={c2 <- c(0,0,1,0,0,0,0)},
+         H={c2 <- c(0,0,0,0,1,0,0)}
+         )
+  ##ten wektor jest abstrakcyjny - jego wartosci ulatwiaja pozniejsze liczenie
+  z_rzutu <- (c1+c2)
+}
+
+licz_ile_otrzyma <- function(rzut = z_rzutu, zamiana = FALSE){}
+  ##funkcja obliczajaca ile dostaniemy
+  ##opcja rzut i ewentualna opcja wymiany
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
+  W <- c(0,0,0,0,0,0,0)
+  if(zamiana = TRUE){switch(wymiana,
+                            R={W <- c(1,0,0,0,0,0,0)},
+                            S={W <- c(0,1,0,0,0,0,0)},
+                            P={W <- c(0,0,1,0,0,0,0)},
+                            C={W <- c(0,0,0,1,0,0,0)},
+                            H={W <- c(0,0,0,0,1,0,0)},
+                            L={W <- c(0,0,0,0,0,1,0)},
+                            B={W <- c(0,0,0,0,0,0,1)})
+  ##W tym miejscu zachodzi liczenie, ile zwierzat wyszlo z rzutu
+  ##dodawanie stada i z_rzutu - powinno byc zaokraglanie w dol do calkowitych
+  ##Tylko jeszcze nie wiem, jak to zrobic xD
+  rzut <- ((stado+z_rzutu)/2)
+  ##tutaj bedzie dodawanie ew. wymiany
+  powinno_byc <- (rzut+W)
+  ##ze sprawdzeniem banku
+  ##tego tez jeszcze nie wiem, ale sie dowiem xD (powinno byc cos na zasadzie:
+  ##tam, gdzie za malo podmien wartosc z jednego wektora na drugi)
 }
 
 zdecyduj <- function(){
   ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
 }
 
+##W tej funkcji trzeba by bylo tylko uwzglednic odjecie ze stada
+##Dodawanie jest uwzgledniane w licz_ile_otrzyma (a wyniku rzutu nie mozna nie przyjac)
+##Trzeba wymieniac po kolei, jak mowilas
 wymien <- function(){
   ##funkcja dokonujaca wymiany
 }
