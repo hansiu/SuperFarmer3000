@@ -52,9 +52,12 @@ rzuc <- function(){
   ##funkcja dokonujaca rzutu i reagujaca
 }
 
-atak_drapieznika <- function(){
+atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
+  if (lis == TRUE ){
+  }
   ##funkcja przyjmujaca argument lis=True/False i wilk True/False
   ## sprawdza czy mamy psa/psy
+  ##odejmuje psa/psy
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }
 
