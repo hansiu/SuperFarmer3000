@@ -157,7 +157,7 @@ losuj_rzut_kostek &lt;- function(a=kostka_zielona,b=kostka_czerwona){
 ##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
 ##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
 
-licz_ile_otrzyma &lt;- function(a=losuj_rzut_kostek(),b=stado){
+licz_ile_otrzyma &lt;- function(a=losuj_rzut_kostek(),b=stado_glowne){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
@@ -182,7 +182,7 @@ atak_drapieznika &lt;- function(lis = FALSE, wilk = FALSE){
       wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-')
       ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
     } else {
-      wykonaj_czynnosc(c(stado[1:4],0,0,0))
+      wykonaj_czynnosc(c(stado[1:4],0,0,0),'-')
       ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
@@ -242,7 +242,7 @@ narysuj_wykres &lt;- function(){
 
 ##
 losuj_rzut_kostek()</code></pre>
-<pre><code>## [1] &quot;S&quot; &quot;R&quot;</code></pre>
+<pre><code>## [1] &quot;R&quot; &quot;R&quot;</code></pre>
 <pre class="r"><code>####################
 
 ## test wykonywania czynnosci i drapieznikow
@@ -280,12 +280,12 @@ cat(stado)</code></pre>
 <pre><code>## 7 8 6 2 1 1 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
 <pre><code>## 53 16 14 10 5 3 2</code></pre>
-<pre class="r"><code>##to nizej nie dziala, ale mozna sie umowic na to ze nigdy tak nie wywolujemy, tylko jak sa oba to robimy dwa razy atak_drapieznika
+<pre class="r"><code>##to nizej juz dziala!
 atak_drapieznika(TRUE,TRUE)
 cat(stado)</code></pre>
-<pre><code>## 14 16 12 4 1 0 0</code></pre>
+<pre><code>## 0 0 0 0 1 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 46 8 8 8 5 4 2</code></pre>
+<pre><code>## 60 24 20 12 5 4 2</code></pre>
 <pre class="r"><code>##################</code></pre>
 
 

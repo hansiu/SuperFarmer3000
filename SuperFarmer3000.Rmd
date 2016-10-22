@@ -74,7 +74,7 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
       wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-')
       ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
     } else {
-      wykonaj_czynnosc(c(stado[1:4],0,0,0))
+      wykonaj_czynnosc(c(stado[1:4],0,0,0),'-')
       ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
@@ -170,7 +170,7 @@ cat(stado_glowne)
 atak_drapieznika(wilk = TRUE)
 cat(stado)
 cat(stado_glowne)
-##to nizej nie dziala, ale mozna sie umowic na to ze nigdy tak nie wywolujemy, tylko jak sa oba to robimy dwa razy atak_drapieznika
+##to nizej juz dziala!
 atak_drapieznika(TRUE,TRUE)
 cat(stado)
 cat(stado_glowne)
