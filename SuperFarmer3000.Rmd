@@ -35,7 +35,6 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   wynik <- c(sample(a, 1), sample(b, 1))
   print(wynik)
 }
-losuj_rzut_kostek()
 
 ##alternatywnie moznaby zapisac po prostu:
 ##wynik <- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
@@ -89,12 +88,12 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
 
 wykonaj_czynnosc <- function(co, jak='+'){
   if (jak=='+'){
-    stado=stado+co
-    stado_glowne=stado-co
+    stado <<- stado + co
+    stado_glowne <<- stado_glowne - co
     ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
   } else {
-    stado=stado-co
-    stado_glowne=stado+co
+    stado <<- stado - co
+    stado_glowne <<- stado_glowne + co
     ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
   }
   ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
@@ -127,5 +126,43 @@ generuj_rozklad <- function(){
 narysuj_wykres <- function(){
   ##funkcja rysujaca rozklad czasu gry
 }
+
+```
+
+```{r}
+##tu wpisujemy testy
+####################
+
+##
+losuj_rzut_kostek()
+####################
+
+## test wykonywania czynnosci i drapieznikow
+cat(stado)
+cat(stado_glowne)
+wykonaj_czynnosc(c(1,2,0,0,0,0,0),'+')
+cat(stado)
+cat(stado_glowne)
+atak_drapieznika(TRUE)
+cat(stado)
+cat(stado_glowne)
+wykonaj_czynnosc(c(5,3,1,0,0,2,0),'+')
+cat(stado)
+cat(stado_glowne)
+atak_drapieznika(TRUE)
+cat(stado)
+cat(stado_glowne)
+wykonaj_czynnosc(c(2,3,5,2,1,0,1),'+')
+cat(stado)
+cat(stado_glowne)
+atak_drapieznika(wilk = TRUE)
+cat(stado)
+cat(stado_glowne)
+##to nizej nie dziala, ale mozna sie umowic na to ze nigdy tak nie wywolujemy, tylko jak sa oba to robimy dwa razy atak_drapieznika
+atak_drapieznika(TRUE,TRUE)
+cat(stado)
+cat(stado_glowne)
+##################
+
 
 ```

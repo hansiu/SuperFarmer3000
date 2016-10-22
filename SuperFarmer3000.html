@@ -118,27 +118,40 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">SuperFarmer3000</h1>
 <h4 class="author"><em>Hanna Kranas, Joanna Zbijewska</em></h4>
-<h4 class="date"><em>21 października 2016</em></h4>
+<h4 class="date"><em>21 paĹşdziernika 2016</em></h4>
 
 </div>
 
 
 <pre><code>## Funkcje gry</code></pre>
 <pre class="r"><code>##tu wpisujemy funkcje gry
-inicjalizuj &lt;- function(){
-  ##funkcja start - inicjalizacja wektorow
-  ## R,S,P,C,H,L,B
-  stado_glowne &lt;- c(60,24,20,12,6,4,2)
-  stado &lt;- c(0,0,0,0,0,0,0)
-  kostka_zielona &lt;- c('R','R','R','R','R','R','S','S','S','P','C','W')
-  kostka_czerwona &lt;- c('R','R','R','R','R','R','S','S','P','P','H','F')
-}
 
-losuj_rzut_kostek &lt;- function(){
+##Zdefiniowanie niezbednych wartosci:
+## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
+stado_glowne &lt;- c(60,24,20,12,6,4,2)
+stado &lt;- c(0,0,0,0,0,0,0)
+kostka_zielona &lt;- c('R','R','R','R','R','R','S','S','S','P','C','W')
+kostka_czerwona &lt;- c('R','R','R','R','R','R','S','S','P','P','H','F')
+##gdzie: W - wilk, F - lis; jeszta jak wyzej
+
+## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
+## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
+
+
+losuj_rzut_kostek &lt;- function(a=kostka_zielona,b=kostka_czerwona){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
+  wynik &lt;- c(sample(a, 1), sample(b, 1))
+  print(wynik)
 }
+losuj_rzut_kostek()</code></pre>
+<pre><code>## [1] &quot;R&quot; &quot;R&quot;</code></pre>
+<pre class="r"><code>##alternatywnie moznaby zapisac po prostu:
+##wynik &lt;- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
+##print(wynik)
+##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
+##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
 
-licz_ile_otrzyma &lt;- function(){
+licz_ile_otrzyma &lt;- function(a=losuj_rzut_kostek(),b=stado){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
@@ -156,16 +169,49 @@ rzuc &lt;- function(){
   ##funkcja dokonujaca rzutu i reagujaca
 }
 
-atak_drapieznika &lt;- function(){
+atak_drapieznika &lt;- function(lis = FALSE, wilk = FALSE){
+  if (wilk == TRUE ){
+    if (stado[7]&gt;0){
+      ##to sie u nas nie zdarza
+      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-')
+      ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1:4],0,0,0))
+      ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
+  }
+  if (lis == TRUE ){
+    if (stado[6]&gt;0){
+      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-')
+      ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-')
+      ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
+  }
   ##funkcja przyjmujaca argument lis=True/False i wilk True/False
   ## sprawdza czy mamy psa/psy
+  ##odejmuje psa/psy
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }
 
-wykonaj_czynnosc &lt;- function(){
+wykonaj_czynnosc &lt;- function(co, jak='+'){
+  if (jak=='+'){
+    stado=stado+co
+    stado_glowne=stado-co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  } else {
+    stado=stado-co
+    stado_glowne=stado+co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  }
   ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
   ##symultanicznie robi operacje na banku i naszym stadzie
   ## sprawdza czy bank+stado sie sumuje odpowiednio
+}
+
+zakoncz &lt;- function(){
+  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
 }</code></pre>
 <pre><code>## Funkcje statystyk gry</code></pre>
 <pre class="r"><code>##tu wpisujemy funkcje statystyk gry
