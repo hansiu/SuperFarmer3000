@@ -17,24 +17,33 @@ cat("Funkcje gry")
 
 ```{r}
 ##tu wpisujemy funkcje gry
-inicjalizuj <- function(){
-  ##funkcja start - inicjalizacja wektorow
-  ## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
-  stado_glowne <- c(60,24,20,12,6,4,2)
-  stado <- c(0,0,0,0,0,0,0)
-  kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
-  kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
-  ##gdzie: W - wilk, F - lis; jeszta jak wyzej
-}
+
+##Zdefiniowanie niezbednych wartosci:
+## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
+stado_glowne <- c(60,24,20,12,6,4,2)
+stado <- c(0,0,0,0,0,0,0)
+kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
+kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
+##gdzie: W - wilk, F - lis; jeszta jak wyzej
 
 ## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
 ## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
 
-losuj_rzut_kostek <- function(){
-  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
-}
 
-licz_ile_otrzyma <- function(){
+losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
+  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
+  wynik <- c(sample(a, 1), sample(b, 1))
+  print(wynik)
+}
+losuj_rzut_kostek()
+
+##alternatywnie moznaby zapisac po prostu:
+##wynik <- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
+##print(wynik)
+##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
+##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
+
+licz_ile_otrzyma <- function(a=losuj_rzut_kostek(),b=stado){
   ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
   ##opcja wymiana i opcja rzut
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
