@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">SuperFarmer3000</h1>
 <h4 class="author"><em>Hanna Kranas, Joanna Zbijewska</em></h4>
-<h4 class="date"><em>21 paĹşdziernika 2016</em></h4>
+<h4 class="date"><em>21 października 2016</em></h4>
 
 </div>
 
@@ -199,182 +199,281 @@ wymiana_owca &lt;- function(b){
   ##jesli tak, to podaje jednoelemenowy wektor odpowiadajacy owcy
   switch(b,
          krolik={if(stado[1]&gt;=owca[1]){
-           wymiana &lt;- c('S')
-           za_wymiane &lt;- c(6,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('S')
+           za_wymiane &lt;&lt;- c(6,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=owca[6]){
-           wymiana &lt;- c('S')
-           cat(wymiana)
-           za_wymiane &lt;- c(0,0,0,0,0,1,0)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('S')
+           return(wymiana)
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,1,0)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=owca[2]){
-           wymiana &lt;- c('S')
-           cat(wymiana)
-           za_wymiane &lt;- c(0,1,0,0,0,0,0)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('S')
+           return(wymiana)
+           za_wymiane &lt;&lt;- c(0,1,0,0,0,0,0)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          ##jesli nie, to wyrzuca komunikat
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
 wymiana_maly_pies &lt;- function(b){
   ##funkcja jest co do zasady taka sama jak dla wymiana_owca
   switch(b,
          krolik={if(stado[1]&gt;=maly_pies[1]){
-           wymiana &lt;- c('L')
-           za_wymiane &lt;- c(6,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('L')
+           za_wymiane &lt;&lt;- c(6,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=maly_pies[6]){
-           wymiana &lt;- c('L')
-           za_wymiane &lt;- c(0,0,0,0,0,1,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('L')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,1,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=maly_pies[2]){
-           wymiana &lt;- c('L')
-           za_wymiane &lt;- c(0,1,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+           wymiana &lt;&lt;- c('L')
+           za_wymiane &lt;&lt;- c(0,1,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
 wymiana_swinia &lt;- function(b){
   ##analogiczna do wymiana_owca
   switch(b,
          krolik={if(stado[1]&gt;=swinia[1]){
-           wymiana &lt;- c('P')
-           za_wymiane &lt;- c(12,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('P')
+           za_wymiane &lt;&lt;- c(12,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=swinia[6]){
-           wymiana &lt;- c('P')
-           za_wymiane &lt;- c(0,0,0,0,0,2,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('P')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,2,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=swinia[2]){
-           wymiana &lt;- c('P')
-           za_wymiane &lt;- c(0,2,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('P')
+           za_wymiane &lt;&lt;- c(0,2,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          swinia={if(stado[3]&gt;=swinia[3]){
-           wymiana &lt;- c('P')
-           za_wymiane &lt;- c(0,0,1,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+           wymiana &lt;&lt;- c('P')
+           za_wymiane &lt;&lt;- c(0,0,1,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
 wymiana_krowa &lt;- function(b){
   ##analogiczna do wymiana_owca i wymiana_swinia
   switch(b,
          krolik={if(stado[1]&gt;=krowa[1]){
-           wymiana &lt;- c('C')
-           za_wymiane &lt;- c(36,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(36,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=krowa[6]){
-           wymiana &lt;- c('C')
-           za_wymiane &lt;- c(0,0,0,0,0,6,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,6,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=krowa[2]){
-           wymiana &lt;- c('C')
-           za_wymiane &lt;- c(0,6,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(0,6,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          swinia={if(stado[3]&gt;=krowa[3]){
-           wymiana &lt;- c('C')
-           za_wymiane &lt;- c(0,0,3,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(0,0,3,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          krowa={if(stado[4]&gt;=krowa[4]){
-           wymiana &lt;- c('C')
-           za_wymiane(0,0,0,1,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(0,0,0,1,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          duzy_pies={if(stado[7]&gt;=krowa[7]){
-           wymiana &lt;- c('C')
-           za_wymiane &lt;- c(0,0,0,0,0,0,1)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+           wymiana &lt;&lt;- c('C')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,0,1)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
-wymiana_duzy_pies &lt;- function(b){
+wymiana_duzy_pies &lt;&lt;- function(b){
   ##funkcja co do zasady taka sama jak wymiana_krowa
   switch(b,
          krolik={if(stado[1]&gt;=duzy_pies[1]){
-           wymiana &lt;- c('B')
-           za_wymiane &lt;- c(36,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(36,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=duzy_pies[6]){
-           wymiana &lt;- c('B')
-           za_wymiane &lt;- c(0,0,0,0,0,6,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,6,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=duzy_pies[2]){
-           wymiana &lt;- c('B')
-           za_wymiane &lt;- c(0,6,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(0,6,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          swinia={if(stado[3]&gt;=duzy_pies[3]){
-           wymiana &lt;- c('B')
-           za_wymiane &lt;- c(0,0,3,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(0,0,3,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          krowa={if(stado[4]&gt;=duzy_pies[4]){
-           wymiana &lt;- c('B')
-           za_wymiane(0,0,0,1,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(0,0,0,1,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          duzy_pies={if(stado[7]&gt;=duzy_pies[7]){
-           wymiana &lt;- c('B')
-           za_wymiane &lt;- c(0,0,0,0,0,0,1)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+           wymiana &lt;&lt;- c('B')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,0,1)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
 wymiana_kon &lt;- function(b){
   ##analogiczna do wymiana_owca, wymiana_swinia i wymiana_krowa
   switch(b,
          krolik={if(stado[1]&gt;=kon[1]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(72,0,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(72,0,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          maly_pies={if(stado[6]&gt;=kon[6]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,0,0,0,0,12,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,12,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          owca={if(stado[2]&gt;=kon[2]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,12,0,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,12,0,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          swinia={if(stado[3]&gt;=kon[3]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,0,6,0,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,0,6,0,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          krowa={if(stado[4]&gt;=kon[4]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,0,0,2,0,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,0,0,2,0,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          kon={if(stado[5]&gt;=kon[5]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,0,0,0,1,0,0)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,0,0,0,1,0,0)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
          duzy_pies={if(stado[7]&gt;=kon[7]){
-           wymiana &lt;- c('H')
-           za_wymiane &lt;- c(0,0,0,0,0,0,2)
-           cat(wymiana)
-           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
-         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+           wymiana &lt;&lt;- c('H')
+           za_wymiane &lt;&lt;- c(0,0,0,0,0,0,2)
+           return(wymiana)
+           }else{
+             wymiana &lt;&lt;- c('pusty')
+             za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+             cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         {wymiana &lt;&lt;- c('pusty')
+         za_wymiane &lt;&lt;- c(0,0,0,0,0,0,0)
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;)})
 }
 
 z_wymiany &lt;- function(zamien = FALSE){
@@ -386,7 +485,8 @@ z_wymiany &lt;- function(zamien = FALSE){
                             C={W &lt;- c(0,0,0,1,0,0,0)},
                             H={W &lt;- c(0,0,0,0,1,0,0)},
                             L={W &lt;- c(0,0,0,0,0,1,0)},
-                            B={W &lt;- c(0,0,0,0,0,0,1)})}
+                            B={W &lt;- c(0,0,0,0,0,0,1)},
+                            {W &lt;- c(0,0,0,0,0,0,0)})}
   return(W)
 }
 
@@ -394,7 +494,7 @@ wymien &lt;- function(z,na){
   ##funkcja dokonujaca wymiany
   ##przyjmowane argumenty sa czytsko symboliczne, a ich wartosc nie ma znaczenia
   ##wlasciwie wymiany dokonuje sie na funkcjach wymien_zwierze('odpowiednie_zwierze')
-  wykonaj_czynnosc(z_wymiany(),'+')
+  wykonaj_czynnosc(z_wymiany(TRUE),'+')
   wykonaj_czynnosc(za_wymiane,'-')
 }</code></pre>
 <pre class="r"><code>##FUNKCJE RZUCANIA
@@ -516,13 +616,6 @@ narysuj_wykres &lt;- function(){
 <pre class="r"><code>##testy
 ##################
 rzuc()</code></pre>
-<pre><code>## R P</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 0 0 0 0 0 0 0</code></pre>
-<pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 24 20 12 6 4 2</code></pre>
-<pre class="r"><code>rzuc()</code></pre>
 <pre><code>## C R</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
@@ -530,33 +623,70 @@ rzuc()</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
 <pre><code>## 60 24 20 12 6 4 2</code></pre>
 <pre class="r"><code>rzuc()</code></pre>
-<pre><code>## R P</code></pre>
+<pre><code>## R R</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 1 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 59 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## S P</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 1 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 59 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## R R</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 2 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 58 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## R H</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 3 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 57 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## S F</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
 <pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
 <pre><code>## 60 24 20 12 6 4 2</code></pre>
-<pre class="r"><code>rzuc()</code></pre>
-<pre><code>## R P</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 0 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>##################
+stado &lt;- c(7,2,0,0,0,0,0)
+stado_glowne &lt;- c(53,22,20,12,6,4,2)
+wymiana_swinia('owca')</code></pre>
+<pre><code>## [1] &quot;P&quot;</code></pre>
+<pre class="r"><code>wymien('owca','swinia')
+cat(stado)</code></pre>
+<pre><code>## 7 0 1 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 24 20 12 6 4 2</code></pre>
-<pre class="r"><code>rzuc()</code></pre>
-<pre><code>## P P</code></pre>
-<pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 0 0 1 0 0 0 0</code></pre>
+<pre><code>## 53 24 19 12 6 4 2</code></pre>
+<pre class="r"><code>wymiana_swinia('owca')</code></pre>
+<pre><code>## Za malo zwierzat na wymiane!</code></pre>
+<pre class="r"><code>wymien('owca','swinia')
+cat(stado)</code></pre>
+<pre><code>## 7 0 1 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 24 19 12 6 4 2</code></pre>
-<pre class="r"><code>rzuc()</code></pre>
-<pre><code>## S R</code></pre>
-<pre><code>## NULL</code></pre>
-<pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 0 0 1 0 0 0 0</code></pre>
+<pre><code>## 53 24 19 12 6 4 2</code></pre>
+<pre class="r"><code>stado &lt;- c(36,0,1,0,0,0,0)
+stado_glowne &lt;- c(24,24,19,12,6,4,2)
+wymiana_krowa('krolik')</code></pre>
+<pre><code>## [1] &quot;C&quot;</code></pre>
+<pre class="r"><code>wymien('krolik','krowa')
+cat(stado)</code></pre>
+<pre><code>## 0 0 1 1 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 24 19 12 6 4 2</code></pre>
-<pre class="r"><code>##################</code></pre>
+<pre><code>## 60 24 19 11 6 4 2</code></pre>
+<pre class="r"><code>wymiana_duzy_pies('swinia')</code></pre>
+<pre><code>## Za malo zwierzat na wymiane!</code></pre>
+<pre class="r"><code>wymien('swinia','duzy_pies')
+cat(stado)</code></pre>
+<pre><code>## 0 0 1 1 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 60 24 19 11 6 4 2</code></pre>
 
 
 
