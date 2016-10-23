@@ -219,7 +219,7 @@ zmiana_na_wektor <- function(w=wynik){
   z_rzutu <- (c1+c2)
 }
 
-licz_ile_otrzyma <- function(rzut = z_rzutu, zamiana = FALSE){}
+licz_ile_otrzyma <- function(rzut = z_rzutu, zamiana = FALSE){
   ##funkcja obliczajaca ile dostaniemy
   ##opcja rzut i ewentualna opcja wymiany
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
@@ -231,11 +231,10 @@ licz_ile_otrzyma <- function(rzut = z_rzutu, zamiana = FALSE){}
                             C={W <- c(0,0,0,1,0,0,0)},
                             H={W <- c(0,0,0,0,1,0,0)},
                             L={W <- c(0,0,0,0,0,1,0)},
-                            B={W <- c(0,0,0,0,0,0,1)})
+                            B={W <- c(0,0,0,0,0,0,1)})}
   ##W tym miejscu zachodzi liczenie, ile zwierzat wyszlo z rzutu
-  ##dodawanie stada i z_rzutu - powinno byc zaokraglanie w dol do calkowitych
-  ##Tylko jeszcze nie wiem, jak to zrobic xD
-  rzut <- ((stado+z_rzutu)/2)
+  ##dodawanie stada i z_rzutu - trunc() to zaokraglanie w dol do calkowitego
+  rzut <- trunc((stado+z_rzutu)/2)
   ##tutaj bedzie dodawanie ew. wymiany
   powinno_byc <- (rzut+W)
   ##ze sprawdzeniem banku
@@ -255,9 +254,16 @@ wymien <- function(){
 }
 
 rzuc <- function(){
+  otrzymane=c(0,0,0,0,0,0,0)
   kostki=losuj_rzut_kostek()
-  ##dodac co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
+  ##co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
   ##
+  if (all(stado==0)){
+    if (kostki[1]==kostki[2]){
+      zmiana_na_wektor(kostki)
+      wykonaj_czynnosc(z_rzutu)}
+    ## jesli nie sa sobie rowne no to nic nie dostajemy i tak.
+  } else {
   if ('W' %in% kostki){
     if ('F' %in% kostki) {
       atak_drapieznika(TRUE,TRUE)
@@ -266,6 +272,8 @@ rzuc <- function(){
     } else {
       atak_drapieznika(wilk = TRUE)
       ##atakuje nas tylko wilk
+      ##################
+      ##dobra tu musze zmienic jak rozumiem
       otrzymane=licz_ile_otrzyma(kostki)
       ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
     }
@@ -274,11 +282,20 @@ rzuc <- function(){
       atak_drapieznika(TRUE)
       ##atakuje nas tylko lis
     }
+    ##################
+    ##dobra tu musze zmienic jak rozumiem
     otrzymane=licz_ile_otrzyma(kostki)
     ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
     ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
+  } 
+  }
+  if (!all(otrzymane==0)){
+    ##################
+    ##dobra tu musze zmienic jak rozumiem?
+    wykonaj_czynnosc(otrzymane)
   }
   ##tutaj zrobic to otrzymywanie (drapiezniki juz zalatwione, wiec tylko sprawdzac czy otrzymane nie sa puste), czyli wykonaj_czynnosc
+  
   
   ##funkcja dokonujaca rzutu i reagujaca
 }
