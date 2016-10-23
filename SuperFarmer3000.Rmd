@@ -497,6 +497,29 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
 }
 
 ```
+
+```{r}
+## glowna funkcja przeprowadzajaca gre
+
+zagraj <- function(){
+  repeat{
+    ##repeat bo musimy w dwoch miejscach sprawdzac czy nie zebralismy
+    if (!all(stado==0)){
+      ##jesli stado jest niepuste - bo jak puste to nie ma z czego wymieniac
+      ##tutaj wymiany i ich warunki
+    }
+    if (zakoncz){
+      break
+    }
+    ##rzucamy zawsze, no chyba ze uzbieralismy
+    rzuc()
+    if (zakoncz){
+      break
+    }
+  }
+}
+```
+
 ```{r}
 ##funkcje statystyk gry
 mierz_czas <- function(){

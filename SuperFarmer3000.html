@@ -118,7 +118,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">SuperFarmer3000</h1>
 <h4 class="author"><em>Hanna Kranas, Joanna Zbijewska</em></h4>
-<h4 class="date"><em>21 października 2016</em></h4>
+<h4 class="date"><em>21 paĹşdziernika 2016</em></h4>
 
 </div>
 
@@ -601,6 +601,25 @@ atak_drapieznika &lt;- function(lis = FALSE, wilk = FALSE){
   ##odejmuje psa/psy
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }</code></pre>
+<pre class="r"><code>## glowna funkcja przeprowadzajaca gre
+
+zagraj &lt;- function(){
+  repeat{
+    ##repeat bo musimy w dwoch miejscach sprawdzac czy nie zebralismy
+    if (!all(stado==0)){
+      ##jesli stado jest niepuste - bo jak puste to nie ma z czego wymieniac
+      ##tutaj wymiany i ich warunki
+    }
+    if (zakoncz){
+      break
+    }
+    ##rzucamy zawsze, no chyba ze uzbieralismy
+    rzuc()
+    if (zakoncz){
+      break
+    }
+  }
+}</code></pre>
 <pre class="r"><code>##funkcje statystyk gry
 mierz_czas &lt;- function(){
   ##funkcja mierzaca czas gry
@@ -616,7 +635,7 @@ narysuj_wykres &lt;- function(){
 <pre class="r"><code>##testy
 ##################
 rzuc()</code></pre>
-<pre><code>## C R</code></pre>
+<pre><code>## S R</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
 <pre><code>## 0 0 0 0 0 0 0</code></pre>
@@ -629,26 +648,28 @@ rzuc()</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
 <pre><code>## 59 24 20 12 6 4 2</code></pre>
 <pre class="r"><code>rzuc()</code></pre>
-<pre><code>## S P</code></pre>
+<pre><code>## S F</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 1 0 0 0 0 0 0</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 59 24 20 12 6 4 2</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
 <pre class="r"><code>rzuc()</code></pre>
-<pre><code>## R R</code></pre>
+<pre><code>## S R</code></pre>
+<pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 2 0 0 0 0 0 0</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 58 24 20 12 6 4 2</code></pre>
-<pre class="r"><code>rzuc()</code></pre>
-<pre><code>## R H</code></pre>
-<pre class="r"><code>cat(stado)</code></pre>
-<pre><code>## 3 0 0 0 0 0 0</code></pre>
-<pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 57 24 20 12 6 4 2</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
 <pre class="r"><code>rzuc()</code></pre>
 <pre><code>## S F</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>cat(stado_glowne)</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## S H</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>cat(stado)</code></pre>
 <pre><code>## 0 0 0 0 0 0 0</code></pre>
