@@ -9,15 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, echo=FALSE}
-cat("Funkcje gry")
-##to tylko napis na ekranie na poczatek zeby bylo czytelnie
-
-```
-
 ```{r}
-##tu wpisujemy funkcje gry
-
 ##Zdefiniowanie niezbednych wartosci:
 ## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
 stado_glowne <- c(60,24,20,12,6,4,2)
@@ -35,12 +27,60 @@ owca <- c(6,1,0,0,0,1,0)
 maly_pies <- c(6,1,0,0,0,1,0)
 duzy_pies <- c(36,6,3,1,0,6,1)
 
-
-losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
-  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
-  wynik <- c(sample(a, 1), sample(b, 1))
-  return(wynik)
+```
+```{r}
+##FUNKCJE POMOCNICZE
+licz_ile_otrzyma <- function(sie_nalezy){
+  if (all(sie_nalezy <= stado_glowne)){
+    return(sie_nalezy)
+  } else {
+    sie_nalezy <<- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
+    return(sie_nalezy)
+  }
+  ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
+  ##funkcja zwraca wektor, wiec nalezy robic otrzymane <- licz_ile_otrzyma(otrzymane)
 }
+
+
+zdecyduj <- function(){
+  ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
+}
+
+
+
+wykonaj_czynnosc <- function(co, jak='+'){
+  if (jak=='+'){
+    stado <<- stado + co
+    stado_glowne <<- stado_glowne - co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  } else {
+    stado <<- stado - co
+    stado_glowne <<- stado_glowne + co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  }
+  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
+    cat('!!!! BLAD - STADA SIE NIE SUMUJA !!!!')
+    break
+  }
+  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
+  ##symultanicznie robi operacje na banku i naszym stadzie
+  ## sprawdza czy bank+stado sie sumuje odpowiednio
+}
+
+zakoncz <- function(x=stado){
+  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
+  if(all(x >= c(1,1,1,1,1,0,0))){
+    cat("Wygrales! Koniec gry!")
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
+##ale fajnie jak cos sie wyswietli na koniec
+```
+```{r}
+##FUNKCJE WYMIANY
 
 ##Funkcje "wymiana_cos" maja na celu sprawdzic mozliwosc wymiany
 ##i zwrocic wartosc mozliwa do wykorzystania dalej
@@ -229,6 +269,36 @@ wymiana_kon <- function(b){
          cat("Nie istnieje mozliwosc wymiany!"))
 }
 
+z_wymiany <- function(zamien = FALSE){
+  ##Wylicza wektor zwierzat otrzymanych z wymiany
+  W <- c(0,0,0,0,0,0,0)
+  if(zamien == TRUE){switch(wymiana,
+                            S={W <- c(0,1,0,0,0,0,0)},
+                            P={W <- c(0,0,1,0,0,0,0)},
+                            C={W <- c(0,0,0,1,0,0,0)},
+                            H={W <- c(0,0,0,0,1,0,0)},
+                            L={W <- c(0,0,0,0,0,1,0)},
+                            B={W <- c(0,0,0,0,0,0,1)})}
+  return(W)
+}
+
+wymien <- function(z,na){
+  ##funkcja dokonujaca wymiany
+  ##przyjmowane argumenty sa czytsko symboliczne, a ich wartosc nie ma znaczenia
+  ##wlasciwie wymiany dokonuje sie na funkcjach wymien_zwierze('odpowiednie_zwierze')
+  wykonaj_czynnosc(z_wymiany(),'+')
+  wykonaj_czynnosc(za_wymiane,'-')
+}
+```
+```{r}
+##FUNKCJE RZUCANIA
+
+losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
+  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
+  wynik <- c(sample(a, 1), sample(b, 1))
+  return(wynik)
+}
+
 zmiana_na_wektor <- function(w=wynik){
   ##Funkcja sprawdz wynik rzutu i zamienia go na wektor analogiczny do wektora stada
   ##Najpierw wynik z pierwszej kosci
@@ -244,48 +314,12 @@ zmiana_na_wektor <- function(w=wynik){
          R={c2 <- c(1,0,0,0,0,0,0)},
          S={c2 <- c(0,1,0,0,0,0,0)},
          P={c2 <- c(0,0,1,0,0,0,0)},
-         H={c2 <- c(0,0,0,0,1,0,0)}
+         H={c2 <- c(0,0,0,0,1,0,0)},
          {c2 <- c(0,0,0,0,0,0,0)}
          )
   ##ten wektor jest abstrakcyjny - jego wartosci ulatwiaja pozniejsze liczenie
   z_rzutu <- (c1+c2)
   return(z_rzutu)
-}
-
-licz_ile_otrzyma <- function(sie_nalezy){
-  if (all(sie_nalezy <= stado_glowne)){
-    return(sie_nalezy)
-  } else {
-    sie_nalezy <<- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
-    return(sie_nalezy)
-  }
-  ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
-  ##funkcja zwraca wektor, wiec nalezy robic otrzymane <- licz_ile_otrzyma(otrzymane)
-}
-
-z_wymiany <- function(zamien = FALSE){
-  ##Wylicza wektor zwierzat otrzymanych z wymiany
-  W <- c(0,0,0,0,0,0,0)
-  if(zamien = TRUE){switch(wymiana,
-                            S={W <- c(0,1,0,0,0,0,0)},
-                            P={W <- c(0,0,1,0,0,0,0)},
-                            C={W <- c(0,0,0,1,0,0,0)},
-                            H={W <- c(0,0,0,0,1,0,0)},
-                            L={W <- c(0,0,0,0,0,1,0)},
-                            B={W <- c(0,0,0,0,0,0,1)})}
-  return(W)
-}
-
-zdecyduj <- function(){
-  ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
-}
-
-wymien <- function(z,na){
-  ##funkcja dokonujaca wymiany
-  ##przyjmowane argumenty sa czytsko symboliczne, a ich wartosc nie ma znaczenia
-  ##wlasciwie wymiany dokonuje sie na funkcjach wymien_zwierze('odpowiednie_zwierze')
-  wykonaj_czynnosc(z_wymiany(),'+')
-  wykonaj_czynnosc(za_wymiane,'-')
 }
 
 rzuc <- function(){
@@ -360,44 +394,9 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
   ##robi wykonaj_czynnosc i reaguje odpowiednio
 }
 
-wykonaj_czynnosc <- function(co, jak='+'){
-  if (jak=='+'){
-    stado <<- stado + co
-    stado_glowne <<- stado_glowne - co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  } else {
-    stado <<- stado - co
-    stado_glowne <<- stado_glowne + co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  }
-  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
-    cat('!!!! BLAD - STADA SIE NIE SUMUJA !!!!')
-    break
-  }
-  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
-  ##symultanicznie robi operacje na banku i naszym stadzie
-  ## sprawdza czy bank+stado sie sumuje odpowiednio
-}
-
-zakoncz <- function(x=stado){
-  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
-  if(all(x >= c(1,1,1,1,1,0,0))){
-    cat("Wygrales! Koniec gry!")
-  }
-}
-##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
-##ale fajnie jak cos sie wyswietli na koniec
-
 ```
-
-```{r, echo=FALSE}
-cat("Funkcje statystyk gry")
-##to tylko napis na ekranie na koniec zeby bylo czytelnie
-
-```
-
 ```{r}
-##tu wpisujemy funkcje statystyk gry
+##funkcje statystyk gry
 mierz_czas <- function(){
   ##funkcja mierzaca czas gry
 }
@@ -411,9 +410,8 @@ narysuj_wykres <- function(){
 }
 
 ```
-
 ```{r}
-##tu wpisujemy testy
+##testy
 ####################
 
 ##
