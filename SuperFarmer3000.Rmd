@@ -219,8 +219,15 @@ zmiana_na_wektor <- function(w=wynik){
   z_rzutu <- (c1+c2)
 }
 
-licz_ile_otrzyma <- function(){
-  ##tudopierobedzie sprawdzanie z bankiem
+licz_ile_otrzyma <- function(sie_nalezy){
+  if (all(sie_nalezy <= stado_glowne)){
+    return(sie_nalezy)
+  } else {
+    sie_nalezy <<- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
+    return(sie_nalezy)
+  }
+  ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
+  ##funkcja zwraca wektor, wiec nalezy robic otrzymane <- licz_ile_otrzyma(otrzymane)
 }
 
 zmienianie <- function(rzut = z_rzutu, zamiana = FALSE){
@@ -236,14 +243,6 @@ zmienianie <- function(rzut = z_rzutu, zamiana = FALSE){
                             H={W <- c(0,0,0,0,1,0,0)},
                             L={W <- c(0,0,0,0,0,1,0)},
                             B={W <- c(0,0,0,0,0,0,1)})}
-  ##W tym miejscu zachodzi liczenie, ile zwierzat wyszlo z rzutu
-  ##dodawanie stada i z_rzutu - trunc() to zaokraglanie w dol do calkowitego
-  rzut <- trunc((stado+z_rzutu)/2)
-  ##tutaj bedzie dodawanie ew. wymiany
-  powinno_byc <- (rzut+W)
-  ##ze sprawdzeniem banku
-  ##tego tez jeszcze nie wiem, ale sie dowiem xD (powinno byc cos na zasadzie:
-  ##tam, gdzie za malo podmien wartosc z jednego wektora na drugi)
 }
 
 zdecyduj <- function(){
@@ -303,6 +302,19 @@ rzuc <- function(){
   
   ##funkcja dokonujaca rzutu i reagujaca
 }
+
+####### to tu chwilowo zeby nie przeszkadzalo, a sie przyda
+{##W tym miejscu zachodzi liczenie, ile zwierzat wyszlo z rzutu
+  ##dodawanie stada i z_rzutu - trunc() to zaokraglanie w dol do calkowitego
+  rzut <- trunc((stado+z_rzutu)/2)
+  ##tutaj bedzie dodawanie ew. wymiany
+  powinno_byc <- (rzut+W)
+  ##ze sprawdzeniem banku
+  ##tego tez jeszcze nie wiem, ale sie dowiem xD (powinno byc cos na zasadzie:
+  ##tam, gdzie za malo podmien wartosc z jednego wektora na drugi)
+  }
+
+
 
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
   if (wilk == TRUE ){
