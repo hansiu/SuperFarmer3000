@@ -64,6 +64,31 @@ wymien <- function(){
 }
 
 rzuc <- function(){
+  kostki=losuj_rzut_kostek()
+  ##dodac co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
+  ##
+  if ('W' %in% kostki){
+    if ('F' %in% kostki) {
+      atak_drapieznika(TRUE,TRUE)
+      ## atakuja nas zarowno wilk jak i lis
+      ## nie mamy co otrzymac
+    } else {
+      atak_drapieznika(wilk = TRUE)
+      ##atakuje nas tylko wilk
+      otrzymane=licz_ile_otrzyma(kostki)
+      ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
+    }
+  } else {
+    if ('F' %in% kostki) {
+      atak_drapieznika(TRUE)
+      ##atakuje nas tylko lis
+    }
+    otrzymane=licz_ile_otrzyma(kostki)
+    ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
+    ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
+  }
+  ##tutaj zrobic to otrzymywanie (drapiezniki juz zalatwione, wiec tylko sprawdzac czy otrzymane nie sa puste), czyli wykonaj_czynnosc
+  
   ##funkcja dokonujaca rzutu i reagujaca
 }
 
