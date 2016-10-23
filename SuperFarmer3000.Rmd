@@ -12,8 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 ##Zdefiniowanie niezbednych wartosci:
 ## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
-stado_glowne <- c(60,24,20,12,6,4,2)
-stado <- c(0,0,0,0,0,0,0)
+stado_glowne <<- c(60,24,20,12,6,4,2)
+stado <<- c(0,0,0,0,0,0,0)
 kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 ##gdzie: W - wilk, F - lis; reszta jak wyzej
@@ -34,7 +34,7 @@ licz_ile_otrzyma <- function(sie_nalezy){
   if (all(sie_nalezy <= stado_glowne)){
     return(sie_nalezy)
   } else {
-    sie_nalezy <<- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
+    sie_nalezy <- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
     return(sie_nalezy)
   }
   ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
@@ -296,10 +296,11 @@ wymien <- function(z,na){
 losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
   wynik <- c(sample(a, 1), sample(b, 1))
+  cat(wynik)
   return(wynik)
 }
 
-zmiana_na_wektor <- function(w=wynik){
+zmiana_na_wektor <- function(wynik){
   ##Funkcja sprawdz wynik rzutu i zamienia go na wektor analogiczny do wektora stada
   ##Najpierw wynik z pierwszej kosci
   switch(wynik[1],
@@ -323,13 +324,13 @@ zmiana_na_wektor <- function(w=wynik){
 }
 
 rzuc <- function(){
-  otrzymane=c(0,0,0,0,0,0,0)
-  kostki<<-losuj_rzut_kostek()
+  otrzymane<-c(0,0,0,0,0,0,0)
+  kostki<-losuj_rzut_kostek()
   ##co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
   ##
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){
-      otrzymane <<- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
+      otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
       }
     ## jesli nie sa sobie rowne no to nic nie dostajemy i tak.
   } else {
@@ -343,8 +344,8 @@ rzuc <- function(){
       ##atakuje nas tylko wilk
       #######PRZELICZANIE n/2
       wylosowane <- zmiana_na_wektor(kostki)
-      otrzymane <<- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
-      otrzymane<<-licz_ile_otrzyma(otrzymane)
+      otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
+      otrzymane <- licz_ile_otrzyma(otrzymane)
       ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
     }
   } else {
@@ -354,14 +355,15 @@ rzuc <- function(){
     }
       ###### PRZELICZANIE n/2
       wylosowane <- zmiana_na_wektor(kostki)
-      otrzymane <<- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
-      otrzymane<<-licz_ile_otrzyma(otrzymane)
+      otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
+      otrzymane <- licz_ile_otrzyma(otrzymane)
     ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
     ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
   } 
   }
   if (!all(otrzymane==0)){
     wykonaj_czynnosc(otrzymane)
+  } else {
   }
   
   ##funkcja dokonujaca rzutu i reagujaca
@@ -412,35 +414,23 @@ narysuj_wykres <- function(){
 ```
 ```{r}
 ##testy
-####################
-
-##
-losuj_rzut_kostek()
-####################
-
-## test wykonywania czynnosci i drapieznikow
+##################
+rzuc()
 cat(stado)
 cat(stado_glowne)
-wykonaj_czynnosc(c(1,2,0,0,0,0,0),'+')
+rzuc()
 cat(stado)
 cat(stado_glowne)
-atak_drapieznika(TRUE)
+rzuc()
 cat(stado)
 cat(stado_glowne)
-wykonaj_czynnosc(c(5,3,1,0,0,2,0),'+')
+rzuc()
 cat(stado)
 cat(stado_glowne)
-atak_drapieznika(TRUE)
+rzuc()
 cat(stado)
 cat(stado_glowne)
-wykonaj_czynnosc(c(2,3,5,2,1,0,1),'+')
-cat(stado)
-cat(stado_glowne)
-atak_drapieznika(wilk = TRUE)
-cat(stado)
-cat(stado_glowne)
-##to nizej juz dziala!
-atak_drapieznika(TRUE,TRUE)
+rzuc()
 cat(stado)
 cat(stado_glowne)
 ##################

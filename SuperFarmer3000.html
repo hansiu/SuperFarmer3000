@@ -123,57 +123,358 @@ $(document).ready(function () {
 </div>
 
 
-<pre><code>## Funkcje gry</code></pre>
-<pre class="r"><code>##tu wpisujemy funkcje gry
-
-##Zdefiniowanie niezbednych wartosci:
+<pre class="r"><code>##Zdefiniowanie niezbednych wartosci:
 ## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
-stado_glowne &lt;- c(60,24,20,12,6,4,2)
-stado &lt;- c(0,0,0,0,0,0,0)
+stado_glowne &lt;&lt;- c(60,24,20,12,6,4,2)
+stado &lt;&lt;- c(0,0,0,0,0,0,0)
 kostka_zielona &lt;- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona &lt;- c('R','R','R','R','R','R','S','S','P','P','H','F')
-##gdzie: W - wilk, F - lis; jeszta jak wyzej
+##gdzie: W - wilk, F - lis; reszta jak wyzej
 
-##Wektory wymian o takiej samej strukturze jak stado i stado_glowne:
+##Wektory wymian o takiej samej strukturze jak stado i stado_glowne
+##Mowia o tym, ile innych zwierza trzeba aby wymienic na dane zwierze
 kon &lt;- c(72,12,6,2,1,12,2)
 krowa &lt;- c(36,6,3,1,0,6,1)
 swinia &lt;- c(12,2,1,0,0,2,0)
 owca &lt;- c(6,1,0,0,0,1,0)
 maly_pies &lt;- c(6,1,0,0,0,1,0)
-duzy_pies &lt;- c(36,6,3,1,0,6,1)
-
-## BRAKUJE: Wartosci wektora stado dla zakonczenia gry. Tylko nie wiem, gdzie go wpisac, czy moze od razu w funkcji konczacej.
-## BRAKUJE: Przelicznikow zwirzat do wymian. Ale wciaz zastanawiam sie w jakiej formie to zrobic, zeby R umil sobie poprzeliczac.
-
-losuj_rzut_kostek &lt;- function(a=kostka_zielona,b=kostka_czerwona){
-  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
-  wynik &lt;- c(sample(a, 1), sample(b, 1))
-  print(wynik)
+duzy_pies &lt;- c(36,6,3,1,0,6,1)</code></pre>
+<pre class="r"><code>##FUNKCJE POMOCNICZE
+licz_ile_otrzyma &lt;- function(sie_nalezy){
+  if (all(sie_nalezy &lt;= stado_glowne)){
+    return(sie_nalezy)
+  } else {
+    sie_nalezy &lt;- ifelse(sie_nalezy &lt;= stado_glowne, sie_nalezy, stado_glowne)
+    return(sie_nalezy)
+  }
+  ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
+  ##funkcja zwraca wektor, wiec nalezy robic otrzymane &lt;- licz_ile_otrzyma(otrzymane)
 }
 
-##alternatywnie moznaby zapisac po prostu:
-##wynik &lt;- c(smaple(kostka_zielona,1),sample(kostka_czerwona,1))
-##print(wynik)
-##tylko wtedy trzeba zmienic w kolejnych funkcjach odpowiednio
-##wtedy mozna ominac niepotrzebne dwie linijki, ale to czysta kosmetyka
-
-licz_ile_otrzyma &lt;- function(a=losuj_rzut_kostek(),b=stado_glowne){
-  ##funkcja obliczajaca ile dostaniemy ze sprawdzeniem banku
-  ##opcja wymiana i opcja rzut
-  ##tworzy wektor z iloscia zwierzat na odpowiednich polach
-}
 
 zdecyduj &lt;- function(){
   ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
 }
 
-wymien &lt;- function(){
+
+
+wykonaj_czynnosc &lt;- function(co, jak='+'){
+  if (jak=='+'){
+    stado &lt;&lt;- stado + co
+    stado_glowne &lt;&lt;- stado_glowne - co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  } else {
+    stado &lt;&lt;- stado - co
+    stado_glowne &lt;&lt;- stado_glowne + co
+    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
+  }
+  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
+    cat('!!!! BLAD - STADA SIE NIE SUMUJA !!!!')
+    break
+  }
+  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
+  ##symultanicznie robi operacje na banku i naszym stadzie
+  ## sprawdza czy bank+stado sie sumuje odpowiednio
+}
+
+zakoncz &lt;- function(x=stado){
+  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
+  if(all(x &gt;= c(1,1,1,1,1,0,0))){
+    cat(&quot;Wygrales! Koniec gry!&quot;)
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
+##ale fajnie jak cos sie wyswietli na koniec</code></pre>
+<pre class="r"><code>##FUNKCJE WYMIANY
+
+##Funkcje &quot;wymiana_cos&quot; maja na celu sprawdzic mozliwosc wymiany
+##i zwrocic wartosc mozliwa do wykorzystania dalej
+##wyluczaja tez wektory, ktore mozna latwo odjac od stada i dodac do stada glownego
+wymiana_owca &lt;- function(b){
+  ##funkcja sprawdza, czy podane zwierze mozna wymienic na owce
+  ##i czy zwierzat w stadzie tego typu jest wystarczajaco duzo
+  ##jesli tak, to podaje jednoelemenowy wektor odpowiadajacy owcy
+  switch(b,
+         krolik={if(stado[1]&gt;=owca[1]){
+           wymiana &lt;- c('S')
+           za_wymiane &lt;- c(6,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=owca[6]){
+           wymiana &lt;- c('S')
+           cat(wymiana)
+           za_wymiane &lt;- c(0,0,0,0,0,1,0)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=owca[2]){
+           wymiana &lt;- c('S')
+           cat(wymiana)
+           za_wymiane &lt;- c(0,1,0,0,0,0,0)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         ##jesli nie, to wyrzuca komunikat
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+wymiana_maly_pies &lt;- function(b){
+  ##funkcja jest co do zasady taka sama jak dla wymiana_owca
+  switch(b,
+         krolik={if(stado[1]&gt;=maly_pies[1]){
+           wymiana &lt;- c('L')
+           za_wymiane &lt;- c(6,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=maly_pies[6]){
+           wymiana &lt;- c('L')
+           za_wymiane &lt;- c(0,0,0,0,0,1,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=maly_pies[2]){
+           wymiana &lt;- c('L')
+           za_wymiane &lt;- c(0,1,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+wymiana_swinia &lt;- function(b){
+  ##analogiczna do wymiana_owca
+  switch(b,
+         krolik={if(stado[1]&gt;=swinia[1]){
+           wymiana &lt;- c('P')
+           za_wymiane &lt;- c(12,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=swinia[6]){
+           wymiana &lt;- c('P')
+           za_wymiane &lt;- c(0,0,0,0,0,2,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=swinia[2]){
+           wymiana &lt;- c('P')
+           za_wymiane &lt;- c(0,2,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         swinia={if(stado[3]&gt;=swinia[3]){
+           wymiana &lt;- c('P')
+           za_wymiane &lt;- c(0,0,1,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+wymiana_krowa &lt;- function(b){
+  ##analogiczna do wymiana_owca i wymiana_swinia
+  switch(b,
+         krolik={if(stado[1]&gt;=krowa[1]){
+           wymiana &lt;- c('C')
+           za_wymiane &lt;- c(36,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=krowa[6]){
+           wymiana &lt;- c('C')
+           za_wymiane &lt;- c(0,0,0,0,0,6,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=krowa[2]){
+           wymiana &lt;- c('C')
+           za_wymiane &lt;- c(0,6,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         swinia={if(stado[3]&gt;=krowa[3]){
+           wymiana &lt;- c('C')
+           za_wymiane &lt;- c(0,0,3,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         krowa={if(stado[4]&gt;=krowa[4]){
+           wymiana &lt;- c('C')
+           za_wymiane(0,0,0,1,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         duzy_pies={if(stado[7]&gt;=krowa[7]){
+           wymiana &lt;- c('C')
+           za_wymiane &lt;- c(0,0,0,0,0,0,1)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+wymiana_duzy_pies &lt;- function(b){
+  ##funkcja co do zasady taka sama jak wymiana_krowa
+  switch(b,
+         krolik={if(stado[1]&gt;=duzy_pies[1]){
+           wymiana &lt;- c('B')
+           za_wymiane &lt;- c(36,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=duzy_pies[6]){
+           wymiana &lt;- c('B')
+           za_wymiane &lt;- c(0,0,0,0,0,6,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=duzy_pies[2]){
+           wymiana &lt;- c('B')
+           za_wymiane &lt;- c(0,6,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         swinia={if(stado[3]&gt;=duzy_pies[3]){
+           wymiana &lt;- c('B')
+           za_wymiane &lt;- c(0,0,3,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         krowa={if(stado[4]&gt;=duzy_pies[4]){
+           wymiana &lt;- c('B')
+           za_wymiane(0,0,0,1,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         duzy_pies={if(stado[7]&gt;=duzy_pies[7]){
+           wymiana &lt;- c('B')
+           za_wymiane &lt;- c(0,0,0,0,0,0,1)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+wymiana_kon &lt;- function(b){
+  ##analogiczna do wymiana_owca, wymiana_swinia i wymiana_krowa
+  switch(b,
+         krolik={if(stado[1]&gt;=kon[1]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(72,0,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         maly_pies={if(stado[6]&gt;=kon[6]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,0,0,0,0,12,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         owca={if(stado[2]&gt;=kon[2]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,12,0,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         swinia={if(stado[3]&gt;=kon[3]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,0,6,0,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         krowa={if(stado[4]&gt;=kon[4]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,0,0,2,0,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         kon={if(stado[5]&gt;=kon[5]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,0,0,0,1,0,0)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         duzy_pies={if(stado[7]&gt;=kon[7]){
+           wymiana &lt;- c('H')
+           za_wymiane &lt;- c(0,0,0,0,0,0,2)
+           cat(wymiana)
+           }else{cat(&quot;Za malo zwierzat na wymiane!&quot;)}},
+         cat(&quot;Nie istnieje mozliwosc wymiany!&quot;))
+}
+
+z_wymiany &lt;- function(zamien = FALSE){
+  ##Wylicza wektor zwierzat otrzymanych z wymiany
+  W &lt;- c(0,0,0,0,0,0,0)
+  if(zamien == TRUE){switch(wymiana,
+                            S={W &lt;- c(0,1,0,0,0,0,0)},
+                            P={W &lt;- c(0,0,1,0,0,0,0)},
+                            C={W &lt;- c(0,0,0,1,0,0,0)},
+                            H={W &lt;- c(0,0,0,0,1,0,0)},
+                            L={W &lt;- c(0,0,0,0,0,1,0)},
+                            B={W &lt;- c(0,0,0,0,0,0,1)})}
+  return(W)
+}
+
+wymien &lt;- function(z,na){
   ##funkcja dokonujaca wymiany
+  ##przyjmowane argumenty sa czytsko symboliczne, a ich wartosc nie ma znaczenia
+  ##wlasciwie wymiany dokonuje sie na funkcjach wymien_zwierze('odpowiednie_zwierze')
+  wykonaj_czynnosc(z_wymiany(),'+')
+  wykonaj_czynnosc(za_wymiane,'-')
+}</code></pre>
+<pre class="r"><code>##FUNKCJE RZUCANIA
+
+losuj_rzut_kostek &lt;- function(a=kostka_zielona,b=kostka_czerwona){
+  ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
+  wynik &lt;- c(sample(a, 1), sample(b, 1))
+  cat(wynik)
+  return(wynik)
+}
+
+zmiana_na_wektor &lt;- function(wynik){
+  ##Funkcja sprawdz wynik rzutu i zamienia go na wektor analogiczny do wektora stada
+  ##Najpierw wynik z pierwszej kosci
+  switch(wynik[1],
+         R={c1 &lt;- c(1,0,0,0,0,0,0)},
+         S={c1 &lt;- c(0,1,0,0,0,0,0)},
+         P={c1 &lt;- c(0,0,1,0,0,0,0)},
+         C={c1 &lt;- c(0,0,0,1,0,0,0)},
+         {c1 &lt;- c(0,0,0,0,0,0,0)}
+         )
+  ##Pozniej wynik z drugiej kosci
+  switch(wynik[2],
+         R={c2 &lt;- c(1,0,0,0,0,0,0)},
+         S={c2 &lt;- c(0,1,0,0,0,0,0)},
+         P={c2 &lt;- c(0,0,1,0,0,0,0)},
+         H={c2 &lt;- c(0,0,0,0,1,0,0)},
+         {c2 &lt;- c(0,0,0,0,0,0,0)}
+         )
+  ##ten wektor jest abstrakcyjny - jego wartosci ulatwiaja pozniejsze liczenie
+  z_rzutu &lt;- (c1+c2)
+  return(z_rzutu)
 }
 
 rzuc &lt;- function(){
+  otrzymane&lt;-c(0,0,0,0,0,0,0)
+  kostki&lt;-losuj_rzut_kostek()
+  ##co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
+  ##
+  if (all(stado==0)){
+    if (kostki[1]==kostki[2]){
+      otrzymane &lt;- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
+      }
+    ## jesli nie sa sobie rowne no to nic nie dostajemy i tak.
+  } else {
+  if ('W' %in% kostki){
+    if ('F' %in% kostki) {
+      atak_drapieznika(TRUE,TRUE)
+      ## atakuja nas zarowno wilk jak i lis
+      ## nie mamy co otrzymac
+    } else {
+      atak_drapieznika(wilk = TRUE)
+      ##atakuje nas tylko wilk
+      #######PRZELICZANIE n/2
+      wylosowane &lt;- zmiana_na_wektor(kostki)
+      otrzymane &lt;- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
+      otrzymane &lt;- licz_ile_otrzyma(otrzymane)
+      ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
+    }
+  } else {
+    if ('F' %in% kostki) {
+      atak_drapieznika(TRUE)
+      ##atakuje nas tylko lis
+    }
+      ###### PRZELICZANIE n/2
+      wylosowane &lt;- zmiana_na_wektor(kostki)
+      otrzymane &lt;- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
+      otrzymane &lt;- licz_ile_otrzyma(otrzymane)
+    ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
+    ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
+  } 
+  }
+  if (!all(otrzymane==0)){
+    wykonaj_czynnosc(otrzymane)
+  } else {
+  }
+  
   ##funkcja dokonujaca rzutu i reagujaca
 }
+
 
 atak_drapieznika &lt;- function(lis = FALSE, wilk = FALSE){
   if (wilk == TRUE ){
@@ -199,33 +500,8 @@ atak_drapieznika &lt;- function(lis = FALSE, wilk = FALSE){
   ## sprawdza czy mamy psa/psy
   ##odejmuje psa/psy
   ##robi wykonaj_czynnosc i reaguje odpowiednio
-}
-
-wykonaj_czynnosc &lt;- function(co, jak='+'){
-  if (jak=='+'){
-    stado &lt;&lt;- stado + co
-    stado_glowne &lt;&lt;- stado_glowne - co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  } else {
-    stado &lt;&lt;- stado - co
-    stado_glowne &lt;&lt;- stado_glowne + co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  }
-  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
-  ##symultanicznie robi operacje na banku i naszym stadzie
-  ## sprawdza czy bank+stado sie sumuje odpowiednio
-}
-
-zakoncz &lt;- function(x=stado){
-  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
-  if(x &gt;= c(1,1,1,1,1,0,0)){
-    cat(&quot;Wygrales! Koniec gry!&quot;)
-  }
-}
-##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
-##ale fajnie jak cos sie wyswietli na koniec</code></pre>
-<pre><code>## Funkcje statystyk gry</code></pre>
-<pre class="r"><code>##tu wpisujemy funkcje statystyk gry
+}</code></pre>
+<pre class="r"><code>##funkcje statystyk gry
 mierz_czas &lt;- function(){
   ##funkcja mierzaca czas gry
 }
@@ -237,55 +513,49 @@ generuj_rozklad &lt;- function(){
 narysuj_wykres &lt;- function(){
   ##funkcja rysujaca rozklad czasu gry
 }</code></pre>
-<pre class="r"><code>##tu wpisujemy testy
-####################
-
-##
-losuj_rzut_kostek()</code></pre>
-<pre><code>## [1] &quot;R&quot; &quot;R&quot;</code></pre>
-<pre class="r"><code>####################
-
-## test wykonywania czynnosci i drapieznikow
-cat(stado)</code></pre>
+<pre class="r"><code>##testy
+##################
+rzuc()</code></pre>
+<pre><code>## R P</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
 <pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
 <pre><code>## 60 24 20 12 6 4 2</code></pre>
-<pre class="r"><code>wykonaj_czynnosc(c(1,2,0,0,0,0,0),'+')
-cat(stado)</code></pre>
-<pre><code>## 1 2 0 0 0 0 0</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## C R</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 59 22 20 12 6 4 2</code></pre>
-<pre class="r"><code>atak_drapieznika(TRUE)
-cat(stado)</code></pre>
-<pre><code>## 0 2 0 0 0 0 0</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## R P</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 22 20 12 6 4 2</code></pre>
-<pre class="r"><code>wykonaj_czynnosc(c(5,3,1,0,0,2,0),'+')
-cat(stado)</code></pre>
-<pre><code>## 5 5 1 0 0 2 0</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## R P</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 0 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 55 19 19 12 6 2 2</code></pre>
-<pre class="r"><code>atak_drapieznika(TRUE)
-cat(stado)</code></pre>
-<pre><code>## 5 5 1 0 0 1 0</code></pre>
+<pre><code>## 60 24 20 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## P P</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 1 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 55 19 19 12 6 3 2</code></pre>
-<pre class="r"><code>wykonaj_czynnosc(c(2,3,5,2,1,0,1),'+')
-cat(stado)</code></pre>
-<pre><code>## 7 8 6 2 1 1 1</code></pre>
+<pre><code>## 60 24 19 12 6 4 2</code></pre>
+<pre class="r"><code>rzuc()</code></pre>
+<pre><code>## S R</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>cat(stado)</code></pre>
+<pre><code>## 0 0 1 0 0 0 0</code></pre>
 <pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 53 16 14 10 5 3 1</code></pre>
-<pre class="r"><code>atak_drapieznika(wilk = TRUE)
-cat(stado)</code></pre>
-<pre><code>## 7 8 6 2 1 1 0</code></pre>
-<pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 53 16 14 10 5 3 2</code></pre>
-<pre class="r"><code>##to nizej juz dziala!
-atak_drapieznika(TRUE,TRUE)
-cat(stado)</code></pre>
-<pre><code>## 0 0 0 0 1 0 0</code></pre>
-<pre class="r"><code>cat(stado_glowne)</code></pre>
-<pre><code>## 60 24 20 12 5 4 2</code></pre>
+<pre><code>## 60 24 19 12 6 4 2</code></pre>
 <pre class="r"><code>##################</code></pre>
 
 
