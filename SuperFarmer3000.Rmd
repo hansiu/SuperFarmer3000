@@ -219,7 +219,11 @@ zmiana_na_wektor <- function(w=wynik){
   z_rzutu <- (c1+c2)
 }
 
-licz_ile_otrzyma <- function(rzut = z_rzutu, zamiana = FALSE){
+licz_ile_otrzyma <- function(){
+  ##tudopierobedzie sprawdzanie z bankiem
+}
+
+zmienianie <- function(rzut = z_rzutu, zamiana = FALSE){
   ##funkcja obliczajaca ile dostaniemy
   ##opcja rzut i ewentualna opcja wymiany
   ##tworzy wektor z iloscia zwierzat na odpowiednich polach
