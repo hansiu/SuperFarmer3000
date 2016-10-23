@@ -295,7 +295,8 @@ rzuc <- function(){
   ##
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){
-      wykonaj_czynnosc((zmiana_na_wektor(kostki))/2)}
+      otrzymane <<- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
+      }
     ## jesli nie sa sobie rowne no to nic nie dostajemy i tak.
   } else {
   if ('W' %in% kostki){
@@ -331,18 +332,6 @@ rzuc <- function(){
   
   ##funkcja dokonujaca rzutu i reagujaca
 }
-
-####### to tu chwilowo zeby nie przeszkadzalo, a sie przyda
-{##W tym miejscu zachodzi liczenie, ile zwierzat wyszlo z rzutu
-  ##dodawanie stada i z_rzutu - trunc() to zaokraglanie w dol do calkowitego
-  rzut <- trunc((stado+z_rzutu)/2)
-  ##tutaj bedzie dodawanie ew. wymiany
-  powinno_byc <- (rzut+W)
-  ##ze sprawdzeniem banku
-  ##tego tez jeszcze nie wiem, ale sie dowiem xD (powinno byc cos na zasadzie:
-  ##tam, gdzie za malo podmien wartosc z jednego wektora na drugi)
-  }
-
 
 
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
