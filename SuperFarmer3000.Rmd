@@ -562,6 +562,7 @@ zagraj <- function(){
     if (!all(stado==0)){
       ##jesli stado jest niepuste - bo jak puste to nie ma z czego wymieniac
       ##tutaj wymiany i ich warunki
+      ######## najpierw sprawdzic czy starczy na konia i krolika!
       if (stado[1]>6){
         ##jesli jest wiecej niz 6 krolikow
         if ((stado[6]==0) & (stado[1]>=9)){
