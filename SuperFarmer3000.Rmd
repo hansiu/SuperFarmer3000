@@ -552,18 +552,25 @@ zagraj <- function(){
 ```
 
 ```{r}
-##funkcje statystyk gry
-mierz_czas <- function(){
+##FUNKCJE STATYSTYK GRY
+
+czas <- data.frame()
+mierz_czas <- system.time(przeprowadz_gre())
+##funkcja rbind() powinna dodawać do data frame nowa linijke na końcu
+##ale opcji jest duzo, wiec najwyzej sie zamieni, jakby cos nie dzialalo
+czas <- replicate(10000){rbind(czas, mierz_czas)}
   ##funkcja mierzaca czas gry
+
+czas_gry <- czas$user
+mediana_i_srednia <- function(x=czas_gry){
+  ##funkcja zwracajaca mediane i srednia z wartosci czasow gry
+  return(median(czas_gry))
+  return(mean(czas_gry))
 }
 
-generuj_rozklad <- function(){
-  ##funkcja powtarzajaca iles razy i zapisujaca na wektor wyniki
-}
-
-narysuj_wykres <- function(){
-  ##funkcja rysujaca rozklad czasu gry
-}
+install.packages(ggplot2)
+library(gglpot2)
+narysuj_wykres <- gplot(x,user,data=czas,color='green',geom='point',ylab="Czas gry",main='Czas trwania gry SuperFarmer')
 
 ```
 ```{r}
