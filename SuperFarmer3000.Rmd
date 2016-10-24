@@ -75,6 +75,7 @@ zakoncz <- function(x=stado){
   } else {
     #########
     suma = 0
+    ##6+12+36+72+1 = 127 krolikow (owca, swinia, krowa, kon, krolik)
     for (i in 1:7){
       switch(i,
              "1"={suma <- suma + stado[i]},
