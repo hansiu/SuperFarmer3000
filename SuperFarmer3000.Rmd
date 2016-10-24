@@ -4,7 +4,7 @@ author: "Hanna Kranas, Joanna Zbijewska"
 date: "21 października 2016"
 output: html_document
 ---
-  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -69,10 +69,28 @@ wykonaj_czynnosc <- function(co, jak='+'){
 
 zakoncz <- function(x=stado){
   ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
-  if(all(x >= c(1,1,1,1,1,0,0))){
+  if(all(stado >= c(1,1,1,1,1,0,0))){
     cat("Wygrales! Koniec gry!")
     return(TRUE)
   } else {
+    #########
+    suma = 0
+    for (i in 1:7){
+      switch(i,
+             "1"={suma <- suma + stado[i]},
+             "2"={suma <- suma + 6*stado[i]},
+             "3"={suma <- suma + 12*stado[i]},
+             "4"={suma <- suma + 36*stado[i]},
+             "5"={suma <- suma + 72*stado[i]},
+             "6"={suma <- suma + 6*stado[i]},
+             "7"={suma <- suma + 36*stado[i]})
+    }
+    if (suma >= 127){
+      cat("Wygrales! Koniec gry!")
+      stado <<- c(suma-126,1,1,1,1,0,0)
+      stado_glowne <<- (c(60,24,20,12,6,4,2) - stado)
+      return(TRUE)
+    }
     return(FALSE)
   }
 }
@@ -94,26 +112,26 @@ wymiana_owca <- function(b){
            wymiana <<- c('S')
            za_wymiane <<- c(6,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=owca[6]){
            wymiana <<- c('S')
            return(wymiana)
            za_wymiane <<- c(0,0,0,0,0,1,0)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=owca[2]){
            wymiana <<- c('S')
            return(wymiana)
            za_wymiane <<- c(0,1,0,0,0,0,0)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          ##jesli nie, to wyrzuca komunikat
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
@@ -127,26 +145,26 @@ wymiana_maly_pies <- function(b){
            wymiana <<- c('L')
            za_wymiane <<- c(6,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=maly_pies[6]){
            wymiana <<- c('L')
            za_wymiane <<- c(0,0,0,0,0,1,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=maly_pies[2]){
            wymiana <<- c('L')
            za_wymiane <<- c(0,1,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
          cat("Nie istnieje mozliwosc wymiany!")})
@@ -159,34 +177,34 @@ wymiana_swinia <- function(b){
            wymiana <<- c('P')
            za_wymiane <<- c(12,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=swinia[6]){
            wymiana <<- c('P')
            za_wymiane <<- c(0,0,0,0,0,2,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=swinia[2]){
            wymiana <<- c('P')
            za_wymiane <<- c(0,2,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          swinia={if(stado[3]>=swinia[3]){
            wymiana <<- c('P')
            za_wymiane <<- c(0,0,1,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
          cat("Nie istnieje mozliwosc wymiany!")})
@@ -199,50 +217,50 @@ wymiana_krowa <- function(b){
            wymiana <<- c('C')
            za_wymiane <<- c(36,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=krowa[6]){
            wymiana <<- c('C')
            za_wymiane <<- c(0,0,0,0,0,6,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=krowa[2]){
            wymiana <<- c('C')
            za_wymiane <<- c(0,6,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          swinia={if(stado[3]>=krowa[3]){
            wymiana <<- c('C')
            za_wymiane <<- c(0,0,3,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          krowa={if(stado[4]>=krowa[4]){
            wymiana <<- c('C')
            za_wymiane <<- c(0,0,0,1,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          duzy_pies={if(stado[7]>=krowa[7]){
            wymiana <<- c('C')
            za_wymiane <<- c(0,0,0,0,0,0,1)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
          cat("Nie istnieje mozliwosc wymiany!")})
@@ -255,50 +273,50 @@ wymiana_duzy_pies <<- function(b){
            wymiana <<- c('B')
            za_wymiane <<- c(36,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=duzy_pies[6]){
            wymiana <<- c('B')
            za_wymiane <<- c(0,0,0,0,0,6,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=duzy_pies[2]){
            wymiana <<- c('B')
            za_wymiane <<- c(0,6,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          swinia={if(stado[3]>=duzy_pies[3]){
            wymiana <<- c('B')
            za_wymiane <<- c(0,0,3,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          krowa={if(stado[4]>=duzy_pies[4]){
            wymiana <<- c('B')
            za_wymiane <<- c(0,0,0,1,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          duzy_pies={if(stado[7]>=duzy_pies[7]){
            wymiana <<- c('B')
            za_wymiane <<- c(0,0,0,0,0,0,1)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
          cat("Nie istnieje mozliwosc wymiany!")})
@@ -311,58 +329,58 @@ wymiana_kon <- function(b){
            wymiana <<- c('H')
            za_wymiane <<- c(72,0,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          maly_pies={if(stado[6]>=kon[6]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,0,0,0,0,12,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          owca={if(stado[2]>=kon[2]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,12,0,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          swinia={if(stado[3]>=kon[3]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,0,6,0,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          krowa={if(stado[4]>=kon[4]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,0,0,2,0,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          kon={if(stado[5]>=kon[5]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,0,0,0,1,0,0)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          duzy_pies={if(stado[7]>=kon[7]){
            wymiana <<- c('H')
            za_wymiane <<- c(0,0,0,0,0,0,2)
            return(wymiana)
-           }else{
-             wymiana <<- c('pusty')
-             za_wymiane <<- c(0,0,0,0,0,0,0)
-             cat("Za malo zwierzat na wymiane!")}},
+         }else{
+           wymiana <<- c('pusty')
+           za_wymiane <<- c(0,0,0,0,0,0,0)
+           cat("Za malo zwierzat na wymiane!")}},
          {wymiana <<- c('pusty')
          za_wymiane <<- c(0,0,0,0,0,0,0)
          cat("Nie istnieje mozliwosc wymiany!")})
@@ -409,7 +427,7 @@ zmiana_na_wektor <- function(wynik){
          P={c1 <- c(0,0,1,0,0,0,0)},
          C={c1 <- c(0,0,0,1,0,0,0)},
          {c1 <- c(0,0,0,0,0,0,0)}
-         )
+  )
   ##Pozniej wynik z drugiej kosci
   switch(wynik[2],
          R={c2 <- c(1,0,0,0,0,0,0)},
@@ -417,7 +435,7 @@ zmiana_na_wektor <- function(wynik){
          P={c2 <- c(0,0,1,0,0,0,0)},
          H={c2 <- c(0,0,0,0,1,0,0)},
          {c2 <- c(0,0,0,0,0,0,0)}
-         )
+  )
   ##ten wektor jest abstrakcyjny - jego wartosci ulatwiaja pozniejsze liczenie
   z_rzutu <- (c1+c2)
   return(z_rzutu)
@@ -431,35 +449,35 @@ rzuc <- function(){
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){
       otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
-      }
+    }
     ## jesli nie sa sobie rowne no to nic nie dostajemy i tak.
   } else {
-  if ('W' %in% kostki){
-    if ('F' %in% kostki) {
-      atak_drapieznika(TRUE,TRUE)
-      ## atakuja nas zarowno wilk jak i lis
-      ## nie mamy co otrzymac
+    if ('W' %in% kostki){
+      if ('F' %in% kostki) {
+        atak_drapieznika(TRUE,TRUE)
+        ## atakuja nas zarowno wilk jak i lis
+        ## nie mamy co otrzymac
+      } else {
+        atak_drapieznika(wilk = TRUE)
+        ##atakuje nas tylko wilk
+        #######PRZELICZANIE n/2
+        wylosowane <- zmiana_na_wektor(kostki)
+        otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
+        otrzymane <- licz_ile_otrzyma(otrzymane)
+        ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
+      }
     } else {
-      atak_drapieznika(wilk = TRUE)
-      ##atakuje nas tylko wilk
-      #######PRZELICZANIE n/2
-      wylosowane <- zmiana_na_wektor(kostki)
-      otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
-      otrzymane <- licz_ile_otrzyma(otrzymane)
-      ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np konia)
-    }
-  } else {
-    if ('F' %in% kostki) {
-      atak_drapieznika(TRUE)
-      ##atakuje nas tylko lis
-    }
+      if ('F' %in% kostki) {
+        atak_drapieznika(TRUE)
+        ##atakuje nas tylko lis
+      }
       ###### PRZELICZANIE n/2
       wylosowane <- zmiana_na_wektor(kostki)
       otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2))
       otrzymane <- licz_ile_otrzyma(otrzymane)
-    ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
-    ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
-  } 
+      ##liczy sie zarowno w przypadku lisa jak i kiedy brak drapieznikow
+      ##bo mozemy jeszcze wylosowac cos na drugiej co nam pasuje (np owce)
+    } 
   }
   if (!all(otrzymane==0)){
     wykonaj_czynnosc(otrzymane)
@@ -507,6 +525,19 @@ zagraj <- function(){
     if (!all(stado==0)){
       ##jesli stado jest niepuste - bo jak puste to nie ma z czego wymieniac
       ##tutaj wymiany i ich warunki
+      if (){
+        ##jesli jest wiecej niz 6 krolikow
+      } else {
+        if (){
+          ##jesli nie ma krolikow ale sa owce
+        } else {
+          if () {
+            ##jesli nie ma krolikow i owiec ale jest swinia
+          } else {
+            ##jesli nie ma kroliow, owiec, swin ale jest cos innego
+          }
+        }
+      }
     }
     if (zakoncz){
       break
