@@ -671,24 +671,26 @@ zagraj <- function(){
 
 ```{r}
 ##FUNKCJE STATYSTYK GRY
-
+library(microbenchmark)
 czas <- data.frame()
-mierz_czas <- system.time(zagraj())
+mierz_czas <- microbenchmark({zagraj()}, times=10000)
+library(ggplot2)
+boxplot(mierz_czas)
+autoplot(mierz_czas)
 ##funkcja rbind() powinna dodawać do data frame nowa linijke na końcu
 ##ale opcji jest duzo, wiec najwyzej sie zamieni, jakby cos nie dzialalo
-czas <- replicate(10000,{rbind(czas, mierz_czas)})
+#czas <- replicate(10000,{rbind(czas, mierz_czas[3])})
   ##funkcja mierzaca czas gry
 
-czas_gry <- czas$user
-mediana_i_srednia <- function(x=czas_gry){
+#czas_gry <- czas$user
+#mediana_i_srednia <- function(x=czas_gry){
   ##funkcja zwracajaca mediane i srednia z wartosci czasow gry
-  return(median(czas_gry))
-  return(mean(czas_gry))
-}
+#  return(median(czas_gry))
+#  return(mean(czas_gry))
+#}
 
-install.packages('ggplot2')
-library(ggplot2)
-narysuj_wykres <- gplot(x,user,data=czas,color='green',geom='point',ylab="Czas gry",main='Czas trwania gry SuperFarmer')
+#library(ggplot2)
+#narysuj_wykres <- ggplot(x,user,data=czas,color='green',geom='point',ylab="Czas gry",main='Czas trwania gry SuperFarmer')
 
 ```
 ```{r}
