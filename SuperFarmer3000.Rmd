@@ -126,6 +126,7 @@ czy_starczy_na_konia <- function(){
         suma <- suma - 6
         ##to i tak nie powinno sie zdarzyc bo 60+72 to juz wygrana
       }
+      wykonaj_czynnosc(c((suma-72),0,0,0,1,0,0))
     }
   } 
   ## jesli nie starczy to nie robimy nic
