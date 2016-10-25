@@ -101,6 +101,30 @@ zakoncz <- function(x=stado){
 ```{r}
 ##FUNKCJE WYMIANY
 
+owce_na_kroliki <- function(z_owiec=FALSE){
+  if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
+    wymiana <<- c('R')
+    za_wymiane <<- c(0,1,0,0,0,0,0)
+    return(wymiana)
+  }else {
+    wymiana <<- c('pusty')
+    za_wymiane <<- c(0,0,0,0,0,0,0)
+    cat('Nie mozna wymienic')
+  }}
+}
+
+swinie_na_owce <- function(ze_swin=FALSE){
+  if(ze_swin==TRUE){if(stado[3]>=1 & stado_glowne[2]>=2){
+    wymiana <<- c('SS')
+    za_wymiane <<- c(0,0,1,0,0,0,0)
+    return(wymiana)
+  }else{
+    wymiana <<- c('pusty')
+    za_wymiane <<- c(0,0,0,0,0,0,0)
+    cat('Nie mozna wymienic')
+  }}
+}
+
 ##Funkcje "wymiana_cos" maja na celu sprawdzic mozliwosc wymiany
 ##i zwrocic wartosc mozliwa do wykorzystania dalej
 ##wyluczaja tez wektory, ktore mozna latwo odjac od stada i dodac do stada glownego
@@ -427,7 +451,9 @@ z_wymiany <- function(zamien = FALSE){
   ##Wylicza wektor zwierzat otrzymanych z wymiany
   W <- c(0,0,0,0,0,0,0)
   if(zamien == TRUE){switch(wymiana,
+                            R={W <- c(6,0,0,0,0,0,0)},
                             S={W <- c(0,1,0,0,0,0,0)},
+                            SS={W <- c(0,2,0,0,0,0,0)},
                             P={W <- c(0,0,1,0,0,0,0)},
                             C={W <- c(0,0,0,1,0,0,0)},
                             H={W <- c(0,0,0,0,1,0,0)},
@@ -602,7 +628,7 @@ czas <- data.frame()
 mierz_czas <- system.time(przeprowadz_gre())
 ##funkcja rbind() powinna dodawać do data frame nowa linijke na końcu
 ##ale opcji jest duzo, wiec najwyzej sie zamieni, jakby cos nie dzialalo
-czas <- replicate(10000){rbind(czas, mierz_czas)}
+czas <- replicate(10000,{rbind(czas, mierz_czas)})
   ##funkcja mierzaca czas gry
 
 czas_gry <- czas$user
@@ -657,6 +683,34 @@ cat(stado)
 cat(stado_glowne)
 wymiana_duzy_pies('swinia')
 wymien('swinia','duzy_pies')
+cat(stado)
+cat(stado_glowne)
+stado <- c(5,2,3,0,0,0,0)
+stado_glowne <- c(55,22,17,12,6,4,2)
+owce_na_kroliki(TRUE)
+wymien('krolik','owca')
+cat(stado)
+cat(stado_glowne)
+swinie_na_owce(TRUE)
+wymien('owca','swinia')
+cat(stado)
+cat(stado_glowne)
+owce_na_kroliki(TRUE)
+wymien('krolik','owca')
+cat(stado)
+cat(stado_glowne)
+owce_na_kroliki(TRUE)
+wymien('krolik','owca')
+cat(stado)
+cat(stado_glowne)
+stado <- c(57,1,0,0,0,0,0)
+stado_glowne <- c(3,23,20,12,6,4,2)
+owce_na_kroliki(TRUE)
+wymien('krolik','owca')
+cat(stado)
+cat(stado_glowne)
+swinie_na_owce(TRUE)
+wymien('owca','swinia')
 cat(stado)
 cat(stado_glowne)
 ```
