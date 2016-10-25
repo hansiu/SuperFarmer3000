@@ -100,6 +100,37 @@ zakoncz <- function(x=stado){
 ```
 ```{r}
 ##FUNKCJE WYMIANY
+czy_starczy_na_konia <- function(){
+  suma = 0
+  for (i in 1:7){
+      switch(i,
+             "1"={suma <- suma + stado[i]},
+             "2"={suma <- suma + 6*stado[i]},
+             "3"={suma <- suma + 12*stado[i]},
+             "4"={suma <- suma + 36*stado[i]},
+             "6"={suma <- suma + 6*stado[i]},
+             "7"={suma <- suma + 36*stado[i]},
+             suma <- suma)
+    }
+    if (suma >= 73){
+      cat("Starczy na konia i krolika! Wymieniasz")
+      ##trzeba dodac petle zeby wymieniac az to niemozliwe
+      wykonaj_czynnosc(c(stado[1:4],0,stado[6:7]),'-')
+      ##usuwam wszystko ze stada, zeby wymienic na konia i krolika/i
+      if ((suma-72)<=60){
+        wykonaj_czynnosc(c((suma-72),0,0,0,1,0,0))
+        #bierzemy konia, a reszte w krolikach
+      } else {
+        while((suma-72)>60){
+          wykonaj_czynnosc(c(0,1,0,0,0,0,0))
+          suma <- suma - 6
+          ##to i tak nie powinno sie zdarzyc bo 60+72 to juz wygrana
+        }
+      }
+    } 
+  ## jesli nie starczy to nie robimy nic
+  }
+
 
 owce_na_kroliki <- function(z_owiec=FALSE){
   if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
@@ -509,6 +540,7 @@ rzuc <- function(){
   kostki<-losuj_rzut_kostek()
   ##co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
   ##
+  cat(" , ")
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){
       otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
@@ -583,38 +615,54 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
 ## glowna funkcja przeprowadzajaca gre
 
 zagraj <- function(){
+  stado_glowne <<- c(60,24,20,12,6,4,2)
+  stado <<- c(0,0,0,0,0,0,0)
   repeat{
     ##repeat bo musimy w dwoch miejscach sprawdzac czy nie zebralismy
     if (!all(stado==0)){
       ##jesli stado jest niepuste - bo jak puste to nie ma z czego wymieniac
       ##tutaj wymiany i ich warunki
-      ######## najpierw sprawdzic czy starczy na konia i krolika!
+      ##najpierw sprawdzamy czy starczy na konia i krolika
+      czy_starczy_na_konia()
       if (stado[1]>6){
-        ##jesli jest wiecej niz 6 krolikow
+        ##jesli jest wiecej niz 6 krolikow i nie mamy malego psa
         if ((stado[6]==0) & (stado[1]>=9)){
           wymiana_maly_pies('krolik')
           wymien('krolik','maly_pies')
         }
         if (stado[2]>0){
+          #jesli juz mamy owce
           wymiana_owca('krolik')
           wymien('krolik','owca')
         }
       } else {
-        ##mniej niz 6 krolikow
+        ##nie mamy krolikow, ale wiecej niz 3 owce i brak malego psa
         if ((stado[1]>3)&(stado[1]==0)&(stado[6]==0)){
           wymiana_maly_pies('owca')
           wymien('owca','maly_pies')
+          owce_na_kroliki(TRUE)
+          wymien('owca','krolik')
           #wymianakroliki
         }
-
+        if ((stado[3]>0)&(stado[6])){
+          #jesli mamy swinie ale nie malego psa
+          swinie_na_owce(TRUE)
+          wymien('swinia','owca')
+          wymiana_maly_pies('owca')
+          wymien('owca','maly_pies')
+          ##czy tu jeszcze na kroliki? a moze zamienic kolejnoscia warunku sie da
+        }
+  #trzeba jeszczee dodac warunek ze jak krolikow 60 to wymienic na owce oprocz dziesieciu
       }
     }
-    if (zakoncz){
+    ##eeee tego chyba nie ma co sprawdzac? tylko po rzutach. przy wymianie nie zmienia nam sie ilosc, no chyba ze czegos zabraknie
+    if (zakoncz()==TRUE){
       break
     }
     ##rzucamy zawsze, no chyba ze uzbieralismy
     rzuc()
-    if (zakoncz){
+    cat(stado)
+    if (zakoncz()==TRUE){
       break
     }
   }
