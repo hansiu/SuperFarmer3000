@@ -41,13 +41,6 @@ licz_ile_otrzyma <- function(sie_nalezy){
   ##funkcja zwraca wektor, wiec nalezy robic otrzymane <- licz_ile_otrzyma(otrzymane)
 }
 
-
-zdecyduj <- function(){
-  ##funkcja decydujaca czy wymienic i rzucic czy tylko rzucic 
-}
-
-
-
 wykonaj_czynnosc <- function(co, jak='+'){
   if (jak=='+'){
     stado <<- stado + co
@@ -95,11 +88,11 @@ zakoncz <- function(x=stado){
     return(FALSE)
   }
 }
-##warunek zawarty w tej funkcji musi jeszcze zapewne zamykac petle gry z break()
-##ale fajnie jak cos sie wyswietli na koniec
+
 ```
 ```{r}
 ##FUNKCJE WYMIANY
+
 czy_starczy_na_konia <- function(){
   suma = 0
   for (i in 1:7){
@@ -134,11 +127,12 @@ czy_starczy_na_konia <- function(){
 
 
 owce_na_kroliki <- function(z_owiec=FALSE){
+  ##funkcja umozliwia wymiane z owiec na kroliki
   if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
     wymiana <<- c('R')
     za_wymiane <<- c(0,1,0,0,0,0,0)
     return(wymiana)
-  }else {
+  }else{
     wymiana <<- c('pusty')
     za_wymiane <<- c(0,0,0,0,0,0,0)
     #cat('Nie mozna wymienic')
@@ -146,6 +140,7 @@ owce_na_kroliki <- function(z_owiec=FALSE){
 }
 
 swinie_na_owce <- function(ze_swin=FALSE){
+  ##funckja umozliwia wymiane ze swin na owce
   if(ze_swin==TRUE){if(stado[3]>=1 & stado_glowne[2]>=2){
     wymiana <<- c('SS')
     za_wymiane <<- c(0,0,1,0,0,0,0)
@@ -159,7 +154,8 @@ swinie_na_owce <- function(ze_swin=FALSE){
 
 ##Funkcje "wymiana_cos" maja na celu sprawdzic mozliwosc wymiany
 ##i zwrocic wartosc mozliwa do wykorzystania dalej
-##wyluczaja tez wektory, ktore mozna latwo odjac od stada i dodac do stada glownego
+##wyliczaja tez wektory, ktore mozna latwo odjac od stada i dodac do stada glownego
+##sluza do wymian ze zwierzat mniejszych na wieksze (o wiekszej wartosci)
 wymiana_owca <- function(b){
   ##funkcja sprawdza, czy podane zwierze mozna wymienic na owce
   ##i czy zwierzat w stadzie tego typu jest wystarczajaco duzo
@@ -515,7 +511,7 @@ wymiana_kon <- function(b){
 }
 
 z_wymiany <- function(zamien = FALSE){
-  ##Wylicza wektor zwierzat otrzymanych z wymiany
+  ##Wylicza wektor zwierzat otrzymanych z wymiany dla roznych przypadkow
   W <- c(0,0,0,0,0,0,0)
   if(zamien == TRUE){switch(wymiana,
                             R={W <- c(6,0,0,0,0,0,0)},
@@ -543,8 +539,7 @@ wymien <- function(z,na){
 
 losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   ##funkcja rzucajaca kostkami i tworzaca wynik rzutu (wektor 2 pola)
-  wynik <- c(sample(a, 1), sample(b, 1))
-  #  #cat(wynik)
+  wynik <<- c(sample(a, 1), sample(b, 1))
   return(wynik)
 }
 
@@ -575,8 +570,6 @@ rzuc <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##co jesli stado puste - wtedy nie trzeba sprawdzac wilkow tylko od razu mozna tu sprawdzac czy kostki sa sobie rowne
-  ##
-  #  #cat(" , ")
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){
       otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
@@ -614,7 +607,6 @@ rzuc <- function(){
     wykonaj_czynnosc(otrzymane)
   } else {
   }
-  
   ##funkcja dokonujaca rzutu i reagujaca
 }
 
@@ -648,7 +640,7 @@ atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
 ```
 
 ```{r}
-## glowna funkcja przeprowadzajaca gre
+##FUNKCJA GLOWNA - przeprowadzenie gry
 
 zagraj <- function(){
   stado_glowne <<- c(60,24,20,12,6,4,2)
@@ -697,7 +689,7 @@ zagraj <- function(){
     }
     ##rzucamy zawsze, no chyba ze uzbieralismy
     rzuc()
-    #    #cat(stado)
+    ##cat(stado)
     if (zakoncz()==TRUE){
       break
     }
@@ -710,23 +702,10 @@ zagraj <- function(){
 library(microbenchmark)
 mierz_czas <- microbenchmark({zagraj()}, times=10000)
 library(ggplot2)
-boxplot(mierz_czas)
-autoplot(mierz_czas)
+boxplot(mierz_czas, ,xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
+autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
+qplot(y=time,data=mierz_czas,color='red',xlab="zagraj()", ylab="Czas gry",main='Czas trwania gry SuperFarmer') + scale_y_log10()
 print(mierz_czas)
-##funkcja rbind() powinna dodawać do data frame nowa linijke na końcu
-##ale opcji jest duzo, wiec najwyzej sie zamieni, jakby cos nie dzialalo
-#czas <- data.frame()
-#czas <- replicate(10000,{rbind(czas, mierz_czas[3])})
-##funkcja mierzaca czas gry
-#czas_gry <- czas$user
-#mediana_i_srednia <- function(x=czas_gry){
-##funkcja zwracajaca mediane i srednia z wartosci czasow gry
-#  return(median(czas_gry))
-#  return(mean(czas_gry))
-#}
-
-#library(ggplot2)
-#narysuj_wykres <- ggplot(x,user,data=czas,color='green',geom='point',ylab="Czas gry",main='Czas trwania gry SuperFarmer')
 
 ```
 ```{r}
