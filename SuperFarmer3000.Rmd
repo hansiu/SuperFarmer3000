@@ -1,35 +1,49 @@
 ---
 title: "SuperFarmer3000"
-author: "Hanna Kranas, Joanna Zbijewska"
-date: "21 pa≈∫dziernika 2016"
+author: "[Hanna Kranas](https://github.com/hansiu), [Joanna Zbijewska](https://github.com/joannazbijewska)"
+date: "21 paüdziernika 2016"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-```{r}
-##Zdefiniowanie niezbednych wartosci:
-## R,S,P,C,H,L,B, gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE,message =FALSE)
+```
+```{r load_packages, include=FALSE}
+library(microbenchmark)
+library(ggplot2)
+```
+#**Definicje niezbÍdnych wartoúci**#  
+Stada
+```{r stada, results="hide"}
 stado_glowne <<- c(60,24,20,12,6,4,2)
 stado <<- c(0,0,0,0,0,0,0)
+## R,S,P,C,H,L,B
+## gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
+```
+Kostki
+```{r kostki, results="hide"}
 kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 ##gdzie: W - wilk, F - lis; reszta jak wyzej
-
+```
+Wektory wymian
+```{r wektory_wymian, results="hide"}
 ##Wektory wymian o takiej samej strukturze jak stado i stado_glowne
-##Mowia o tym, ile innych zwierza trzeba aby wymienic na dane zwierze
 kon <- c(72,12,6,2,1,12,2)
 krowa <- c(36,6,3,1,0,6,1)
 swinia <- c(12,2,1,0,0,2,0)
 owca <- c(6,1,0,0,0,1,0)
 maly_pies <- c(6,1,0,0,0,1,0)
 duzy_pies <- c(36,6,3,1,0,6,1)
+##ile innych zwierzat trzeba aby wymienic na dane zwierze
 
 ```
-```{r}
-##FUNKCJE POMOCNICZE
+#**Funkcje pomocnicze**#  
+Funkcja liczπca ile otrzymamy ze stada g≥Ûwnego, z tego co nam siÍ naleøy
+```{r licz, result="hide"}
 licz_ile_otrzyma <- function(sie_nalezy){
   if (all(sie_nalezy <= stado_glowne)){
     return(sie_nalezy)
@@ -37,38 +51,30 @@ licz_ile_otrzyma <- function(sie_nalezy){
     sie_nalezy <- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
     return(sie_nalezy)
   }
-  ##sprawdzanie z bankiem; bierzemy max tyle ile jest w banku.
-  ##funkcja zwraca wektor, wiec nalezy robic otrzymane <- licz_ile_otrzyma(otrzymane)
 }
-
+```
+Funkcja wykonujπca czynnoúÊ przekazywania zwierzπt miÍdzy stadem a stadem g≥Ûwnym
+```{r wykonaj, result="hide"}
 wykonaj_czynnosc <- function(co, jak='+'){
-  if (jak=='+'){
+  if (jak=='+'){ ## dodajemy do stada
     stado <<- stado + co
     stado_glowne <<- stado_glowne - co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
-  } else {
+  } else { ## odejmujemy ze stada
     stado <<- stado - co
     stado_glowne <<- stado_glowne + co
-    ## tu by sie przydalo sprawdzic czy sie wszystko zgadza
   }
   if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
-    #cat('!!!! BLAD - STADA SIE NIE SUMUJA !!!!')
-    break
+    break ##przerywamy gre - stada sie nie sumuja
   }
-  ##wez z banku/oddaj do banku/wymien; bierze to co w licz_ile_otrzyma zwrocona
-  ##symultanicznie robi operacje na banku i naszym stadzie
-  ## sprawdza czy bank+stado sie sumuje odpowiednio
 }
-
+```
+Funkcja sprawdzajπca czy staÊ nas na wygranπ i zakoÒczajπca grÍ
+```{r zakoncz, result="hide"}
 zakoncz <- function(x=stado){
-  ##funkcja konczaca gre, gdy otrzymane beda zadane wartosci stada
   if(all(stado >= c(1,1,1,1,1,0,0))){
-    #cat("Wygrales! Koniec gry!")
-    return(TRUE)
-  } else {
-    #########
+    return(TRUE) ## jesli mamy wiecej lub rowno zwierzat, to wygralismy
+  } else { 
     suma = 0
-    ##6+12+36+72+1 = 127 krolikow (owca, swinia, krowa, kon, krolik)
     for (i in 1:7){
       switch(i,
              "1"={suma <- suma + stado[i]},
@@ -79,19 +85,18 @@ zakoncz <- function(x=stado){
              "6"={suma <- suma + 6*stado[i]},
              "7"={suma <- suma + 36*stado[i]})
     }
-    if (suma >= 127){
-      #cat("Wygrales! Koniec gry!")
+    if (suma >= 127){ ##6+12+36+72+1 = 127 krolikow
       stado <<- c(suma-126,1,1,1,1,0,0)
       stado_glowne <<- (c(60,24,20,12,6,4,2) - stado)
-      return(TRUE)
+      return(TRUE) ## stac nas na wygrana, wiec tez wygralismy
     }
-    return(FALSE)
+    return(FALSE) ## jeszcze za malo
   }
 }
 
 ```
+#**Funkcje wymiany**#  
 ```{r}
-##FUNKCJE WYMIANY
 
 czy_starczy_na_konia <- function(){
   suma = 0
@@ -697,11 +702,9 @@ zagraj <- function(){
 }
 ```
 
-```{r}
+```{r cache=TRUE}
 ##FUNKCJE STATYSTYK GRY
-library(microbenchmark)
 mierz_czas <- microbenchmark({zagraj()}, times=10000)
-library(ggplot2)
 boxplot(mierz_czas, ,xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
 autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
 qplot(y=time,data=mierz_czas,color='red',xlab="zagraj()", ylab="Czas gry",main='Czas trwania gry SuperFarmer') + scale_y_log10()
