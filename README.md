@@ -1,2 +1,2 @@
 # SuperFarmer3000
-nasz super projekt faza środkowa
+nasz super projekt faza końcowa
