@@ -17,7 +17,7 @@ library(ggplot2)
 ```
 #**Definicje niezbêdnych wartoœci**#  
 Stada
-```{r stada, results="hide", eval=FALSE}
+```{r stada, results="hide"}
 stado_glowne <<- c(60,24,20,12,6,4,2)
 stado <<- c(0,0,0,0,0,0,0)
 ## R,S,P,C,H,L,B
@@ -43,7 +43,7 @@ duzy_pies <- c(36,6,3,1,0,6,1)
 ```
 #**Funkcje pomocnicze**#  
 Funkcja licz¹ca ile otrzymamy ze stada g³ównego, z tego co nam siê nale¿y
-```{r licz, result="hide"}
+```{r licz)}
 licz_ile_otrzyma <- function(sie_nalezy){
   if (all(sie_nalezy <= stado_glowne)){
     return(sie_nalezy)
@@ -52,9 +52,12 @@ licz_ile_otrzyma <- function(sie_nalezy){
     return(sie_nalezy)
   }
 }
+sie_nalezy <- c(1,25,0,0,0,5,0)
+licz_ile_otrzyma(sie_nalezy)
+
 ```
 Funkcja wykonuj¹ca czynnoœæ przekazywania zwierz¹t miêdzy stadem a stadem g³ównym
-```{r wykonaj, result="hide"}
+```{r wykonaj}
 wykonaj_czynnosc <- function(co, jak='+'){
   if (jak=='+'){ ## dodajemy do stada
     stado <<- stado + co
@@ -67,6 +70,11 @@ wykonaj_czynnosc <- function(co, jak='+'){
     break ##przerywamy gre - stada sie nie sumuja
   }
 }
+co <- licz_ile_otrzyma(sie_nalezy)
+wykonaj_czynnosc(co,'+')
+stado
+stado_glowne
+
 ```
 Funkcja sprawdzaj¹ca czy staæ nas na wygran¹ i zakoñczaj¹ca grê
 ```{r zakoncz, result="hide"}
@@ -93,11 +101,13 @@ zakoncz <- function(x=stado){
     return(FALSE) ## jeszcze za malo
   }
 }
-
+zakoncz()
+stado
+stado_glowne
 ```
 #**Funkcje wymiany**#  
 Funkcja sprawdzaj¹ca czy jest ju¿ mo¿liwe wziêcie konia i królika
-```{r kon_starczanie, results="hide"}
+```{r kon_starczanie}
 ##podobna do zakoncz
 wez_konia <- function(){
   suma = 0
@@ -128,36 +138,13 @@ wez_konia <- function(){
   } 
   ## jesli nie starczy to nie robimy nic
 }
-```
-Sprawdzanie mo¿liwoœci rozdrobnienia owcy na króliki
-```{r owce_kroliki, results="hide"}
-owce_na_kroliki <- function(z_owiec=FALSE){
-  if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
-    wymiana <<- c('R')
-    za_wymiane <<- c(0,1,0,0,0,0,0)
-    return(wymiana)
-  }else{
-    wymiana <<- c('pusty')
-    za_wymiane <<- c(0,0,0,0,0,0,0)
-  }}
-}
-```
-Sprawdzanie mo¿liwoœci rozdrobnienia œwini na owce
-```{r swinie_owce, results="hide"}
-swinie_na_owce <- function(ze_swin=FALSE){
-  if(ze_swin==TRUE){if(stado[3]>=1 & stado_glowne[2]>=2){
-    wymiana <<- c('SS')
-    za_wymiane <<- c(0,0,1,0,0,0,0)
-    return(wymiana)
-  }else{
-    wymiana <<- c('pusty')
-    za_wymiane <<- c(0,0,0,0,0,0,0)
-  }}
-}
+wez_konia()
+stado
+stado_glowne
 ```
 **Sprawdzanie mo¿liwoœci wymiany zwierz¹t na te o wiêkszej wartoœci: **  
 1. Wymiana na owcê
-```{r owca, results="hide"}
+```{r owca}
 wymiana_owca <- function(b){
   if (stado_glowne[2]==0){ ##sprawdzenie czy jest zwierzê w stadzie g³ównym
     wymiana <<- c('pusty')
@@ -193,6 +180,8 @@ wymiana_owca <- function(b){
            })
   }
 }
+wymiana_owca('maly_pies')
+za_wymiane
 ```
 ```{r maly_pies, results="hide", echo=FALSE}
 wymiana_maly_pies <- function(b){
@@ -232,7 +221,7 @@ wymiana_maly_pies <- function(b){
 }
 ```
 2. Wymiana na œwiniê
-```{r swinia, results="hide"}
+```{r swinia}
 wymiana_swinia <- function(b){
   ##analogiczna do wymiana_owca
   if (stado_glowne[3]==0){
@@ -277,6 +266,8 @@ wymiana_swinia <- function(b){
            })
   }
 }
+wymiana_swinia('krolik')
+za_wymiane
 ```
 ```{r krowa, results="hide", echo=FALSE}
 wymiana_krowa <- function(b){
@@ -403,6 +394,8 @@ wymiana_duzy_pies <<- function(b){
 }
 ```
 ...  
+...  
+...  
 6. Wymiana na konia
 ```{r kon, results="hide"}
 wymiana_kon <- function(b){
@@ -474,7 +467,37 @@ wymiana_kon <- function(b){
   }
 }
 ```
-Dokonanie wymiany
+#**Sprawdzanie mo¿liwoœci wymiany na zwierzêta o mniejszej wartoœci**#  
+1.Rozdrobnienie owcy na króliki
+```{r owce_kroliki}
+owce_na_kroliki <- function(z_owiec=FALSE){
+  if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
+    wymiana <<- c('R')
+    za_wymiane <<- c(0,1,0,0,0,0,0)
+    return(wymiana)
+  }else{
+    wymiana <<- c('pusty')
+    za_wymiane <<- c(0,0,0,0,0,0,0)
+  }}
+}
+```
+```{r eval=FALSE}
+owce_na_kroliki(TRUE)
+```
+2. Rozdrobnienie œwini na owce
+```{r swinie_owce}
+swinie_na_owce <- function(ze_swin=FALSE){
+  if(ze_swin==TRUE){if(stado[3]>=1 & stado_glowne[2]>=2){
+    wymiana <<- c('SS')
+    za_wymiane <<- c(0,0,1,0,0,0,0)
+    return(wymiana)
+  }else{
+    wymiana <<- c('pusty')
+    za_wymiane <<- c(0,0,0,0,0,0,0)
+  }}
+}
+```
+#**Dokonanie wymiany**#
 ```{r wymiana}
 ##Wyliczanie zwierzat otrzymanych z wymiany
 z_wymiany <- function(zamien = FALSE){
@@ -491,22 +514,26 @@ z_wymiany <- function(zamien = FALSE){
                             {W <- c(0,0,0,0,0,0,0)})}
   return(W)
 }
-
+z_wymiany(TRUE)
 ##Wykonanie operacji wymiany na stadach
 wymien <- function(z,na){
   wykonaj_czynnosc(z_wymiany(TRUE),'+')
   wykonaj_czynnosc(za_wymiane,'-') ## za_wymiane powstaje przy funkcjach wymiana_cos
 }
+wymien('krolik','swinia')
+stado
+stado_glowne
 ```
 #**Funkcje rzutów**#  
 Rzut kostkami
-```{r losowanie, results="hide"}
+```{r losowanie}
 ##losowanie rzutu
 losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
   wynik <<- c(sample(a, 1), sample(b, 1))
   return(wynik)
 }
-
+k <- losuj_rzut_kostek()
+cat(k)
 ##zamiana wyniku rzutu na wektor analogiczny do wektorów stad
 zmiana_na_wektor <- function(wynik){
   switch(wynik[1], ##Najpierw wynik z pierwszej kosci
@@ -526,9 +553,33 @@ zmiana_na_wektor <- function(wynik){
   z_rzutu <- (c1+c2)
   return(z_rzutu)
 }
+zmiana_na_wektor(k)
+```
+Przeprowadzenie ataków drapie¿ników
+```{r drapiezniki}
+atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
+  if (wilk == TRUE ){ ##wilk!
+    if (stado[7]>0){ ## sprawdzenie posiadania du¿ego psa
+      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-') ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1:4],0,0,0),'-') ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
+  }
+  if (lis == TRUE ){ ##lis!
+    if (stado[6]>0){ ## sprawdzenie posiadania mia³ego psa
+      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-') ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+    } else {
+      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-') ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+    }
+  }
+}
+stado
+atak_drapieznika(TRUE)
+stado
+stado_glowne
 ```
 Dokonywanie rzutu i akcji z nim zwi¹zanych
-```{r rzucanie, results="hide"}
+```{r rzucanie, results="hide", eval=FALSE}
 rzuc <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
@@ -563,25 +614,81 @@ rzuc <- function(){
   }
 }
 ```
-Przeprowadzenie ataków drapie¿ników
-```{r drapiezniki, results="hide"}
-atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
-  if (wilk == TRUE ){ ##wilk!
-    if (stado[7]>0){ ## sprawdzenie posiadania du¿ego psa
-      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-') ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
-    } else {
-      wykonaj_czynnosc(c(stado[1:4],0,0,0),'-') ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+```{r rzucaniefalse, echo=FALSE}
+rzuc <- function(){
+  otrzymane<-c(0,0,0,0,0,0,0)
+  kostki<-c('R','R')
+  ##jeœli stado puste nie trzeba sprawdzaæ drapie¿nikow
+  if (all(stado==0)){
+    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki s¹ sobie równe
+      otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
     }
+    ## jeœli nie s¹ sobie rowne to nic nie dostajemy
+  } else {
+    if ('W' %in% kostki){
+      if ('F' %in% kostki) {
+        atak_drapieznika(TRUE,TRUE) ##atak wilka z lisem!
+      } else {
+        atak_drapieznika(wilk = TRUE) ##atak wilka
+        wylosowane <- zmiana_na_wektor(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
+        otrzymane <- licz_ile_otrzyma(otrzymane)
+      }
+    } else {
+      if ('F' %in% kostki) { ## atak lisa
+        atak_drapieznika(TRUE)
+      }
+      wylosowane <- zmiana_na_wektor(kostki)
+      otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
+      otrzymane <- licz_ile_otrzyma(otrzymane)
+    } 
   }
-  if (lis == TRUE ){ ##lis!
-    if (stado[6]>0){ ## sprawdzenie posiadania mia³ego psa
-      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-') ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
-    } else {
-      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-') ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
-    }
+  if (!all(otrzymane==0)){
+    wykonaj_czynnosc(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
+  } else {
   }
 }
-
+```
+```{r}
+rzuc()
+##('R','R') -> kostki
+stado
+stado_glowne
+```
+```{r rzucanietrue, results="hide", echo=FALSE}
+rzuc <- function(){
+  otrzymane<-c(0,0,0,0,0,0,0)
+  kostki<-losuj_rzut_kostek()
+  ##jeœli stado puste nie trzeba sprawdzaæ drapie¿nikow
+  if (all(stado==0)){
+    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki s¹ sobie równe
+      otrzymane <- licz_ile_otrzyma((zmiana_na_wektor(kostki))/2)
+    }
+    ## jeœli nie s¹ sobie rowne to nic nie dostajemy
+  } else {
+    if ('W' %in% kostki){
+      if ('F' %in% kostki) {
+        atak_drapieznika(TRUE,TRUE) ##atak wilka z lisem!
+      } else {
+        atak_drapieznika(wilk = TRUE) ##atak wilka
+        wylosowane <- zmiana_na_wektor(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
+        otrzymane <- licz_ile_otrzyma(otrzymane)
+      }
+    } else {
+      if ('F' %in% kostki) { ## atak lisa
+        atak_drapieznika(TRUE)
+      }
+      wylosowane <- zmiana_na_wektor(kostki)
+      otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
+      otrzymane <- licz_ile_otrzyma(otrzymane)
+    } 
+  }
+  if (!all(otrzymane==0)){
+    wykonaj_czynnosc(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
+  } else {
+  }
+}
 ```
 #**Przeprowadzenie ca³ej gry**#  
 **i strategia**
