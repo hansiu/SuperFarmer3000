@@ -1,0 +1,124 @@
+---
+title: "SystemWymian_2.0"
+author: "Joanna Zbijewska"
+date: "10/31/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+##Definiuje klasy do funkcji wymian
+##Pomijam duzego psa, bo w naszej strategii nie jest potrzebny
+kroliki <- 6
+class(kroliki) <- "kroliki"
+owca <- 1
+class(owca) <-"owca"
+owce <- 2
+class(owce) <-"owce"
+swinia <- 1
+class(swinia) <-"swinia"
+krowa <- 1
+class(krowa) <-"krowa"
+kon <- 1
+class(kon) <-"kon"
+maly_pies <- 1
+class(maly_pies) <-"maly_pies"
+
+##Definuje generyczna funckje "wymiana", ktora dodaje to, na co chcemy wymienic do naszego stada i odejmuje to, z czego wymianiamy
+##Zakladam, ze wymieniamy zwierzeta po kolei
+setGeneric(wymiana, function(i){
+  z <- c(6,1,2,1,0,0,0)
+  za <- c(0,0,0,0,kon,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}, valueClass = character("kroliki","owca","owce","swinia","krowa","kon","maly_pies"))
+
+wymiana.kroliki <- function(i){
+  z <- c(kroliki,0,0,0,0,0,0)
+  za <- c(0,owca,0,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.owca <- function(i){
+  z <- c(0,owca,0,0,0,0,0)
+  za <- c(kroliki,0,0,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.owce <- function(i){
+  z <- c(0,owce,0,0,0,0,0)
+  za <- c(0,0,swinia,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.swinia <- function(i){
+  z <- c(0,0,swinia,0,0,0,0)
+  za <- c(0,owce,0,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.krowa <- function(i){
+  z <- c(0,0,0,krowa,0,0,0)
+  za <- c(0,0,3,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.kon <- function(i){
+  z <- c(0,0,0,0,kon,0,0)
+  za <- c(0,0,0,2,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+wymiana.maly_pies <- function(i){
+  z <- c(0,0,0,0,0,maly_pies,0)
+  za <- c(kroliki,0,0,0,0,0,0)
+  if(stado_glowne >= z & stado >= za){
+  wykonaj_czynnosc(z,'+')
+  wykonaj_czynnosc(za,'-')} else {
+    return(FALSE)
+  }
+}
+
+##Nie przewiduje funckji do wymiany owca na malego psa i kroliki
+##Wtedy wystarczy uzyc najpierw na kroliki z owcy, a pozniej z krolikow na malego psa
+##To niby dwie wymiany, ale tak naprawde jedna
+
+##PROBLEM: funckje sa wlasciwie identyczne - roznia sie tylko wektorami z i za
+##Moze istnieje sposob, zeby wykorzystac szkielet funckji default i zmieniac tylko wektory
+```
