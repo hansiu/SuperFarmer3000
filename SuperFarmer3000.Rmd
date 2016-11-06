@@ -1,8 +1,14 @@
 ---
 title: "SuperFarmer"
 author: "[Hanna Kranas](https://github.com/hansiu), [Joanna Zbijewska](https://github.com/joannazbijewska)"
-date: "21 pa?dziernika 2016"
-output: html_document
+date: "21 pazdziernika 2016"
+ output:
+   html_document:
+     toc: true
+     depth: 3
+     number_sections: true
+     theme: united
+     highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -22,19 +28,19 @@ library(ggplot2)
 ```
 #**Definicje niezbednych wartosci**  
 ##Stada
-```{r stada, eval=FALSE}
+```{r stada, restuts="hide"}
 stado_glowne <- c(60,24,20,12,6,4,2)
 stado <- c(0,0,0,0,0,0,0)
 ## R,S,P,C,H,L,B
 ## gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
 ```
-Kostki
+##Kostki
 ```{r kostki, results="hide"}
 kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
 kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 ##gdzie: W - wilk, F - lis; reszta jak wyzej
 ```
-Wektory wymian
+##Wektory wymian
 ```{r wektory_wymian, results="hide"}
 ##Wektory wymian o takiej samej strukturze jak stado i stado_glowne
 kon <- c(72,12,6,2,1,12,2)
@@ -47,7 +53,7 @@ duzy_pies <- c(36,6,3,1,0,6,1)
 
 ```
 #**Funkcje pomocnicze**#  
-Funkcja licz?ca ile otrzymamy ze stada g??wnego, z tego co nam si? nale?y
+##Funkcja licz?ca ile otrzymamy ze stada g??wnego, z tego co nam si? nale?y
 ```{r licz}
 daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy,s=stado,s_g=stado_glowne){
   if (all(sie_nalezy <= s_g)){
@@ -61,7 +67,7 @@ sie_nalezy <- c(1,25,0,0,0,5,0)
 daj_ze_stada_glownego_ile_sie_da(sie_nalezy)
 
 ```
-Funkcja wykonuj?ca czynno?? przekazywania zwierz?t mi?dzy stadem a stadem g??wnym
+##Funkcja wykonuj?ca czynno?? przekazywania zwierz?t mi?dzy stadem a stadem g??wnym
 ```{r wykonaj}
 dodaj_lub_odejmij_zwierzeta <- function(co, jak='+',s=stado,s_g=stado_glowne){
   if (jak=='+'){ ## dodajemy do stada
@@ -113,7 +119,7 @@ zakoncz_gre_jak_starcza <- function(s=stado,s_g=stado_glowne){
 zakoncz_gre_jak_starcza()
 ```
 #**Funkcje wymiany**#  
-Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika
+##Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika
 ```{r kon_starczanie}
 
 ##### tez do poprawki i oparcia na wektorach wymian
@@ -155,7 +161,7 @@ stado
 stado_glowne
 ```
 **Sprawdzanie mo?liwo?ci wymiany zwierz?t na te o wi?kszej warto?ci: **  
-1. Wymiana na owc?
+##Wymiana na owc?
 ```{r owca}
 wymiana_owca <- function(b){
   if (stado_glowne[2]==0){ ##sprawdzenie czy jest zwierz? w stadzie g??wnym
@@ -232,7 +238,7 @@ wymiana_maly_pies <- function(b){
   }
 }
 ```
-2. Wymiana na ?wini?
+##Wymiana na ?wini?
 ```{r swinia}
 wymiana_swinia <- function(b){
   ##analogiczna do wymiana_owca
@@ -405,10 +411,7 @@ wymiana_duzy_pies <<- function(b){
   }
 }
 ```
-...  
-...  
-...  
-6. Wymiana na konia
+##Wymiana na konia
 ```{r kon, results="hide"}
 wymiana_kon <- function(b){
   ##analogiczna do wymiana_owca, wymiana_swinia....
@@ -479,8 +482,8 @@ wymiana_kon <- function(b){
   }
 }
 ```
-#**Sprawdzanie mo?liwo?ci wymiany na zwierz?ta o mniejszej warto?ci**#  
-1.Rozdrobnienie owcy na kr?liki
+#**Sprawdzanie mo?liwo?ci wymiany na zwierz?ta o mniejszej warto?ci**  
+##Rozdrobnienie owcy na kr?liki
 ```{r owce_kroliki}
 owce_na_kroliki <- function(z_owiec=FALSE){
   if(z_owiec==TRUE){if(stado[2]>=1 & stado_glowne[1]>=6){
@@ -496,7 +499,7 @@ owce_na_kroliki <- function(z_owiec=FALSE){
 ```{r eval=FALSE}
 owce_na_kroliki(TRUE)
 ```
-2. Rozdrobnienie ?wini na owce
+##Rozdrobnienie ?wini na owce
 ```{r swinie_owce}
 swinie_na_owce <- function(ze_swin=FALSE){
   if(ze_swin==TRUE){if(stado[3]>=1 & stado_glowne[2]>=2){
@@ -536,8 +539,8 @@ wymien('krolik','swinia')
 stado
 stado_glowne
 ```
-#**Funkcje rzut?w**#  
-Rzut kostkami
+#**Funkcje rzut?w**  
+##Rzut kostkami
 ```{r losowanie}
 ##losowanie rzutu
 losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
@@ -567,21 +570,21 @@ zmiana_na_wektor <- function(wynik){
 }
 zmiana_na_wektor(k)
 ```
-Przeprowadzenie atak?w drapie?nik?w
+##Przeprowadzenie atak?w drapie?nik?w
 ```{r drapiezniki}
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE,s=stado,s_g=stado_glowne){
   if (wilk == TRUE ){ ##wilk!
     if (s[7]>0){ ## sprawdzenie posiadania du?ego psa
       list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,0,1),'-',s,s_g) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
     } else {
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(stado[1:4],0,0,0),'-',s,s_g) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1:4],0,0,0),'-',s,s_g) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
   if (lis == TRUE ){ ##lis!
     if (stado[6]>0){ ## sprawdzenie posiadania mia?ego psa
       list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,1,0),'-',s,s_g) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
     } else {
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(stado[1],0,0,0,0,0,0),'-',s,s_g) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1],0,0,0,0,0,0),'-',s,s_g) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
   return(list(s,s_g))
@@ -591,7 +594,7 @@ list[stado,stado_glowne] <- atak_drapieznika(TRUE)
 stado
 stado_glowne
 ```
-Dokonywanie rzutu i akcji z nim zwi?zanych
+##Dokonywanie rzutu i akcji z nim zwi?zanych
 ```{r rzucanie, results="hide", eval=FALSE}
 ######### DALEJ JESZCZE NIE POPRAWIONE Z DAWANIEM ARGUMENTOW I ZWRACANIEM
 rzuc_i_zareaguj <- function(){
@@ -629,7 +632,7 @@ rzuc_i_zareaguj <- function(){
 }
 ```
 ```{r rzucaniefalse, echo=FALSE}
-reakcja_na_wynik_rzutu <- function(){
+rzuc_i_zareaguj <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-c('R','R')
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
@@ -664,13 +667,13 @@ reakcja_na_wynik_rzutu <- function(){
 }
 ```
 ```{r}
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 ##('R','R') -> kostki
 stado
 stado_glowne
 ```
 ```{r rzucanietrue, results="hide", echo=FALSE}
-reakcja_na_wynik_rzutu <- function(){
+rzuc_i_zareaguj <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
@@ -704,12 +707,15 @@ reakcja_na_wynik_rzutu <- function(){
   }
 }
 ```
-#**Przeprowadzenie ca?ej gry**#  
-**i strategia**
+#**Przeprowadzenie ca?ej gry**  
 ```{r}
 zagraj <- function(){
+  
+  #######trzeba rozbic na funkcje strategia() i funkcje zagraj(strategia())
+  
   stado_glowne <<- c(60,24,20,12,6,4,2)
   stado <<- c(0,0,0,0,0,0,0)
+  kroki = 0
   repeat{
     if (!all(stado==0)){ ##jesli stado jest niepuste sprawdzamy czy nie op?aca si? czego? wymieni?
       wez_konia() ##najpierw sprawdzamy czy starczy na konia i krolika
@@ -737,41 +743,51 @@ zagraj <- function(){
         }
       }
     }
-    reakcja_na_wynik_rzutu()
+    rzuc_i_zareaguj()
+    kroki <- kroki+1
     if (zakoncz_gre()==TRUE){
-      break
+      return(kroki)
     }
   }
 }
 ```
-#**Czas gry**#
+#**Czas gry**
 ```{r echo=FALSE}
-mierz_czas <- microbenchmark({zagraj()}, times=10000)
-boxplot(mierz_czas, xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
-autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
-qplot(y=time,data=mierz_czas,color='red',xlab="zagraj()", ylab="Czas gry",main='Czas trwania gry SuperFarmer') + scale_y_log10()
-print(mierz_czas)
+wyniki <- as.data.frame(replicate(10000,zagraj()))
+summary(wyniki)
+ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
+                 col="blue", 
+                 fill="green") + 
+  labs(title="Rozk³ad czasu gry") +
+  labs(x="Czas gry [kroki]", y="Liczba gier")
+
+## jak to usuwamy to trzeba i library(microbenchmark usunšæ)
+#mierz_czas <- microbenchmark({zagraj()}, times=10000)
+#boxplot(mierz_czas, xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
+#autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
+#qplot(y=time,data=mierz_czas,color='red',xlab="zagraj()", ylab="Czas gry",main='Czas trwania gry SuperFarmer') + scale_y_log10()
+#print(mierz_czas)
 
 ```
 ```{r eval=FALSE, echo=FALSE}
 ##testy
 ##################
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
-reakcja_na_wynik_rzutu()
+rzuc_i_zareaguj()
 #cat(stado)
 #cat(stado_glowne)
 ##################
