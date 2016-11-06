@@ -18,14 +18,20 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning=FALSE,message =FALSE)
 ```
 ```{r load_packages, include=FALSE}
-library(microbenchmark)
+##konieczna najnowsza wersja R
+##gsubfn jest wykorzystywany do wygodnego zwracania wielu wynikow
+##np. list[stado,stado_glowne] <- funkcja()
+devtools::install_github("ggrothendieck/gsubfn",force=TRUE)
+library(gsubfn)
+#library(microbenchmark)
 library(ggplot2)
+library('dplyr')
 ```
 #**Definicje niezbednych wartosci**  
 ##Stada
 ```{r stada, results="hide"}
-stado_glowne <<- c(60,24,20,12,6,4,2)
-stado <<- c(0,0,0,0,0,0,0)
+stado_glowne <- c(60,24,20,12,6,4,2)
+stado <- c(0,0,0,0,0,0,0)
 ## R,S,P,C,H,L,B
 ## gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
 ```
@@ -38,34 +44,36 @@ kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 #**Funkcje pomocnicze**  
 ##Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy
 ```{r licz}
-daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy){
-  if (all(sie_nalezy <= stado_glowne)){
+daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy,s=stado,s_g=stado_glowne){
+  if (all(sie_nalezy <= s_g)){
     return(sie_nalezy)
   } else {
-    sie_nalezy <- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
+    sie_nalezy <- ifelse(sie_nalezy <= s_g, sie_nalezy, s_g)
     return(sie_nalezy)
   }
 }
 sie_nalezy <- c(1,25,0,0,0,5,0)
 daj_ze_stada_glownego_ile_sie_da(sie_nalezy)
 
+
 ```
 ##Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym
 ```{r wykonaj}
-dodaj_lub_odejmij_zwierzeta <- function(co, jak='+'){
+dodaj_lub_odejmij_zwierzeta <- function(co, jak='+',s=stado,s_g=stado_glowne){
   if (jak=='+'){ ## dodajemy do stada
-    stado <<- stado + co
-    stado_glowne <<- stado_glowne - co
+    s <- s + co
+    s_g <- s_g - co
   } else { ## odejmujemy ze stada
-    stado <<- stado - co
-    stado_glowne <<- stado_glowne + co
+    s <- s - co
+    s_g <- s_g + co
   }
-  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
+  if (!all(s+s_g==c(60,24,20,12,6,4,2))){
     stop('!!! STADA SIE NIE SUMUJA!!!') ##przerywamy gre - stada sie nie sumuja
   }
+  return(list(s,s_g))
 }
 co <- daj_ze_stada_glownego_ile_sie_da(sie_nalezy)
-dodaj_lub_odejmij_zwierzeta(co,'+')
+list[stado, stado_glowne] <- dodaj_lub_odejmij_zwierzeta(co,'+')
 stado
 stado_glowne
 
@@ -75,32 +83,32 @@ stado_glowne
 
 ####### trzeba zamienic tak, zeby bylo zgodnie z zasadami - jezeli nas stac, to trzeba po kolei zrobic wymiany
 
-zakoncz_gre_jak_starcza <- function(x=stado){
-  if(all(stado >= c(1,1,1,1,1,0,0))){
+####### do poprawki, przydaloby sie to oprzec na wektorach wymian
+
+zakoncz_gre_jak_starcza <- function(s=stado,s_g=stado_glowne){
+  if(all(s >= c(1,1,1,1,1,0,0))){
     return(TRUE) ## jesli mamy wiecej lub rowno zwierzat, to wygralismy
   } else { 
     suma = 0
     for (i in 1:7){
       switch(i,
-             "1"={suma <- suma + stado[i]},
-             "2"={suma <- suma + 6*stado[i]},
-             "3"={suma <- suma + 12*stado[i]},
-             "4"={suma <- suma + 36*stado[i]},
-             "5"={suma <- suma + 72*stado[i]},
-             "6"={suma <- suma + 6*stado[i]},
-             "7"={suma <- suma + 36*stado[i]})
+             "1"={suma <- suma + s[i]},
+             "2"={suma <- suma + 6*s[i]},
+             "3"={suma <- suma + 12*s[i]},
+             "4"={suma <- suma + 36*s[i]},
+             "5"={suma <- suma + 72*s[i]},
+             "6"={suma <- suma + 6*s[i]},
+             "7"={suma <- suma + 36*s[i]})
     }
     if (suma >= 127){ ##6+12+36+72+1 = 127 krolikow
-      stado <<- c(suma-126,1,1,1,1,0,0)
-      stado_glowne <<- (c(60,24,20,12,6,4,2) - stado)
+      #s <- c(suma-126,1,1,1,1,0,0)
+      #s_g <- (c(60,24,20,12,6,4,2) - s)
       return(TRUE) ## stac nas na wygrana, wiec tez wygralismy
     }
     return(FALSE) ## jeszcze za malo
   }
 }
 zakoncz_gre_jak_starcza()
-stado
-stado_glowne
 ```
 #**Funkcje wymiany**  
 ##Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika
@@ -108,37 +116,41 @@ stado_glowne
 
 ##### moze trzeba w ogole usunac i ja dorobie nam do ramki danych wymiane czego sie da na konia??? 
 
+##### tez do poprawki i oparcia na wektorach wymian
+
 ##podobna do zakoncz_gre_jak_starcza
-wez_konia_jak_starcza <- function(){
+wez_konia_jak_starcza <- function(s=stado,s_g=stado_glowne){
   suma = 0
   for (i in 1:7){
     switch(i,
-           "1"={suma <- suma + stado[i]},
-           "2"={suma <- suma + 6*stado[i]},
-           "3"={suma <- suma + 12*stado[i]},
-           "4"={suma <- suma + 36*stado[i]},
-           "6"={suma <- suma + 6*stado[i]},
-           "7"={suma <- suma + 36*stado[i]},
+           "1"={suma <- suma + s[i]},
+           "2"={suma <- suma + 6*s[i]},
+           "3"={suma <- suma + 12*s[i]},
+           "4"={suma <- suma + 36*s[i]},
+           "5"={suma <- suma},
+           "6"={suma <- suma + 6*s[i]},
+           "7"={suma <- suma + 36*s[i]},
            suma <- suma)
   }
   if (suma >= 73){
-    dodaj_lub_odejmij_zwierzeta(c(stado[1:4],0,stado[6:7]),'-')
+    list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1:4],0,s[6:7]),'-',s,s_g)
     ##usuwamy wszystko ze stada, zeby wymienic na konia i krolika
     if ((suma-72)<=60){
-      dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0))
+      list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',s,s_g)
       #bierzemy konia, a reszt? w krolikach
     } else {
       while((suma-72)>60){
-        dodaj_lub_odejmij_zwierzeta(c(0,1,0,0,0,0,0))
+        list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,1,0,0,0,0,0),'+',s,s_g)
         suma <- suma - 6
         ##je?li zabraknie kr?lik?w, to bierzemy jeszcze w owcach
       }
-      dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0))
+      list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',s,s_g)
     }
   } 
   ## jesli nie starczy to nie robimy nic
+  return(list(s,s_g))
 }
-wez_konia_jak_starcza()
+list[stado,stado_glowne] <- wez_konia_jak_starcza()
 stado
 stado_glowne
 ```
@@ -154,7 +166,7 @@ za_ile <- c("6,0,0,0,0,0,0","12,0,0,0,0,0,0","36,0,0,0,0,0,0","12,0,0,0,0,0,0","
 ##To będzie ostatnia kolumna ramki danych - wektory z otrzymanymi zwierzetami.
 co_z_tego <- c("0,1,0,0,0,0,0","0,0,1,0,0,0,0","0,0,0,1,0,0,0","0,0,0,0,0,1,0","0,0,0,0,0,0,1","6,0,0,0,0,0,0","0,0,1,0,0,0,0","0,0,0,1,0,0,0","0,0,0,0,1,0,0","0,0,0,0,0,1,0","0,0,0,0,0,0,1","12,0,0,0,0,0,0","0,2,0,0,0,0,0","0,0,0,1,0,0,0","0,0,0,0,1,0,0","0,0,0,0,0,1,0","0,0,0,0,0,0,1","6,1,0,0,0,0,0","0,1,0,0,0,1,0","6,0,0,0,0,1,0","36,0,0,0,0,0,0","0,6,0,0,0,0,0","0,0,3,0,0,0,0","0,0,0,0,1,0,0","0,0,0,0,0,0,1","30,1,0,0,0,0,0","18,1,1,0,0,0,0","24,0,1,0,0,0,0","24,1,0,0,0,1,0","18,0,1,0,0,1,0","0,2,2,0,0,0,0","0,0,2,0,0,2,0","0,1,2,0,0,1,0","12,1,1,0,0,1,0","6,0,0,0,0,0,0","0,1,0,0,0,0,0","0,0,1,0,0,0,0","36,0,0,0,0,0,0","0,6,0,0,0,0,0","0,0,3,0,0,0,0","0,0,0,1,0,0,0","0,0,0,0,1,0,0","30,1,0,0,0,0,0","18,1,1,0,0,0,0","24,0,1,0,0,0,0","24,1,0,0,0,1,0","18,0,1,0,0,1,0","0,2,2,0,0,0,0","0,0,2,0,0,2,0","0,1,2,0,0,1,0","12,1,1,0,0,1,0","0,24,0,0,0,0,0","0,0,6,0,0,0,0","0,0,0,2,0,0,0","0,0,0,0,0,0,2","0,0,0,1,0,0,1","0,0,3,1,0,0,0","0,4,1,1,0,0,0","0,0,2,1,0,2,0","0,3,1,1,0,1,0","36,0,0,1,0,0,0","24,0,1,1,0,0,0","18,1,1,1,0,0,0","18,0,1,1,0,1,0","0,6,3,0,0,0,0","0,0,4,0,0,4,0","0,5,3,0,0,1,0","24,1,3,0,0,1,0","48,0,1,0,0,1,0","42,2,1,0,0,0,0","0,23,0,0,0,1,0","36,6,0,0,0,0,0","36,5,0,0,0,1,0","60,0,0,0,0,2,0","0,0,3,0,0,0,1","0,4,1,0,0,0,1","0,0,2,0,0,2,1","0,3,1,0,0,1,1","36,0,0,0,0,0,1","24,0,1,0,0,0,1","18,1,1,0,0,0,1","18,0,1,0,0,1,1")
 ```
-## Nasza ramka sklada sie z 4 kolumn i 82 wierszy odpowiadajacych roznym sposobom wymiany zwierzat
+## Ramka sklada sie z 4 kolumn i 82 wierszy odpowiadajacych roznym sposobom wymiany zwierzat
 ```{r dane_wymian}
 dane_wymian <- data.frame(co,na_co,za_ile,co_z_tego)
 colnames(dane_wymian) = c("Co","Na_co","Za_ile","Co_z_tego")
@@ -163,7 +175,6 @@ head(dane_wymian,12)
 #**Funkcja wymiany**  
 ##Funkcja korzystajac z przygotowanej ramki danych dokonuje wymiany, jezeli ilosc zwierzat w stadzie i stadzie glownym jest wystarczajaca
 ```{r wymiana}
-library('dplyr')
 ##przyjmuje wartosci z - jakie zwierze chcemy wymienic oraz na - na jakie zwirzaki chcemy wymienic (jesli wiecej niz jedno nalezy wpisac je z "+" pomiedzy)
 wymiana <- function(z = NA,na = NA){
   ##filtruje nasza ramke danych najpierw ze wzgledu na zwierze wymieniane, pozniej ze   wzgledu na wybrane zwierzeta, ktore chcemy uzyskac
@@ -226,29 +237,31 @@ zamien_wynik_rzutu_na_wektor(k)
 ```
 ##Przeprowadzenie atakow drapieznikow
 ```{r drapiezniki}
-atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
+atak_drapieznika <- function(lis = FALSE, wilk = FALSE,s=stado,s_g=stado_glowne){
   if (wilk == TRUE ){ ##wilk!
-    if (stado[7]>0){ ## sprawdzenie posiadania du?ego psa
-      dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,0,1),'-') ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+    if (s[7]>0){ ## sprawdzenie posiadania du?ego psa
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,0,1),'-',s,s_g) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
     } else {
-      dodaj_lub_odejmij_zwierzeta(c(stado[1:4],0,0,0),'-') ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1:4],0,0,0),'-',s,s_g) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
   if (lis == TRUE ){ ##lis!
     if (stado[6]>0){ ## sprawdzenie posiadania mia?ego psa
-      dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,1,0),'-') ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,1,0),'-',s,s_g) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
     } else {
-      dodaj_lub_odejmij_zwierzeta(c(stado[1],0,0,0,0,0,0),'-') ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1],0,0,0,0,0,0),'-',s,s_g) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
+  return(list(s,s_g))
 }
 stado
-atak_drapieznika(TRUE)
+list[stado,stado_glowne] <- atak_drapieznika(TRUE)
 stado
 stado_glowne
 ```
 ##Dokonywanie rzutu i akcji z nim zwi?zanych
 ```{r rzucanie, results="hide", eval=FALSE}
+######### DALEJ JESZCZE NIE POPRAWIONE Z DAWANIEM ARGUMENTOW I ZWRACANIEM
 rzuc_i_zareaguj <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
@@ -403,7 +416,6 @@ zagraj <- function(){
 ```
 #**Czas gry**
 ```{r echo=FALSE}
-##trzeba zmienic na wykres liczby rzutow
 wyniki <- as.data.frame(replicate(10000,zagraj()))
 summary(wyniki) ##### nie lepiej summarize z dplyr?????
 ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
