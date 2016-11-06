@@ -58,7 +58,7 @@ licz_ile_otrzyma(sie_nalezy)
 ```
 Funkcja wykonuj?ca czynno?? przekazywania zwierz?t mi?dzy stadem a stadem g??wnym
 ```{r wykonaj}
-wykonaj_czynnosc <- function(co, jak='+'){
+dodaj_lub_odejmij <- function(co, jak='+'){
   if (jak=='+'){ ## dodajemy do stada
     stado <<- stado + co
     stado_glowne <<- stado_glowne - co
@@ -71,14 +71,14 @@ wykonaj_czynnosc <- function(co, jak='+'){
   }
 }
 co <- licz_ile_otrzyma(sie_nalezy)
-wykonaj_czynnosc(co,'+')
+dodaj_lub_odejmij(co,'+')
 stado
 stado_glowne
 
 ```
 Funkcja sprawdzaj?ca czy sta? nas na wygran? i zako?czaj?ca gr?
-```{r zakoncz, result="hide"}
-zakoncz <- function(x=stado){
+```{r zakoncz_gre, result="hide"}
+zakoncz_gre <- function(x=stado){
   if(all(stado >= c(1,1,1,1,1,0,0))){
     return(TRUE) ## jesli mamy wiecej lub rowno zwierzat, to wygralismy
   } else { 
@@ -101,14 +101,14 @@ zakoncz <- function(x=stado){
     return(FALSE) ## jeszcze za malo
   }
 }
-zakoncz()
+zakoncz_gre()
 stado
 stado_glowne
 ```
 #**Funkcje wymiany**#  
 Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika
 ```{r kon_starczanie}
-##podobna do zakoncz
+##podobna do zakoncz_gre
 wez_konia <- function(){
   suma = 0
   for (i in 1:7){
@@ -122,18 +122,18 @@ wez_konia <- function(){
            suma <- suma)
   }
   if (suma >= 73){
-    wykonaj_czynnosc(c(stado[1:4],0,stado[6:7]),'-')
+    dodaj_lub_odejmij(c(stado[1:4],0,stado[6:7]),'-')
     ##usuwamy wszystko ze stada, zeby wymienic na konia i krolika
     if ((suma-72)<=60){
-      wykonaj_czynnosc(c((suma-72),0,0,0,1,0,0))
+      dodaj_lub_odejmij(c((suma-72),0,0,0,1,0,0))
       #bierzemy konia, a reszt? w krolikach
     } else {
       while((suma-72)>60){
-        wykonaj_czynnosc(c(0,1,0,0,0,0,0))
+        dodaj_lub_odejmij(c(0,1,0,0,0,0,0))
         suma <- suma - 6
         ##je?li zabraknie kr?lik?w, to bierzemy jeszcze w owcach
       }
-      wykonaj_czynnosc(c((suma-72),0,0,0,1,0,0))
+      dodaj_lub_odejmij(c((suma-72),0,0,0,1,0,0))
     }
   } 
   ## jesli nie starczy to nie robimy nic
@@ -517,8 +517,8 @@ z_wymiany <- function(zamien = FALSE){
 z_wymiany(TRUE)
 ##Wykonanie operacji wymiany na stadach
 wymien <- function(z,na){
-  wykonaj_czynnosc(z_wymiany(TRUE),'+')
-  wykonaj_czynnosc(za_wymiane,'-') ## za_wymiane powstaje przy funkcjach wymiana_cos
+  dodaj_lub_odejmij(z_wymiany(TRUE),'+')
+  dodaj_lub_odejmij(za_wymiane,'-') ## za_wymiane powstaje przy funkcjach wymiana_cos
 }
 wymien('krolik','swinia')
 stado
@@ -560,16 +560,16 @@ Przeprowadzenie atak?w drapie?nik?w
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE){
   if (wilk == TRUE ){ ##wilk!
     if (stado[7]>0){ ## sprawdzenie posiadania du?ego psa
-      wykonaj_czynnosc(c(0,0,0,0,0,0,1),'-') ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+      dodaj_lub_odejmij(c(0,0,0,0,0,0,1),'-') ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
     } else {
-      wykonaj_czynnosc(c(stado[1:4],0,0,0),'-') ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      dodaj_lub_odejmij(c(stado[1:4],0,0,0),'-') ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
   if (lis == TRUE ){ ##lis!
     if (stado[6]>0){ ## sprawdzenie posiadania mia?ego psa
-      wykonaj_czynnosc(c(0,0,0,0,0,1,0),'-') ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      dodaj_lub_odejmij(c(0,0,0,0,0,1,0),'-') ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
     } else {
-      wykonaj_czynnosc(c(stado[1],0,0,0,0,0,0),'-') ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      dodaj_lub_odejmij(c(stado[1],0,0,0,0,0,0),'-') ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
     }
   }
 }
@@ -580,7 +580,7 @@ stado_glowne
 ```
 Dokonywanie rzutu i akcji z nim zwi?zanych
 ```{r rzucanie, results="hide", eval=FALSE}
-rzuc <- function(){
+reakcja_na_wynik_rzutu <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
@@ -609,13 +609,13 @@ rzuc <- function(){
     } 
   }
   if (!all(otrzymane==0)){
-    wykonaj_czynnosc(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
+    dodaj_lub_odejmij(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
   } else {
   }
 }
 ```
 ```{r rzucaniefalse, echo=FALSE}
-rzuc <- function(){
+reakcja_na_wynik_rzutu <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-c('R','R')
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
@@ -644,19 +644,19 @@ rzuc <- function(){
     } 
   }
   if (!all(otrzymane==0)){
-    wykonaj_czynnosc(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
+    dodaj_lub_odejmij(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
   } else {
   }
 }
 ```
 ```{r}
-rzuc()
+reakcja_na_wynik_rzutu()
 ##('R','R') -> kostki
 stado
 stado_glowne
 ```
 ```{r rzucanietrue, results="hide", echo=FALSE}
-rzuc <- function(){
+reakcja_na_wynik_rzutu <- function(){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
@@ -685,7 +685,7 @@ rzuc <- function(){
     } 
   }
   if (!all(otrzymane==0)){
-    wykonaj_czynnosc(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
+    dodaj_lub_odejmij(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
   } else {
   }
 }
@@ -723,8 +723,8 @@ zagraj <- function(){
         }
       }
     }
-    rzuc()
-    if (zakoncz()==TRUE){
+    reakcja_na_wynik_rzutu()
+    if (zakoncz_gre()==TRUE){
       break
     }
   }
@@ -742,22 +742,22 @@ print(mierz_czas)
 ```{r eval=FALSE, echo=FALSE}
 ##testy
 ##################
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
-rzuc()
+reakcja_na_wynik_rzutu()
 #cat(stado)
 #cat(stado_glowne)
 ##################
