@@ -719,6 +719,7 @@ rzuc_i_zareaguj <- function(){
 zagraj <- function(){
   stado_glowne <<- c(60,24,20,12,6,4,2)
   stado <<- c(0,0,0,0,0,0,0)
+  kroki = 0
   repeat{
     if (!all(stado==0)){ ##jesli stado jest niepuste sprawdzamy czy nie op?aca si? czego? wymieni?
       wez_konia_jak_starcza() ##najpierw sprawdzamy czy starczy na konia i krolika
@@ -747,8 +748,9 @@ zagraj <- function(){
       }
     }
     rzuc_i_zareaguj()
+    kroki <- kroki+1
     if (zakoncz_gre_jak_starcza()==TRUE){
-      break
+      return(kroki)
     }
   }
 }
@@ -756,6 +758,15 @@ zagraj <- function(){
 #**Czas gry**
 ```{r echo=FALSE}
 ##trzeba zmienic na wykres liczby rzutow
+wyniki <- as.data.frame(replicate(10000,zagraj()))
+summary(wyniki)
+ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
+                 col="blue", 
+                 fill="green") + 
+  labs(title="Rozk³ad czasu gry") +
+  labs(x="Czas gry [kroki]", y="Liczba gier")
+
+## jak to usuwamy to trzeba i library(microbenchmark usun¹æ)
 #mierz_czas <- microbenchmark({zagraj()}, times=10000)
 #boxplot(mierz_czas, xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
 #autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
