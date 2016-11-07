@@ -20,9 +20,7 @@ knitr::opts_chunk$set(warning=FALSE,message =FALSE)
 ```{r load_packages, include=FALSE}
 ##konieczna najnowsza wersja R
 ##gsubfn jest wykorzystywany do wygodnego zwracania wielu wynikow
-##np. list[stado,stado_glowne] <- funkcja()
-devtools::install_github("ggrothendieck/gsubfn",force=TRUE)
-library(gsubfn)
+##np. NoweStany <- funkcja()
 #library(microbenchmark)
 library(ggplot2)
 library('dplyr')
@@ -44,38 +42,39 @@ kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
 #**Funkcje pomocnicze**  
 ##Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy
 ```{r licz}
-daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy,s=stado,s_g=stado_glowne){
-  if (all(sie_nalezy <= s_g)){
+daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy,stado,stado_glowne){
+  if (all(sie_nalezy <= stado_glowne)){
     return(sie_nalezy)
   } else {
-    sie_nalezy <- ifelse(sie_nalezy <= s_g, sie_nalezy, s_g)
+    sie_nalezy <- ifelse(sie_nalezy <= stado_glowne, sie_nalezy, stado_glowne)
     return(sie_nalezy)
   }
 }
 sie_nalezy <- c(1,25,0,0,0,5,0)
-daj_ze_stada_glownego_ile_sie_da(sie_nalezy)
+daj_ze_stada_glownego_ile_sie_da(sie_nalezy,stado,stado_glowne)
 
 
 ```
 ##Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym
 ```{r wykonaj}
-dodaj_lub_odejmij_zwierzeta <- function(co, jak='+',s=stado,s_g=stado_glowne){
+dodaj_lub_odejmij_zwierzeta <- function(co, jak='+',stado,stado_glowne){
   if (jak=='+'){ ## dodajemy do stada
-    s <- s + co
-    s_g <- s_g - co
+    stado <- stado + co
+    stado_glowne <- stado_glowne - co
   } else { ## odejmujemy ze stada
-    s <- s - co
-    s_g <- s_g + co
+    stado <- stado - co
+    stado_glowne <- stado_glowne + co
   }
-  if (!all(s+s_g==c(60,24,20,12,6,4,2))){
+  if (!all(stado+stado_glowne==c(60,24,20,12,6,4,2))){
     stop('!!! STADA SIE NIE SUMUJA!!!') ##przerywamy gre - stada sie nie sumuja
   }
-  return(list(s,s_g))
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
-co <- daj_ze_stada_glownego_ile_sie_da(sie_nalezy)
-list[stado, stado_glowne] <- dodaj_lub_odejmij_zwierzeta(co,'+')
-stado
-stado_glowne
+co <- daj_ze_stada_glownego_ile_sie_da(sie_nalezy,stado,stado_glowne)
+NoweStany <- dodaj_lub_odejmij_zwierzeta(co,'+',stado,stado_glowne)
+NoweStany
+stado <- NoweStany$Stado
+stado_glowne <- NoweStany$Glowne
 
 ```
 ##Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre
@@ -85,30 +84,31 @@ stado_glowne
 
 ####### do poprawki, przydaloby sie to oprzec na wektorach wymian
 
-zakoncz_gre_jak_starcza <- function(s=stado,s_g=stado_glowne){
-  if(all(s >= c(1,1,1,1,1,0,0))){
+zakoncz_gre_jak_starcza <- function(stado,stado_glowne){
+  if(all(stado >= c(1,1,1,1,1,0,0))){
     return(TRUE) ## jesli mamy wiecej lub rowno zwierzat, to wygralismy
   } else { 
     suma = 0
     for (i in 1:7){
       switch(i,
-             "1"={suma <- suma + s[i]},
-             "2"={suma <- suma + 6*s[i]},
-             "3"={suma <- suma + 12*s[i]},
-             "4"={suma <- suma + 36*s[i]},
-             "5"={suma <- suma + 72*s[i]},
-             "6"={suma <- suma + 6*s[i]},
-             "7"={suma <- suma + 36*s[i]})
+             "1"={suma <- suma + stado[i]},
+             "2"={suma <- suma + 6*stado[i]},
+             "3"={suma <- suma + 12*stado[i]},
+             "4"={suma <- suma + 36*stado[i]},
+             "5"={suma <- suma + 72*stado[i]},
+             "6"={suma <- suma + 6*stado[i]},
+             "7"={suma <- suma + 36*stado[i]})
     }
     if (suma >= 127){ ##6+12+36+72+1 = 127 krolikow
-      #s <- c(suma-126,1,1,1,1,0,0)
-      #s_g <- (c(60,24,20,12,6,4,2) - s)
+      #stado <- c(suma-126,1,1,1,1,0,0)
+      #stado_glowne <- (c(60,24,20,12,6,4,2) - stado)
+      #tu trzeba dodac wymienianie
       return(TRUE) ## stac nas na wygrana, wiec tez wygralismy
     }
     return(FALSE) ## jeszcze za malo
   }
 }
-zakoncz_gre_jak_starcza()
+zakoncz_gre_jak_starcza(stado, stado_glowne)
 ```
 #**Funkcje wymiany**  
 ##Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika
@@ -119,40 +119,48 @@ zakoncz_gre_jak_starcza()
 ##### tez do poprawki i oparcia na wektorach wymian
 
 ##podobna do zakoncz_gre_jak_starcza
-wez_konia_jak_starcza <- function(s=stado,s_g=stado_glowne){
+wez_konia_jak_starcza <- function(stado,stado_glowne){
   suma = 0
   for (i in 1:7){
     switch(i,
-           "1"={suma <- suma + s[i]},
-           "2"={suma <- suma + 6*s[i]},
-           "3"={suma <- suma + 12*s[i]},
-           "4"={suma <- suma + 36*s[i]},
+           "1"={suma <- suma + stado[i]},
+           "2"={suma <- suma + 6*stado[i]},
+           "3"={suma <- suma + 12*stado[i]},
+           "4"={suma <- suma + 36*stado[i]},
            "5"={suma <- suma},
-           "6"={suma <- suma + 6*s[i]},
-           "7"={suma <- suma + 36*s[i]},
+           "6"={suma <- suma + 6*stado[i]},
+           "7"={suma <- suma + 36*stado[i]},
            suma <- suma)
   }
   if (suma >= 73){
-    list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1:4],0,s[6:7]),'-',s,s_g)
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(c(stado[1:4],0,stado[6:7]),'-',stado,stado_glowne)
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
     ##usuwamy wszystko ze stada, zeby wymienic na konia i krolika
     if ((suma-72)<=60){
-      list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',s,s_g)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',stado,stado_glowne)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
       #bierzemy konia, a reszt? w krolikach
     } else {
       while((suma-72)>60){
-        list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,1,0,0,0,0,0),'+',s,s_g)
+        NoweStany <- dodaj_lub_odejmij_zwierzeta(c(0,1,0,0,0,0,0),'+',stado,stado_glowne)
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
         suma <- suma - 6
         ##je?li zabraknie kr?lik?w, to bierzemy jeszcze w owcach
       }
-      list[s, s_g] <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',s,s_g)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c((suma-72),0,0,0,1,0,0),'+',stado,stado_glowne)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
     }
   } 
   ## jesli nie starczy to nie robimy nic
-  return(list(s,s_g))
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
-list[stado,stado_glowne] <- wez_konia_jak_starcza()
-stado
-stado_glowne
+NoweStany <- wez_konia_jak_starcza(stado, stado_glowne)
+stado <- NoweStany$Stado
+stado_glowne <- NoweStany$Glowne
 ```
 #**Ramka danych do wymian**   
 ## Tworzenie ramki danych
@@ -176,7 +184,7 @@ head(dane_wymian,12)
 ##Funkcja korzystajac z przygotowanej ramki danych dokonuje wymiany, jezeli ilosc zwierzat w stadzie i stadzie glownym jest wystarczajaca
 ```{r wymiana}
 ##przyjmuje wartosci z - jakie zwierze chcemy wymienic oraz na - na jakie zwirzaki chcemy wymienic (jesli wiecej niz jedno nalezy wpisac je z "+" pomiedzy)
-wymiana <- function(z = NA,na = NA){
+wymiana <- function(z = NA,na = NA,stado,stado_glowne){
   ##filtruje nasza ramke danych najpierw ze wzgledu na zwierze wymieniane, pozniej ze   wzgledu na wybrane zwierzeta, ktore chcemy uzyskac
   if(is.na(z)){
     FALSE
@@ -192,17 +200,23 @@ wymiana <- function(z = NA,na = NA){
   zaplata <- as.numeric(unlist(strsplit(as.character(nasza_wymiana$Za_ile),",")))
   uzysk <- as.numeric(unlist(strsplit(as.character(nasza_wymiana$Co_z_tego),",")))
   ##dodaje i odejmuje odpowiednie wartosci ze stada i stada glownego
-  dodaj_lub_odejmij_zwierzeta(zaplata,'-')
-  dodaj_lub_odejmij_zwierzeta(uzysk,'+')
+  NoweStany <- dodaj_lub_odejmij_zwierzeta(zaplata,'-',stado,stado_glowne)
+  NoweStany <- dodaj_lub_odejmij_zwierzeta(uzysk,'+',NoweStany$Stado,NoweStany$Glowne)
+  stado <- NoweStany$Stado
+  stado_glowne <- NoweStany$Glowne
   ##Tutaj dodajemy warunek, zeby nie wymienialo sie, gdy juz nie mozna.
   if(!all(stado>=c(0,0,0,0,0,0,0)) || !all(stado_glowne>=c(0,0,0,0,0,0,0))){
-    dodaj_lub_odejmij_zwierzeta(zaplata,'+')
-    dodaj_lub_odejmij_zwierzeta(uzysk,'-')
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(zaplata,'+',stado,stado_glowne)
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(uzysk,'-',NoweStany$Stado,NoweStany$Glowne)
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
   }
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
-wymiana('krolik','swinia')
-stado
-stado_glowne
+NoweStany <- wymiana('krolik','swinia',stado,stado_glowne)
+NoweStany
+stado <- NoweStany$Stado
+stado_glowne <- NoweStany$Glowne
 ```
 #**Funkcje rzutow**  
 ##Rzut kostkami
@@ -237,139 +251,170 @@ zamien_wynik_rzutu_na_wektor(k)
 ```
 ##Przeprowadzenie atakow drapieznikow
 ```{r drapiezniki}
-atak_drapieznika <- function(lis = FALSE, wilk = FALSE,s=stado,s_g=stado_glowne){
+atak_drapieznika <- function(lis = FALSE, wilk = FALSE,stado,stado_glowne){
   if (wilk == TRUE ){ ##wilk!
-    if (s[7]>0){ ## sprawdzenie posiadania du?ego psa
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,0,1),'-',s,s_g) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+    if (stado[7]>0){ ## sprawdzenie posiadania du?ego psa
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,0,1),'-',stado,stado_glowne) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
     } else {
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1:4],0,0,0),'-',s,s_g) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c(stado[1:4],0,0,0),'-',stado,stado_glowne) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
     }
   }
   if (lis == TRUE ){ ##lis!
     if (stado[6]>0){ ## sprawdzenie posiadania mia?ego psa
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,1,0),'-',s,s_g) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c(0,0,0,0,0,1,0),'-',stado,stado_glowne) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
     } else {
-      list[s,s_g] <- dodaj_lub_odejmij_zwierzeta(c(s[1],0,0,0,0,0,0),'-',s,s_g) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(c(stado[1],0,0,0,0,0,0),'-',stado,stado_glowne) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      stado <- NoweStany$Stado
+      stado_glowne <- NoweStany$Glowne
     }
   }
-  return(list(s,s_g))
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
-stado
-list[stado,stado_glowne] <- atak_drapieznika(TRUE)
-stado
-stado_glowne
+NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
+stado <- NoweStany$Stado
+stado_glowne <- NoweStany$Glowne
+NoweStany
 ```
 ##Dokonywanie rzutu i akcji z nim zwi?zanych
 ```{r rzucanie, results="hide", eval=FALSE}
-######### DALEJ JESZCZE NIE POPRAWIONE Z DAWANIEM ARGUMENTOW I ZWRACANIEM
-rzuc_i_zareaguj <- function(){
+rzuc_i_zareaguj <- function(stado, stado_glowne){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
   if (all(stado==0)){
-    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki s? sobie r?wne
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2)
+    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki stado? sobie r?wne
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2,stado,stado_glowne)
     }
-    ## je?li nie s? sobie rowne to nic nie dostajemy
+    ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
     if ('W' %in% kostki){
       if ('F' %in% kostki) {
-        atak_drapieznika(TRUE,TRUE) ##atak wilka z lisem!
+        NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       } else {
-        atak_drapieznika(wilk = TRUE) ##atak wilka
+        NoweStany <- atak_drapieznika(FALSE,TRUE,stado,stado_glowne) ##atak wilka
         wylosowane <- zamien_wynik_rzutu_na_wektor(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
         otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
       if ('F' %in% kostki) { ## atak lisa
-        atak_drapieznika(TRUE)
+        NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       }
       wylosowane <- zamien_wynik_rzutu_na_wektor(kostki)
       otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
     } 
   }
   if (!all(otrzymane==0)){
-    dodaj_lub_odejmij_zwierzeta(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
-  } else {
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(otrzymane,'+',stado,stado_glowne) ##przekazanie wyniku rzutu miedzy stadami
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
   }
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
 ```
 ```{r rzucaniefalse, echo=FALSE}
-rzuc_i_zareaguj <- function(){
+rzuc_i_zareaguj <- function(stado, stado_glowne){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-c('R','R')
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
   if (all(stado==0)){
-    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki s? sobie r?wne
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2)
+    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki stado? sobie r?wne
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2,stado,stado_glowne)
     }
-    ## je?li nie s? sobie rowne to nic nie dostajemy
+    ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
     if ('W' %in% kostki){
       if ('F' %in% kostki) {
-        atak_drapieznika(TRUE,TRUE) ##atak wilka z lisem!
+        NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       } else {
-        atak_drapieznika(wilk = TRUE) ##atak wilka
+        NoweStany <- atak_drapieznika(FALSE,TRUE,stado,stado_glowne) ##atak wilka
         wylosowane <- zamien_wynik_rzutu_na_wektor(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
         otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
       if ('F' %in% kostki) { ## atak lisa
-        atak_drapieznika(TRUE)
+        NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       }
       wylosowane <- zamien_wynik_rzutu_na_wektor(kostki)
       otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
     } 
   }
   if (!all(otrzymane==0)){
-    dodaj_lub_odejmij_zwierzeta(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
-  } else {
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(otrzymane,'+',stado,stado_glowne) ##przekazanie wyniku rzutu miedzy stadami
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
   }
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
 ```
 ```{r}
-rzuc_i_zareaguj()
-##('R','R') -> kostki
-stado
-stado_glowne
+NoweStany <- rzuc_i_zareaguj(stado, stado_glowne)
+NoweStany
+stado <- NoweStany$Stado
+stado_glowne <- NoweStany$Glowne
 ```
 ```{r rzucanietrue, results="hide", echo=FALSE}
-rzuc_i_zareaguj <- function(){
+rzuc_i_zareaguj <- function(stado, stado_glowne){
   otrzymane<-c(0,0,0,0,0,0,0)
   kostki<-losuj_rzut_kostek()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
   if (all(stado==0)){
-    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki s? sobie r?wne
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2)
+    if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki stado? sobie r?wne
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da((zamien_wynik_rzutu_na_wektor(kostki))/2,stado,stado_glowne)
     }
-    ## je?li nie s? sobie rowne to nic nie dostajemy
+    ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
     if ('W' %in% kostki){
       if ('F' %in% kostki) {
-        atak_drapieznika(TRUE,TRUE) ##atak wilka z lisem!
+        NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       } else {
-        atak_drapieznika(wilk = TRUE) ##atak wilka
+        NoweStany <- atak_drapieznika(FALSE,TRUE,stado,stado_glowne) ##atak wilka
         wylosowane <- zamien_wynik_rzutu_na_wektor(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
         otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+        otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
       if ('F' %in% kostki) { ## atak lisa
-        atak_drapieznika(TRUE)
+        NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
+        stado <- NoweStany$Stado
+        stado_glowne <- NoweStany$Glowne
       }
       wylosowane <- zamien_wynik_rzutu_na_wektor(kostki)
       otrzymane <- ifelse(wylosowane == 0, 0, trunc((stado+wylosowane)/2)) ## przeliczamy kostki wg. zasady n/2
-      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane)
+      otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
     } 
   }
   if (!all(otrzymane==0)){
-    dodaj_lub_odejmij_zwierzeta(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
-  } else {
+    NoweStany <- dodaj_lub_odejmij_zwierzeta(otrzymane,'+',stado,stado_glowne) ##przekazanie wyniku rzutu miedzy stadami
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
   }
+  return(list(Stado=stado,Glowne=stado_glowne))
 }
 ```
 #**Przeprowadzenie calej gry**  
@@ -379,36 +424,58 @@ rzuc_i_zareaguj <- function(){
 ## trzeba dodac liczenie rzutow
 
 
-zagraj <- function(){
-  stado_glowne <<- c(60,24,20,12,6,4,2)
-  stado <<- c(0,0,0,0,0,0,0)
+zagraj <- function() {
+  stado_glowne <- c(60, 24, 20, 12, 6, 4, 2)
+  stado <- c(0, 0, 0, 0, 0, 0, 0)
   kroki = 0
-  repeat{
-    if (!all(stado==0)){ ##jesli stado jest niepuste sprawdzamy czy nie oplaca sie czegos wymienic
-      wez_konia_jak_starcza() ##najpierw sprawdzamy czy starczy na konia i krolika
-      if (stado[1]>6){ ##wiecej niz 6 krolikow
-        if ((stado[6]==0) & (stado[1]>=9)){ ##wiecej niz 9 krolikow i brak malego psa, to bierzemy malego psa
-          wymiana('krolik','maly_pies')
+  repeat {
+    if (!all(stado == 0)) {
+      ##jesli stado jest niepuste sprawdzamy czy nie oplaca sie czegos wymienic
+      NoweStany <- wez_konia_jak_starcza(stado, stado_glowne)
+      stado <- NoweStany$Stado
+      stado_glowne <-
+        NoweStany$Glowne ##najpierw sprawdzamy czy starczy na konia i krolika
+      if (stado[1] > 6) {
+        ##wiecej niz 6 krolikow
+        if ((stado[6] == 0) &
+            (stado[1] >= 9)) {
+          ##wiecej niz 9 krolikow i brak malego psa, to bierzemy malego psa
+          NoweStany <-
+            wymiana('krolik', 'maly_pies', stado, stado_glowne)
+          stado <- NoweStany$Stado
+          stado_glowne <- NoweStany$Glowne
         }
-        if (stado[2]>0){ #jesli juz mamy owce, to wymieniamy na nie kroliki
-          wymiana('krolik','owca')
+        if (stado[2] > 0) {
+          #jesli juz mamy owce, to wymieniamy na nie kroliki
+          NoweStany <- wymiana('krolik', 'owca', stado, stado_glowne)
+          stado <- NoweStany$Stado
+          stado_glowne <- NoweStany$Glowne
         }
       } else {
-        if ((stado[2]>3)&(stado[1]==0)&(stado[6]==0)){ ##nie mamy krolikow, ale wiecej niz 3 owce i brak malego psa !!!to jest niezgodne z zasadami - moze jak mamy wiecej niz dwie owce, to jedna na malego psa????
-          wymiana_maly_pies('owca') ##wymieniamy jedna owce na malego psa
-          wymiana('owca','maly_pies')
-          owce_na_kroliki(TRUE) ##a druga na kroliki
-          wymiana('owca','krolik')
+        if ((stado[2] > 2) &
+            (stado[1] == 0)) {
+          ##nie mamy krolikow, ale wiecej niz 3 owce i brak malego psa !!!to jest niezgodne z zasadami - moze jak mamy wiecej niz dwie owce, to jedna na malego psa????
+          NoweStany <-
+            wymiana('owca', 'maly_pies', stado, stado_glowne)
+          stado <- NoweStany$Stado
+          stado_glowne <- NoweStany$Glowne
         }
-        if ((stado[3]>0)&(stado[6])){##jezli mamy swinie ale brak malego psa
+        if ((stado[3] > 0) &
+            (stado[6])) {
+          ##jezli mamy swinie ale brak malego psa
           ## wymieniamy swinie na owce i malego_psa
-          wymiana('swinia','owca+maly_pies')
+          NoweStany <- wymiana('swinia', 'owca+maly_pies', stado, stado_glowne)
+          stado <- NoweStany$Stado
+          stado_glowne <- NoweStany$Glowne
         }
       }
     }
-    rzuc_i_zareaguj()
-    kroki <- kroki+1
-    if (zakoncz_gre_jak_starcza()==TRUE){
+    NoweStany <- rzuc_i_zareaguj(stado, stado_glowne)
+    stado <- NoweStany$Stado
+    stado_glowne <- NoweStany$Glowne
+    kroki <- kroki + 1
+    if (zakoncz_gre_jak_starcza(stado, stado_glowne) == TRUE) {
+      ##trzeba zmienic na zgodne z wymianami
       return(kroki)
     }
   }
@@ -417,7 +484,7 @@ zagraj <- function(){
 #**Czas gry**
 ```{r echo=FALSE}
 wyniki <- as.data.frame(replicate(10000,zagraj()))
-summary(wyniki) ##### nie lepiej summarize z dplyr?????
+summary(wyniki) ##### jak robie summarise/ze to pisze ¿e ramka danych z zerow¹ liczba kolumn i 0 wierszami
 ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
                  col="blue", 
                  fill="green") + 

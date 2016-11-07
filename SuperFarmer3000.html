@@ -155,34 +155,29 @@ $(document).ready(function () {
 <li><a href="#definicje-niezbednych-wartosci"><span class="toc-section-number">1</span> <strong>Definicje niezbednych wartosci</strong></a><ul>
 <li><a href="#stada"><span class="toc-section-number">1.1</span> Stada</a></li>
 <li><a href="#kostki"><span class="toc-section-number">1.2</span> Kostki</a></li>
-<li><a href="#wektory-wymian"><span class="toc-section-number">1.3</span> Wektory wymian</a></li>
 </ul></li>
 <li><a href="#funkcje-pomocnicze"><span class="toc-section-number">2</span> <strong>Funkcje pomocnicze</strong></a><ul>
-<li><a href="#funkcja-liczca-ile-otrzymamy-ze-stada-gwnego-z-tego-co-nam-si-naley"><span class="toc-section-number">2.1</span> Funkcja licz?ca ile otrzymamy ze stada g??wnego, z tego co nam si? nale?y</a></li>
-<li><a href="#funkcja-wykonujca-czynno-przekazywania-zwierzt-midzy-stadem-a-stadem-gwnym"><span class="toc-section-number">2.2</span> Funkcja wykonuj?ca czynno?? przekazywania zwierz?t mi?dzy stadem a stadem g??wnym</a></li>
-<li><a href="#funkcja-sprawdzajca-czy-sta-nas-na-wygran-i-zakoczajca-gr"><span class="toc-section-number">2.3</span> Funkcja sprawdzaj?ca czy sta? nas na wygran? i zako?czaj?ca gr?</a></li>
+<li><a href="#funkcja-liczaca-ile-otrzymamy-ze-stada-glownego-z-tego-co-nam-sie-nalezy"><span class="toc-section-number">2.1</span> Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy</a></li>
+<li><a href="#funkcja-wykonujaca-czynnosc-przekazywania-zwierzat-miedzy-stadem-a-stadem-glownym"><span class="toc-section-number">2.2</span> Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym</a></li>
+<li><a href="#funkcja-sprawdzajaca-czy-stac-nas-na-wygrana-i-zakanczajaca-gre"><span class="toc-section-number">2.3</span> Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre</a></li>
 </ul></li>
 <li><a href="#funkcje-wymiany"><span class="toc-section-number">3</span> <strong>Funkcje wymiany</strong></a><ul>
 <li><a href="#funkcja-sprawdzajca-czy-jest-ju-moliwe-wzicie-konia-i-krlika"><span class="toc-section-number">3.1</span> Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika</a></li>
 </ul></li>
-<li><a href="#sprawdzanie-moliwoci-wymiany-zwierzt-na-te-o-wikszej-wartoci"><span class="toc-section-number">4</span> <strong>Sprawdzanie mo?liwo?ci wymiany zwierz?t na te o wi?kszej warto?ci: </strong></a><ul>
-<li><a href="#wymiana-na-owc"><span class="toc-section-number">4.1</span> Wymiana na owc?</a></li>
-<li><a href="#wymiana-na-wini"><span class="toc-section-number">4.2</span> Wymiana na ?wini?</a></li>
-<li><a href="#section"><span class="toc-section-number">4.3</span> …</a></li>
-<li><a href="#wymiana-na-konia"><span class="toc-section-number">4.4</span> Wymiana na konia</a></li>
+<li><a href="#ramka-danych-do-wymian"><span class="toc-section-number">4</span> <strong>Ramka danych do wymian</strong></a><ul>
+<li><a href="#tworzenie-ramki-danych"><span class="toc-section-number">4.1</span> Tworzenie ramki danych</a></li>
+<li><a href="#ramka-sklada-sie-z-4-kolumn-i-82-wierszy-odpowiadajacych-roznym-sposobom-wymiany-zwierzat"><span class="toc-section-number">4.2</span> Ramka sklada sie z 4 kolumn i 82 wierszy odpowiadajacych roznym sposobom wymiany zwierzat</a></li>
 </ul></li>
-<li><a href="#sprawdzanie-moliwoci-wymiany-na-zwierzta-o-mniejszej-wartoci"><span class="toc-section-number">5</span> <strong>Sprawdzanie mo?liwo?ci wymiany na zwierz?ta o mniejszej warto?ci</strong></a><ul>
-<li><a href="#rozdrobnienie-owcy-na-krliki"><span class="toc-section-number">5.1</span> Rozdrobnienie owcy na kr?liki</a></li>
-<li><a href="#rozdrobnienie-wini-na-owce"><span class="toc-section-number">5.2</span> Rozdrobnienie ?wini na owce</a></li>
+<li><a href="#funkcja-wymiany"><span class="toc-section-number">5</span> <strong>Funkcja wymiany</strong></a><ul>
+<li><a href="#funkcja-korzystajac-z-przygotowanej-ramki-danych-dokonuje-wymiany-jezeli-ilosc-zwierzat-w-stadzie-i-stadzie-glownym-jest-wystarczajaca"><span class="toc-section-number">5.1</span> Funkcja korzystajac z przygotowanej ramki danych dokonuje wymiany, jezeli ilosc zwierzat w stadzie i stadzie glownym jest wystarczajaca</a></li>
 </ul></li>
-<li><a href="#dokonanie-wymiany"><span class="toc-section-number">6</span> <strong>Dokonanie wymiany</strong></a></li>
-<li><a href="#funkcje-rzutw"><span class="toc-section-number">7</span> <strong>Funkcje rzut?w</strong></a><ul>
-<li><a href="#rzut-kostkami"><span class="toc-section-number">7.1</span> Rzut kostkami</a></li>
-<li><a href="#przeprowadzenie-atakw-drapienikw"><span class="toc-section-number">7.2</span> Przeprowadzenie atak?w drapie?nik?w</a></li>
-<li><a href="#dokonywanie-rzutu-i-akcji-z-nim-zwizanych"><span class="toc-section-number">7.3</span> Dokonywanie rzutu i akcji z nim zwi?zanych</a></li>
+<li><a href="#funkcje-rzutow"><span class="toc-section-number">6</span> <strong>Funkcje rzutow</strong></a><ul>
+<li><a href="#rzut-kostkami"><span class="toc-section-number">6.1</span> Rzut kostkami</a></li>
+<li><a href="#przeprowadzenie-atakow-drapieznikow"><span class="toc-section-number">6.2</span> Przeprowadzenie atakow drapieznikow</a></li>
+<li><a href="#dokonywanie-rzutu-i-akcji-z-nim-zwizanych"><span class="toc-section-number">6.3</span> Dokonywanie rzutu i akcji z nim zwi?zanych</a></li>
 </ul></li>
-<li><a href="#przeprowadzenie-caej-gry"><span class="toc-section-number">8</span> <strong>Przeprowadzenie ca?ej gry</strong></a></li>
-<li><a href="#czas-gry"><span class="toc-section-number">9</span> <strong>Czas gry</strong></a></li>
+<li><a href="#przeprowadzenie-calej-gry"><span class="toc-section-number">7</span> <strong>Przeprowadzenie calej gry</strong></a></li>
+<li><a href="#czas-gry"><span class="toc-section-number">8</span> <strong>Czas gry</strong></a></li>
 </ul>
 </div>
 
@@ -190,8 +185,8 @@ $(document).ready(function () {
 <h1><span class="header-section-number">1</span> <strong>Definicje niezbednych wartosci</strong></h1>
 <div id="stada" class="section level2">
 <h2><span class="header-section-number">1.1</span> Stada</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>,<span class="dv">24</span>,<span class="dv">20</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)
-stado &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>,<span class="dv">24</span>,<span class="dv">20</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)
+stado &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
 ## R,S,P,C,H,L,B
 ## gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies</code></pre></div>
 </div>
@@ -201,26 +196,12 @@ stado &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="d
 kostka_czerwona &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'R'</span>,<span class="st">'R'</span>,<span class="st">'R'</span>,<span class="st">'R'</span>,<span class="st">'R'</span>,<span class="st">'R'</span>,<span class="st">'S'</span>,<span class="st">'S'</span>,<span class="st">'P'</span>,<span class="st">'P'</span>,<span class="st">'H'</span>,<span class="st">'F'</span>)
 ##gdzie: W - wilk, F - lis; reszta jak wyzej</code></pre></div>
 </div>
-<div id="wektory-wymian" class="section level2">
-<h2><span class="header-section-number">1.3</span> Wektory wymian</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">###########################CO Z TYM????
-
-
-##Wektory wymian o takiej samej strukturze jak stado i stado_glowne
-kon &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)
-krowa &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">36</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>)
-swinia &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)
-owca &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)
-maly_pies &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)
-duzy_pies &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">36</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">1</span>)
-##ile innych zwierzat trzeba aby wymienic na dane zwierze</code></pre></div>
-</div>
 </div>
 <div id="funkcje-pomocnicze" class="section level1">
 <h1><span class="header-section-number">2</span> <strong>Funkcje pomocnicze</strong></h1>
-<div id="funkcja-liczca-ile-otrzymamy-ze-stada-gwnego-z-tego-co-nam-si-naley" class="section level2">
-<h2><span class="header-section-number">2.1</span> Funkcja licz?ca ile otrzymamy ze stada g??wnego, z tego co nam si? nale?y</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">daj_z_banku_ile_sie_da &lt;-<span class="st"> </span>function(sie_nalezy){
+<div id="funkcja-liczaca-ile-otrzymamy-ze-stada-glownego-z-tego-co-nam-sie-nalezy" class="section level2">
+<h2><span class="header-section-number">2.1</span> Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">daj_ze_stada_glownego_ile_sie_da &lt;-<span class="st"> </span>function(sie_nalezy,stado,stado_glowne){
   if (<span class="kw">all</span>(sie_nalezy &lt;=<span class="st"> </span>stado_glowne)){
     <span class="kw">return</span>(sie_nalezy)
   } else {
@@ -229,35 +210,42 @@ duzy_pies &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="d
   }
 }
 sie_nalezy &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">25</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span>)
-<span class="kw">daj_z_banku_ile_sie_da</span>(sie_nalezy)</code></pre></div>
+<span class="kw">daj_ze_stada_glownego_ile_sie_da</span>(sie_nalezy,stado,stado_glowne)</code></pre></div>
 <pre><code>## [1]  1 24  0  0  0  4  0</code></pre>
 </div>
-<div id="funkcja-wykonujca-czynno-przekazywania-zwierzt-midzy-stadem-a-stadem-gwnym" class="section level2">
-<h2><span class="header-section-number">2.2</span> Funkcja wykonuj?ca czynno?? przekazywania zwierz?t mi?dzy stadem a stadem g??wnym</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dodaj_lub_odejmij_zwierzeta_do_stada &lt;-<span class="st"> </span>function(co, <span class="dt">jak=</span><span class="st">'+'</span>){
+<div id="funkcja-wykonujaca-czynnosc-przekazywania-zwierzat-miedzy-stadem-a-stadem-glownym" class="section level2">
+<h2><span class="header-section-number">2.2</span> Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dodaj_lub_odejmij_zwierzeta &lt;-<span class="st"> </span>function(co, <span class="dt">jak=</span><span class="st">'+'</span>,stado,stado_glowne){
   if (jak==<span class="st">'+'</span>){ ## dodajemy do stada
-    stado &lt;&lt;-<span class="st"> </span>stado +<span class="st"> </span>co
-    stado_glowne &lt;&lt;-<span class="st"> </span>stado_glowne -<span class="st"> </span>co
+    stado &lt;-<span class="st"> </span>stado +<span class="st"> </span>co
+    stado_glowne &lt;-<span class="st"> </span>stado_glowne -<span class="st"> </span>co
   } else { ## odejmujemy ze stada
-    stado &lt;&lt;-<span class="st"> </span>stado -<span class="st"> </span>co
-    stado_glowne &lt;&lt;-<span class="st"> </span>stado_glowne +<span class="st"> </span>co
+    stado &lt;-<span class="st"> </span>stado -<span class="st"> </span>co
+    stado_glowne &lt;-<span class="st"> </span>stado_glowne +<span class="st"> </span>co
   }
   if (!<span class="kw">all</span>(stado+stado_glowne==<span class="kw">c</span>(<span class="dv">60</span>,<span class="dv">24</span>,<span class="dv">20</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>))){
     <span class="kw">stop</span>(<span class="st">'!!! STADA SIE NIE SUMUJA!!!'</span>) ##przerywamy gre - stada sie nie sumuja
   }
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }
-co &lt;-<span class="st"> </span><span class="kw">daj_z_banku_ile_sie_da</span>(sie_nalezy)
-<span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(co,<span class="st">'+'</span>)
-stado</code></pre></div>
-<pre><code>## [1]  1 24  0  0  0  4  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 59  0 20 12  6  0  2</code></pre>
+co &lt;-<span class="st"> </span><span class="kw">daj_ze_stada_glownego_ile_sie_da</span>(sie_nalezy,stado,stado_glowne)
+NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(co,<span class="st">'+'</span>,stado,stado_glowne)
+NoweStany</code></pre></div>
+<pre><code>## $Stado
+## [1]  1 24  0  0  0  4  0
+## 
+## $Glowne
+## [1] 59  0 20 12  6  0  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado &lt;-<span class="st"> </span>NoweStany$Stado
+stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
 </div>
-<div id="funkcja-sprawdzajca-czy-sta-nas-na-wygran-i-zakoczajca-gr" class="section level2">
-<h2><span class="header-section-number">2.3</span> Funkcja sprawdzaj?ca czy sta? nas na wygran? i zako?czaj?ca gr?</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">####### do poprawki, przydaloby sie to oprzec na wektorach wymian
+<div id="funkcja-sprawdzajaca-czy-stac-nas-na-wygrana-i-zakanczajaca-gre" class="section level2">
+<h2><span class="header-section-number">2.3</span> Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">####### trzeba zamienic tak, zeby bylo zgodnie z zasadami - jezeli nas stac, to trzeba po kolei zrobic wymiany
 
-zakoncz_gre_jak_starcza &lt;-<span class="st"> </span>function(<span class="dt">x=</span>stado){
+####### do poprawki, przydaloby sie to oprzec na wektorach wymian
+
+zakoncz_gre_jak_starcza &lt;-<span class="st"> </span>function(stado,stado_glowne){
   if(<span class="kw">all</span>(stado &gt;=<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))){
     <span class="kw">return</span>(<span class="ot">TRUE</span>) ## jesli mamy wiecej lub rowno zwierzat, to wygralismy
   } else { 
@@ -273,29 +261,28 @@ zakoncz_gre_jak_starcza &lt;-<span class="st"> </span>function(<span class="dt">
              <span class="st">&quot;7&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">36</span>*stado[i]})
     }
     if (suma &gt;=<span class="st"> </span><span class="dv">127</span>){ ##6+12+36+72+1 = 127 krolikow
-      stado &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(suma<span class="dv">-126</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-      stado_glowne &lt;&lt;-<span class="st"> </span>(<span class="kw">c</span>(<span class="dv">60</span>,<span class="dv">24</span>,<span class="dv">20</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>) -<span class="st"> </span>stado)
+      <span class="co">#stado &lt;- c(suma-126,1,1,1,1,0,0)</span>
+      <span class="co">#stado_glowne &lt;- (c(60,24,20,12,6,4,2) - stado)</span>
+      <span class="co">#tu trzeba dodac wymienianie</span>
       <span class="kw">return</span>(<span class="ot">TRUE</span>) ## stac nas na wygrana, wiec tez wygralismy
     }
     <span class="kw">return</span>(<span class="ot">FALSE</span>) ## jeszcze za malo
   }
 }
-<span class="kw">zakoncz_gre_jak_starcza</span>()</code></pre></div>
+<span class="kw">zakoncz_gre_jak_starcza</span>(stado, stado_glowne)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado</code></pre></div>
-<pre><code>## [1] 43  1  1  1  1  0  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 17 23 19 11  5  4  2</code></pre>
 </div>
 </div>
 <div id="funkcje-wymiany" class="section level1">
 <h1><span class="header-section-number">3</span> <strong>Funkcje wymiany</strong></h1>
 <div id="funkcja-sprawdzajca-czy-jest-ju-moliwe-wzicie-konia-i-krlika" class="section level2">
 <h2><span class="header-section-number">3.1</span> Funkcja sprawdzaj?ca czy jest ju? mo?liwe wzi?cie konia i kr?lika</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##### tez do poprawki i oparcia na wektorach wymian
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##### moze trzeba w ogole usunac i ja dorobie nam do ramki danych wymiane czego sie da na konia??? 
+
+##### tez do poprawki i oparcia na wektorach wymian
 
 ##podobna do zakoncz_gre_jak_starcza
-wez_konia_jak_starcza &lt;-<span class="st"> </span>function(){
+wez_konia_jak_starcza &lt;-<span class="st"> </span>function(stado,stado_glowne){
   suma =<span class="st"> </span><span class="dv">0</span>
   for (i in <span class="dv">1</span>:<span class="dv">7</span>){
     switch(i,
@@ -303,279 +290,124 @@ wez_konia_jak_starcza &lt;-<span class="st"> </span>function(){
            <span class="st">&quot;2&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">6</span>*stado[i]},
            <span class="st">&quot;3&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">12</span>*stado[i]},
            <span class="st">&quot;4&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">36</span>*stado[i]},
+           <span class="st">&quot;5&quot;</span>={suma &lt;-<span class="st"> </span>suma},
            <span class="st">&quot;6&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">6</span>*stado[i]},
            <span class="st">&quot;7&quot;</span>={suma &lt;-<span class="st"> </span>suma +<span class="st"> </span><span class="dv">36</span>*stado[i]},
            suma &lt;-<span class="st"> </span>suma)
   }
   if (suma &gt;=<span class="st"> </span><span class="dv">73</span>){
-    <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>:<span class="dv">4</span>],<span class="dv">0</span>,stado[<span class="dv">6</span>:<span class="dv">7</span>]),<span class="st">'-'</span>)
+    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>:<span class="dv">4</span>],<span class="dv">0</span>,stado[<span class="dv">6</span>:<span class="dv">7</span>]),<span class="st">'-'</span>,stado,stado_glowne)
+    stado &lt;-<span class="st"> </span>NoweStany$Stado
+    stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     ##usuwamy wszystko ze stada, zeby wymienic na konia i krolika
     if ((suma<span class="dv">-72</span>)&lt;=<span class="dv">60</span>){
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>((suma<span class="dv">-72</span>),<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>((suma<span class="dv">-72</span>),<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'+'</span>,stado,stado_glowne)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
       <span class="co">#bierzemy konia, a reszt? w krolikach</span>
     } else {
       while((suma<span class="dv">-72</span>)&gt;<span class="dv">60</span>){
-        <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+        NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'+'</span>,stado,stado_glowne)
+        stado &lt;-<span class="st"> </span>NoweStany$Stado
+        stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         suma &lt;-<span class="st"> </span>suma -<span class="st"> </span><span class="dv">6</span>
         ##je?li zabraknie kr?lik?w, to bierzemy jeszcze w owcach
       }
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>((suma<span class="dv">-72</span>),<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>((suma<span class="dv">-72</span>),<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'+'</span>,stado,stado_glowne)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     }
   } 
   ## jesli nie starczy to nie robimy nic
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }
-<span class="kw">wez_konia_jak_starcza</span>()
-stado</code></pre></div>
-<pre><code>## [1] 31  0  0  0  2  0  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 29 24 20 12  4  4  2</code></pre>
+NoweStany &lt;-<span class="st"> </span><span class="kw">wez_konia_jak_starcza</span>(stado, stado_glowne)
+stado &lt;-<span class="st"> </span>NoweStany$Stado
+stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
 </div>
 </div>
-<div id="sprawdzanie-moliwoci-wymiany-zwierzt-na-te-o-wikszej-wartoci" class="section level1">
-<h1><span class="header-section-number">4</span> <strong>Sprawdzanie mo?liwo?ci wymiany zwierz?t na te o wi?kszej warto?ci: </strong></h1>
-<div id="wymiana-na-owc" class="section level2">
-<h2><span class="header-section-number">4.1</span> Wymiana na owc?</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">###### co z wymianami???????
-wymiana_owca &lt;-<span class="st"> </span>function(b){
-  if (stado_glowne[<span class="dv">2</span>]==<span class="dv">0</span>){ ##sprawdzenie czy jest zwierz? w stadzie g??wnym
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+<div id="ramka-danych-do-wymian" class="section level1">
+<h1><span class="header-section-number">4</span> <strong>Ramka danych do wymian</strong></h1>
+<div id="tworzenie-ramki-danych" class="section level2">
+<h2><span class="header-section-number">4.1</span> Tworzenie ramki danych</h2>
+</div>
+<div id="ramka-sklada-sie-z-4-kolumn-i-82-wierszy-odpowiadajacych-roznym-sposobom-wymiany-zwierzat" class="section level2">
+<h2><span class="header-section-number">4.2</span> Ramka sklada sie z 4 kolumn i 82 wierszy odpowiadajacych roznym sposobom wymiany zwierzat</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dane_wymian &lt;-<span class="st"> </span><span class="kw">data.frame</span>(co,na_co,za_ile,co_z_tego)
+<span class="kw">colnames</span>(dane_wymian) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Co&quot;</span>,<span class="st">&quot;Na_co&quot;</span>,<span class="st">&quot;Za_ile&quot;</span>,<span class="st">&quot;Co_z_tego&quot;</span>)
+<span class="kw">head</span>(dane_wymian,<span class="dv">12</span>)</code></pre></div>
+<pre><code>##        Co     Na_co         Za_ile      Co_z_tego
+## 1  krolik      owca  6,0,0,0,0,0,0  0,1,0,0,0,0,0
+## 2  krolik    swinia 12,0,0,0,0,0,0  0,0,1,0,0,0,0
+## 3  krolik     krowa 36,0,0,0,0,0,0  0,0,0,1,0,0,0
+## 4  krolik maly_pies 12,0,0,0,0,0,0  0,0,0,0,0,1,0
+## 5  krolik duzy_pies 36,0,0,0,0,0,0  0,0,0,0,0,0,1
+## 6    owca    krolik  0,1,0,0,0,0,0  6,0,0,0,0,0,0
+## 7    owca    swinia  0,2,0,0,0,0,0  0,0,1,0,0,0,0
+## 8    owca     krowa  0,6,0,0,0,0,0  0,0,0,1,0,0,0
+## 9    owca       kon 0,12,0,0,0,0,0  0,0,0,0,1,0,0
+## 10   owca maly_pies  0,1,0,0,0,0,0  0,0,0,0,0,1,0
+## 11   owca duzy_pies  0,6,0,0,0,0,0  0,0,0,0,0,0,1
+## 12 swinia    krolik  0,0,1,0,0,0,0 12,0,0,0,0,0,0</code></pre>
+</div>
+</div>
+<div id="funkcja-wymiany" class="section level1">
+<h1><span class="header-section-number">5</span> <strong>Funkcja wymiany</strong></h1>
+<div id="funkcja-korzystajac-z-przygotowanej-ramki-danych-dokonuje-wymiany-jezeli-ilosc-zwierzat-w-stadzie-i-stadzie-glownym-jest-wystarczajaca" class="section level2">
+<h2><span class="header-section-number">5.1</span> Funkcja korzystajac z przygotowanej ramki danych dokonuje wymiany, jezeli ilosc zwierzat w stadzie i stadzie glownym jest wystarczajaca</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##przyjmuje wartosci z - jakie zwierze chcemy wymienic oraz na - na jakie zwirzaki chcemy wymienic (jesli wiecej niz jedno nalezy wpisac je z &quot;+&quot; pomiedzy)
+wymiana &lt;-<span class="st"> </span>function(<span class="dt">z =</span> <span class="ot">NA</span>,<span class="dt">na =</span> <span class="ot">NA</span>,stado,stado_glowne){
+  ##filtruje nasza ramke danych najpierw ze wzgledu na zwierze wymieniane, pozniej ze   wzgledu na wybrane zwierzeta, ktore chcemy uzyskac
+  if(<span class="kw">is.na</span>(z)){
+    <span class="ot">FALSE</span>
   } else {
-    switch(b,
-           <span class="dt">krolik=</span>{if(stado[<span class="dv">1</span>]&gt;=owca[<span class="dv">1</span>]){ ##chcemy owc? za kr?liki
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'S'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{ ## sprawdzenie czy starczy kr?lik?w ze stada na wymian?
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">maly_pies=</span>{if(stado[<span class="dv">6</span>]&gt;=owca[<span class="dv">6</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'S'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">owca=</span>{if(stado[<span class="dv">2</span>]&gt;=owca[<span class="dv">2</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'S'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           {wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>) ## nie istnieje mo?liwo?? wymiany za podane zwierz?
-           za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           })
+    wymieniany_zwierzak &lt;-<span class="st"> </span><span class="kw">filter</span>(dane_wymian, Co %in%<span class="st"> </span>z)
   }
-}
-<span class="kw">wymiana_owca</span>(<span class="st">'maly_pies'</span>)
-za_wymiane</code></pre></div>
-<pre><code>## [1] 0 0 0 0 0 0 0</code></pre>
-</div>
-<div id="wymiana-na-wini" class="section level2">
-<h2><span class="header-section-number">4.2</span> Wymiana na ?wini?</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wymiana_swinia &lt;-<span class="st"> </span>function(b){
-  ##analogiczna do wymiana_owca
-  if (stado_glowne[<span class="dv">3</span>]==<span class="dv">0</span>){
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-  }else {
-    switch(b,
-           <span class="dt">krolik=</span>{if(stado[<span class="dv">1</span>]&gt;=swinia[<span class="dv">1</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'P'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">maly_pies=</span>{if(stado[<span class="dv">6</span>]&gt;=swinia[<span class="dv">6</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'P'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">owca=</span>{if(stado[<span class="dv">2</span>]&gt;=swinia[<span class="dv">2</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'P'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">swinia=</span>{if(stado[<span class="dv">3</span>]&gt;=swinia[<span class="dv">3</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'P'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           {wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-           za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           })
+  if(<span class="kw">is.na</span>(na)){
+    <span class="ot">FALSE</span>
+  } else {
+    nasza_wymiana &lt;-<span class="st"> </span><span class="kw">filter</span>(wymieniany_zwierzak, Na_co %in%<span class="st"> </span>na)
   }
-}
-<span class="kw">wymiana_swinia</span>(<span class="st">'krolik'</span>)</code></pre></div>
-<pre><code>## [1] &quot;P&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">za_wymiane</code></pre></div>
-<pre><code>## [1] 12  0  0  0  0  0  0</code></pre>
-</div>
-<div id="section" class="section level2">
-<h2><span class="header-section-number">4.3</span> …</h2>
-</div>
-<div id="wymiana-na-konia" class="section level2">
-<h2><span class="header-section-number">4.4</span> Wymiana na konia</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wymiana_kon &lt;-<span class="st"> </span>function(b){
-  ##analogiczna do wymiana_owca, wymiana_swinia....
-  if (stado_glowne[<span class="dv">5</span>]==<span class="dv">0</span>){
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-  }else {
-    switch(b,
-           <span class="dt">krolik=</span>{if(stado[<span class="dv">1</span>]&gt;=kon[<span class="dv">1</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">72</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">maly_pies=</span>{if(stado[<span class="dv">6</span>]&gt;=kon[<span class="dv">6</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">12</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">owca=</span>{if(stado[<span class="dv">2</span>]&gt;=kon[<span class="dv">2</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">12</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">swinia=</span>{if(stado[<span class="dv">3</span>]&gt;=kon[<span class="dv">3</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">krowa=</span>{if(stado[<span class="dv">4</span>]&gt;=kon[<span class="dv">4</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">kon=</span>{if(stado[<span class="dv">5</span>]&gt;=kon[<span class="dv">5</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           <span class="dt">duzy_pies=</span>{if(stado[<span class="dv">7</span>]&gt;=kon[<span class="dv">7</span>]){
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'H'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">2</span>)
-             <span class="kw">return</span>(wymiana)
-           }else{
-             wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-             za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           }},
-           {wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-           za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-           })
+  ##uzyskanie z ramki danych wartosci wektorow zaplaty i uzyskanych zwirzat
+  zaplata &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(nasza_wymiana$Za_ile),<span class="st">&quot;,&quot;</span>)))
+  uzysk &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(nasza_wymiana$Co_z_tego),<span class="st">&quot;,&quot;</span>)))
+  ##dodaje i odejmuje odpowiednie wartosci ze stada i stada glownego
+  NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(zaplata,<span class="st">'-'</span>,stado,stado_glowne)
+  NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(uzysk,<span class="st">'+'</span>,NoweStany$Stado,NoweStany$Glowne)
+  stado &lt;-<span class="st"> </span>NoweStany$Stado
+  stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
+  ##Tutaj dodajemy warunek, zeby nie wymienialo sie, gdy juz nie mozna.
+  if(!<span class="kw">all</span>(stado&gt;=<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)) ||<span class="st"> </span>!<span class="kw">all</span>(stado_glowne&gt;=<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))){
+    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(zaplata,<span class="st">'+'</span>,stado,stado_glowne)
+    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(uzysk,<span class="st">'-'</span>,NoweStany$Stado,NoweStany$Glowne)
+    stado &lt;-<span class="st"> </span>NoweStany$Stado
+    stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
   }
-}</code></pre></div>
-</div>
-</div>
-<div id="sprawdzanie-moliwoci-wymiany-na-zwierzta-o-mniejszej-wartoci" class="section level1">
-<h1><span class="header-section-number">5</span> <strong>Sprawdzanie mo?liwo?ci wymiany na zwierz?ta o mniejszej warto?ci</strong></h1>
-<div id="rozdrobnienie-owcy-na-krliki" class="section level2">
-<h2><span class="header-section-number">5.1</span> Rozdrobnienie owcy na kr?liki</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">###### co z wymianami???????
-
-owce_na_kroliki &lt;-<span class="st"> </span>function(<span class="dt">z_owiec=</span><span class="ot">FALSE</span>){
-  if(z_owiec==<span class="ot">TRUE</span>){if(stado[<span class="dv">2</span>]&gt;=<span class="dv">1</span> &amp;<span class="st"> </span>stado_glowne[<span class="dv">1</span>]&gt;=<span class="dv">6</span>){
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'R'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-    <span class="kw">return</span>(wymiana)
-  }else{
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-  }}
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">owce_na_kroliki</span>(<span class="ot">TRUE</span>)</code></pre></div>
-</div>
-<div id="rozdrobnienie-wini-na-owce" class="section level2">
-<h2><span class="header-section-number">5.2</span> Rozdrobnienie ?wini na owce</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">swinie_na_owce &lt;-<span class="st"> </span>function(<span class="dt">ze_swin=</span><span class="ot">FALSE</span>){
-  if(ze_swin==<span class="ot">TRUE</span>){if(stado[<span class="dv">3</span>]&gt;=<span class="dv">1</span> &amp;<span class="st"> </span>stado_glowne[<span class="dv">2</span>]&gt;=<span class="dv">2</span>){
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'SS'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-    <span class="kw">return</span>(wymiana)
-  }else{
-    wymiana &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'pusty'</span>)
-    za_wymiane &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-  }}
-}</code></pre></div>
-</div>
-</div>
-<div id="dokonanie-wymiany" class="section level1">
-<h1><span class="header-section-number">6</span> <strong>Dokonanie wymiany</strong></h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### co z wymianami???????
-##Wyliczanie zwierzat otrzymanych z wymiany
-z_wymiany &lt;-<span class="st"> </span>function(<span class="dt">zamien =</span> <span class="ot">FALSE</span>){
-  W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
-  if(zamien ==<span class="st"> </span><span class="ot">TRUE</span>){switch(wymiana,
-                            <span class="dt">R=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">S=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">SS=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">P=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">C=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">H=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-                            <span class="dt">L=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)},
-                            <span class="dt">B=</span>{W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>)},
-                            {W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)})}
-  <span class="kw">return</span>(W)
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }
-<span class="kw">z_wymiany</span>(<span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 0 0 1 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##Wykonanie operacji wymiany na stadach
-wymien &lt;-<span class="st"> </span>function(z,na){
-  <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">z_wymiany</span>(<span class="ot">TRUE</span>),<span class="st">'+'</span>)
-  <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(za_wymiane,<span class="st">'-'</span>) ## za_wymiane powstaje przy funkcjach wymiana_cos
-}
-<span class="kw">wymien</span>(<span class="st">'krolik'</span>,<span class="st">'swinia'</span>)
-stado</code></pre></div>
-<pre><code>## [1] 19  0  1  0  2  0  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 41 24 19 12  4  4  2</code></pre>
+NoweStany &lt;-<span class="st"> </span><span class="kw">wymiana</span>(<span class="st">'krolik'</span>,<span class="st">'swinia'</span>,stado,stado_glowne)
+NoweStany</code></pre></div>
+<pre><code>## $Stado
+## [1] 43  7  1  0  1  0  0
+## 
+## $Glowne
+## [1] 17 17 19 12  5  4  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado &lt;-<span class="st"> </span>NoweStany$Stado
+stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
 </div>
-<div id="funkcje-rzutw" class="section level1">
-<h1><span class="header-section-number">7</span> <strong>Funkcje rzut?w</strong></h1>
+</div>
+<div id="funkcje-rzutow" class="section level1">
+<h1><span class="header-section-number">6</span> <strong>Funkcje rzutow</strong></h1>
 <div id="rzut-kostkami" class="section level2">
-<h2><span class="header-section-number">7.1</span> Rzut kostkami</h2>
+<h2><span class="header-section-number">6.1</span> Rzut kostkami</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##losowanie rzutu
 losuj_rzut_kostek &lt;-<span class="st"> </span>function(<span class="dt">a=</span>kostka_zielona,<span class="dt">b=</span>kostka_czerwona){
-  wynik &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sample</span>(a, <span class="dv">1</span>), <span class="kw">sample</span>(b, <span class="dv">1</span>))
+  wynik &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sample</span>(a, <span class="dv">1</span>), <span class="kw">sample</span>(b, <span class="dv">1</span>))
   <span class="kw">return</span>(wynik)
 }
 k &lt;-<span class="st"> </span><span class="kw">losuj_rzut_kostek</span>()
 <span class="kw">cat</span>(k)</code></pre></div>
-<pre><code>## R S</code></pre>
+<pre><code>## S F</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##zamiana wyniku rzutu na wektor analogiczny do wektor?w stad
 zamien_wynik_rzutu_na_wektor &lt;-<span class="st"> </span>function(wynik){
   switch(wynik[<span class="dv">1</span>], ##Najpierw wynik z pierwszej kosci
@@ -596,132 +428,172 @@ zamien_wynik_rzutu_na_wektor &lt;-<span class="st"> </span>function(wynik){
   <span class="kw">return</span>(z_rzutu)
 }
 <span class="kw">zamien_wynik_rzutu_na_wektor</span>(k)</code></pre></div>
-<pre><code>## [1] 1 1 0 0 0 0 0</code></pre>
+<pre><code>## [1] 0 1 0 0 0 0 0</code></pre>
 </div>
-<div id="przeprowadzenie-atakw-drapienikw" class="section level2">
-<h2><span class="header-section-number">7.2</span> Przeprowadzenie atak?w drapie?nik?w</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">atak_drapieznika &lt;-<span class="st"> </span>function(<span class="dt">lis =</span> <span class="ot">FALSE</span>, <span class="dt">wilk =</span> <span class="ot">FALSE</span>){
+<div id="przeprowadzenie-atakow-drapieznikow" class="section level2">
+<h2><span class="header-section-number">6.2</span> Przeprowadzenie atakow drapieznikow</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">atak_drapieznika &lt;-<span class="st"> </span>function(<span class="dt">lis =</span> <span class="ot">FALSE</span>, <span class="dt">wilk =</span> <span class="ot">FALSE</span>,stado,stado_glowne){
   if (wilk ==<span class="st"> </span><span class="ot">TRUE</span> ){ ##wilk!
     if (stado[<span class="dv">7</span>]&gt;<span class="dv">0</span>){ ## sprawdzenie posiadania du?ego psa
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="st">'-'</span>) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="st">'-'</span>,stado,stado_glowne) ## to oznacza: jeden duzy pies. odejmij od stada (dodaj do glownego)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     } else {
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>:<span class="dv">4</span>],<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'-'</span>) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>:<span class="dv">4</span>],<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'-'</span>,stado,stado_glowne) ## to oznacza: wszystkie zwierzeta oprocz konia i psow ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     }
   }
   if (lis ==<span class="st"> </span><span class="ot">TRUE</span> ){ ##lis!
     if (stado[<span class="dv">6</span>]&gt;<span class="dv">0</span>){ ## sprawdzenie posiadania mia?ego psa
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="st">'-'</span>) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),<span class="st">'-'</span>,stado,stado_glowne) ## to oznacza: jeden maly pies. odejmij od stada (dodaj do glownego)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     } else {
-      <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>],<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'-'</span>) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">c</span>(stado[<span class="dv">1</span>],<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),<span class="st">'-'</span>,stado,stado_glowne) ## to oznacza: wszystkie kroliki ktore sa w stadzie. odejmij od stada (dodaj do glownego)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     }
   }
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }
-stado</code></pre></div>
-<pre><code>## [1] 19  0  1  0  2  0  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>)
-stado</code></pre></div>
-<pre><code>## [1] 0 0 1 0 2 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 60 24 19 12  4  4  2</code></pre>
+NoweStany &lt;-<span class="st"> </span><span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,stado,stado_glowne)
+stado &lt;-<span class="st"> </span>NoweStany$Stado
+stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
+NoweStany</code></pre></div>
+<pre><code>## $Stado
+## [1] 0 7 1 0 1 0 0
+## 
+## $Glowne
+## [1] 60 17 19 12  5  4  2</code></pre>
 </div>
 <div id="dokonywanie-rzutu-i-akcji-z-nim-zwizanych" class="section level2">
-<h2><span class="header-section-number">7.3</span> Dokonywanie rzutu i akcji z nim zwi?zanych</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rzuc_i_zareaguj &lt;-<span class="st"> </span>function(){
+<h2><span class="header-section-number">6.3</span> Dokonywanie rzutu i akcji z nim zwi?zanych</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rzuc_i_zareaguj &lt;-<span class="st"> </span>function(stado, stado_glowne){
   otrzymane&lt;-<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
   kostki&lt;-<span class="kw">losuj_rzut_kostek</span>()
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
   if (<span class="kw">all</span>(stado==<span class="dv">0</span>)){
-    if (kostki[<span class="dv">1</span>]==kostki[<span class="dv">2</span>]){ ##sprawdzenie czy kostki s? sobie r?wne
-      otrzymane &lt;-<span class="st"> </span><span class="kw">daj_z_banku_ile_sie_da</span>((<span class="kw">zamien_wynik_rzutu_na_wektor</span>(kostki))/<span class="dv">2</span>)
+    if (kostki[<span class="dv">1</span>]==kostki[<span class="dv">2</span>]){ ##sprawdzenie czy kostki stado? sobie r?wne
+      otrzymane &lt;-<span class="st"> </span><span class="kw">daj_ze_stada_glownego_ile_sie_da</span>((<span class="kw">zamien_wynik_rzutu_na_wektor</span>(kostki))/<span class="dv">2</span>,stado,stado_glowne)
     }
-    ## je?li nie s? sobie rowne to nic nie dostajemy
+    ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
     if (<span class="st">'W'</span> %in%<span class="st"> </span>kostki){
       if (<span class="st">'F'</span> %in%<span class="st"> </span>kostki) {
-        <span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>,<span class="ot">TRUE</span>) ##atak wilka z lisem!
+        NoweStany &lt;-<span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,stado,stado_glowne) ##atak wilka z lisem!
+        stado &lt;-<span class="st"> </span>NoweStany$Stado
+        stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
       } else {
-        <span class="kw">atak_drapieznika</span>(<span class="dt">wilk =</span> <span class="ot">TRUE</span>) ##atak wilka
+        NoweStany &lt;-<span class="st"> </span><span class="kw">atak_drapieznika</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,stado,stado_glowne) ##atak wilka
         wylosowane &lt;-<span class="st"> </span><span class="kw">zamien_wynik_rzutu_na_wektor</span>(kostki) ## ale moglismy sie obronic i na drugiej kosci cos wylosowac korzystnego
+        stado &lt;-<span class="st"> </span>NoweStany$Stado
+        stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         otrzymane &lt;-<span class="st"> </span><span class="kw">ifelse</span>(wylosowane ==<span class="st"> </span><span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">trunc</span>((stado+wylosowane)/<span class="dv">2</span>)) ## przeliczamy kostki wg. zasady n/2
-        otrzymane &lt;-<span class="st"> </span><span class="kw">daj_z_banku_ile_sie_da</span>(otrzymane)
+        otrzymane &lt;-<span class="st"> </span><span class="kw">daj_ze_stada_glownego_ile_sie_da</span>(otrzymane,stado,stado_glowne)
       }
     } else {
       if (<span class="st">'F'</span> %in%<span class="st"> </span>kostki) { ## atak lisa
-        <span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>)
+        NoweStany &lt;-<span class="st"> </span><span class="kw">atak_drapieznika</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,stado,stado_glowne)
+        stado &lt;-<span class="st"> </span>NoweStany$Stado
+        stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
       }
       wylosowane &lt;-<span class="st"> </span><span class="kw">zamien_wynik_rzutu_na_wektor</span>(kostki)
       otrzymane &lt;-<span class="st"> </span><span class="kw">ifelse</span>(wylosowane ==<span class="st"> </span><span class="dv">0</span>, <span class="dv">0</span>, <span class="kw">trunc</span>((stado+wylosowane)/<span class="dv">2</span>)) ## przeliczamy kostki wg. zasady n/2
-      otrzymane &lt;-<span class="st"> </span><span class="kw">daj_z_banku_ile_sie_da</span>(otrzymane)
+      otrzymane &lt;-<span class="st"> </span><span class="kw">daj_ze_stada_glownego_ile_sie_da</span>(otrzymane,stado,stado_glowne)
     } 
   }
   if (!<span class="kw">all</span>(otrzymane==<span class="dv">0</span>)){
-    <span class="kw">dodaj_lub_odejmij_zwierzeta_do_stada</span>(otrzymane) ##przekazanie wyniku rzutu miedzy stadami
-  } else {
+    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(otrzymane,<span class="st">'+'</span>,stado,stado_glowne) ##przekazanie wyniku rzutu miedzy stadami
+    stado &lt;-<span class="st"> </span>NoweStany$Stado
+    stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
   }
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rzuc_i_zareaguj</span>()
-##('R','R') -&gt; kostki
-stado</code></pre></div>
-<pre><code>## [1] 1 0 1 0 2 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado_glowne</code></pre></div>
-<pre><code>## [1] 59 24 19 12  4  4  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NoweStany &lt;-<span class="st"> </span><span class="kw">rzuc_i_zareaguj</span>(stado, stado_glowne)
+NoweStany</code></pre></div>
+<pre><code>## $Stado
+## [1] 1 7 1 0 1 0 0
+## 
+## $Glowne
+## [1] 59 17 19 12  5  4  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stado &lt;-<span class="st"> </span>NoweStany$Stado
+stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
 </div>
 </div>
-<div id="przeprowadzenie-caej-gry" class="section level1">
-<h1><span class="header-section-number">8</span> <strong>Przeprowadzenie ca?ej gry</strong></h1>
+<div id="przeprowadzenie-calej-gry" class="section level1">
+<h1><span class="header-section-number">7</span> <strong>Przeprowadzenie calej gry</strong></h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#######trzeba rozbic na funkcje strategia() i funkcje zagraj(strategia())
 ## trzeba dodac liczenie rzutow
 
 
-zagraj &lt;-<span class="st"> </span>function(){
-  stado_glowne &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>,<span class="dv">24</span>,<span class="dv">20</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>)
-  stado &lt;&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+zagraj &lt;-<span class="st"> </span>function() {
+  stado_glowne &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">24</span>, <span class="dv">20</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">2</span>)
+  stado &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)
   kroki =<span class="st"> </span><span class="dv">0</span>
-  repeat{
-    if (!<span class="kw">all</span>(stado==<span class="dv">0</span>)){ ##jesli stado jest niepuste sprawdzamy czy nie op?aca si? czego? wymieni?
-      <span class="kw">wez_konia_jak_starcza</span>() ##najpierw sprawdzamy czy starczy na konia i krolika
-      if (stado[<span class="dv">1</span>]&gt;<span class="dv">6</span>){ ##wiecej niz 6 krolikow
-        if ((stado[<span class="dv">6</span>]==<span class="dv">0</span>) &amp;<span class="st"> </span>(stado[<span class="dv">1</span>]&gt;=<span class="dv">9</span>)){ ##wiecej niz 9 krolikow i brak malego psa, to bierzemy malego psa
-          <span class="kw">wymiana_maly_pies</span>(<span class="st">'krolik'</span>)
-          <span class="kw">wymien</span>(<span class="st">'krolik'</span>,<span class="st">'maly_pies'</span>)
+  repeat {
+    if (!<span class="kw">all</span>(stado ==<span class="st"> </span><span class="dv">0</span>)) {
+      ##jesli stado jest niepuste sprawdzamy czy nie oplaca sie czegos wymienic
+      NoweStany &lt;-<span class="st"> </span><span class="kw">wez_konia_jak_starcza</span>(stado, stado_glowne)
+      stado &lt;-<span class="st"> </span>NoweStany$Stado
+      stado_glowne &lt;-
+<span class="st">        </span>NoweStany$Glowne ##najpierw sprawdzamy czy starczy na konia i krolika
+      if (stado[<span class="dv">1</span>] &gt;<span class="st"> </span><span class="dv">6</span>) {
+        ##wiecej niz 6 krolikow
+        if ((stado[<span class="dv">6</span>] ==<span class="st"> </span><span class="dv">0</span>) &amp;
+<span class="st">            </span>(stado[<span class="dv">1</span>] &gt;=<span class="st"> </span><span class="dv">9</span>)) {
+          ##wiecej niz 9 krolikow i brak malego psa, to bierzemy malego psa
+          NoweStany &lt;-
+<span class="st">            </span><span class="kw">wymiana</span>(<span class="st">'krolik'</span>, <span class="st">'maly_pies'</span>, stado, stado_glowne)
+          stado &lt;-<span class="st"> </span>NoweStany$Stado
+          stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         }
-        if (stado[<span class="dv">2</span>]&gt;<span class="dv">0</span>){ <span class="co">#jesli juz mamy owce, to wymieniamy na nie kroliki</span>
-          <span class="kw">wymiana_owca</span>(<span class="st">'krolik'</span>)
-          <span class="kw">wymien</span>(<span class="st">'krolik'</span>,<span class="st">'owca'</span>)
+        if (stado[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">0</span>) {
+          <span class="co">#jesli juz mamy owce, to wymieniamy na nie kroliki</span>
+          NoweStany &lt;-<span class="st"> </span><span class="kw">wymiana</span>(<span class="st">'krolik'</span>, <span class="st">'owca'</span>, stado, stado_glowne)
+          stado &lt;-<span class="st"> </span>NoweStany$Stado
+          stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         }
       } else {
-        if ((stado[<span class="dv">2</span>]&gt;<span class="dv">3</span>)&amp;(stado[<span class="dv">1</span>]==<span class="dv">0</span>)&amp;(stado[<span class="dv">6</span>]==<span class="dv">0</span>)){ ##nie mamy krolikow, ale wiecej niz 3 owce i brak malego psa
-          <span class="kw">wymiana_maly_pies</span>(<span class="st">'owca'</span>) ##wymieniamy jedn? owc? na ma?ego psa
-          <span class="kw">wymien</span>(<span class="st">'owca'</span>,<span class="st">'maly_pies'</span>)
-          <span class="kw">owce_na_kroliki</span>(<span class="ot">TRUE</span>) ##a drug? na kr?liki
-          <span class="kw">wymien</span>(<span class="st">'owca'</span>,<span class="st">'krolik'</span>)
+        if ((stado[<span class="dv">2</span>] &gt;<span class="st"> </span><span class="dv">2</span>) &amp;
+<span class="st">            </span>(stado[<span class="dv">1</span>] ==<span class="st"> </span><span class="dv">0</span>)) {
+          ##nie mamy krolikow, ale wiecej niz 3 owce i brak malego psa !!!to jest niezgodne z zasadami - moze jak mamy wiecej niz dwie owce, to jedna na malego psa????
+          NoweStany &lt;-
+<span class="st">            </span><span class="kw">wymiana</span>(<span class="st">'owca'</span>, <span class="st">'maly_pies'</span>, stado, stado_glowne)
+          stado &lt;-<span class="st"> </span>NoweStany$Stado
+          stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         }
-        if ((stado[<span class="dv">3</span>]&gt;<span class="dv">0</span>)&amp;(stado[<span class="dv">6</span>])){##je?li mamy ?wini? ale brak ma?ego psa
-          <span class="kw">swinie_na_owce</span>(<span class="ot">TRUE</span>) ## wymieniamy ?wini? na owce
-          <span class="kw">wymien</span>(<span class="st">'swinia'</span>,<span class="st">'owca'</span>)
-          <span class="kw">wymiana_maly_pies</span>(<span class="st">'owca'</span>) ##wymieniamy owc? na ma?ego psa
-          <span class="kw">wymien</span>(<span class="st">'owca'</span>,<span class="st">'maly_pies'</span>)
+        if ((stado[<span class="dv">3</span>] &gt;<span class="st"> </span><span class="dv">0</span>) &amp;
+<span class="st">            </span>(stado[<span class="dv">6</span>])) {
+          ##jezli mamy swinie ale brak malego psa
+          ## wymieniamy swinie na owce i malego_psa
+          NoweStany &lt;-<span class="st"> </span><span class="kw">wymiana</span>(<span class="st">'swinia'</span>, <span class="st">'owca+maly_pies'</span>, stado, stado_glowne)
+          stado &lt;-<span class="st"> </span>NoweStany$Stado
+          stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
         }
       }
     }
-    <span class="kw">rzuc_i_zareaguj</span>()
-    kroki &lt;-<span class="st"> </span>kroki<span class="dv">+1</span>
-    if (<span class="kw">zakoncz_gre_jak_starcza</span>()==<span class="ot">TRUE</span>){
+    NoweStany &lt;-<span class="st"> </span><span class="kw">rzuc_i_zareaguj</span>(stado, stado_glowne)
+    stado &lt;-<span class="st"> </span>NoweStany$Stado
+    stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
+    kroki &lt;-<span class="st"> </span>kroki +<span class="st"> </span><span class="dv">1</span>
+    if (<span class="kw">zakoncz_gre_jak_starcza</span>(stado, stado_glowne) ==<span class="st"> </span><span class="ot">TRUE</span>) {
+      ##trzeba zmienic na zgodne z wymianami
       <span class="kw">return</span>(kroki)
     }
   }
 }</code></pre></div>
 </div>
 <div id="czas-gry" class="section level1">
-<h1><span class="header-section-number">9</span> <strong>Czas gry</strong></h1>
+<h1><span class="header-section-number">8</span> <strong>Czas gry</strong></h1>
 <pre><code>##  replicate(10000, zagraj())
-##  Min.   :  7.0             
-##  1st Qu.: 23.0             
-##  Median : 33.0             
-##  Mean   : 39.7             
-##  3rd Qu.: 50.0             
-##  Max.   :260.0</code></pre>
-<p><img src="data:image/png;base64,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" width="672" /></p>
+##  Min.   :  8.00            
+##  1st Qu.: 34.00            
+##  Median : 53.00            
+##  Mean   : 66.97            
+##  3rd Qu.: 86.00            
+##  Max.   :443.00</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
 </div>
 
 
