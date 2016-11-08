@@ -18,9 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning=FALSE,message =FALSE)
 ```
 ```{r load_packages, include=FALSE}
-##konieczna najnowsza wersja R
-##gsubfn jest wykorzystywany do wygodnego zwracania wielu wynikow
-##np. NoweStany <- funkcja()
 #library(microbenchmark)
 library(ggplot2)
 library('dplyr')
@@ -28,16 +25,17 @@ library('dplyr')
 #**Definicje niezbednych wartosci**  
 ##Stada
 ```{r stada, results="hide"}
+nazwy <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
 stado_glowne <- c(60,24,20,12,6,4,2)
 stado <- c(0,0,0,0,0,0,0)
-## R,S,P,C,H,L,B
-## gdzie R - krolik, S - owca, P - swinia, C - krowa, H - kon, L - maly pies, B - duzy pies
+names(stado_glowne) <- nazwy
+names(stado) <- nazwy
+#####trzeba jeszcze zmienic stado[1] na stado['krolik']
 ```
 ##Kostki
 ```{r kostki, results="hide"}
-kostka_zielona <- c('R','R','R','R','R','R','S','S','S','P','C','W')
-kostka_czerwona <- c('R','R','R','R','R','R','S','S','P','P','H','F')
-##gdzie: W - wilk, F - lis; reszta jak wyzej
+kostka_zielona <- c('krolik','krolik','krolik','krolik','krolik','krolik','owca','owca','owca','swinia','krowa','wilk')
+kostka_czerwona <- c('krolik','krolik','krolik','krolik','krolik','krolik','owca','owca','swinia','swinia','kon','lis')
 ```
 #**Funkcje pomocnicze**  
 ##Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy
@@ -83,6 +81,9 @@ stado_glowne <- NoweStany$Glowne
 ####### trzeba zamienic tak, zeby bylo zgodnie z zasadami - jezeli nas stac, to trzeba po kolei zrobic wymiany
 
 ####### do poprawki, przydaloby sie to oprzec na wektorach wymian
+
+###biecek cos mowil o switchach zeby je poprawic
+
 
 zakoncz_gre_jak_starcza <- function(stado,stado_glowne){
   if(all(stado >= c(1,1,1,1,1,0,0))){
@@ -229,18 +230,22 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
 k <- losuj_rzut_kostek()
 cat(k)
 ##zamiana wyniku rzutu na wektor analogiczny do wektor?w stad
+
+##########biecek cos mowil o switchach zeby je poprawic
+
+
 zamien_wynik_rzutu_na_wektor <- function(wynik){
   switch(wynik[1], ##Najpierw wynik z pierwszej kosci
-         R={c1 <- c(1,0,0,0,0,0,0)},
-         S={c1 <- c(0,1,0,0,0,0,0)},
-         P={c1 <- c(0,0,1,0,0,0,0)},
-         C={c1 <- c(0,0,0,1,0,0,0)},
+         krolik={c1 <- c(1,0,0,0,0,0,0)},
+         owca={c1 <- c(0,1,0,0,0,0,0)},
+         swinia={c1 <- c(0,0,1,0,0,0,0)},
+         krowa={c1 <- c(0,0,0,1,0,0,0)},
          {c1 <- c(0,0,0,0,0,0,0)}
   )
   switch(wynik[2], ##Pozniej wynik z drugiej kosci
-         R={c2 <- c(1,0,0,0,0,0,0)},
-         S={c2 <- c(0,1,0,0,0,0,0)},
-         P={c2 <- c(0,0,1,0,0,0,0)},
+         krolik={c2 <- c(1,0,0,0,0,0,0)},
+         owca={c2 <- c(0,1,0,0,0,0,0)},
+         swinia={c2 <- c(0,0,1,0,0,0,0)},
          H={c2 <- c(0,0,0,0,1,0,0)},
          {c2 <- c(0,0,0,0,0,0,0)}
   )
@@ -293,8 +298,8 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
     }
     ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
-    if ('W' %in% kostki){
-      if ('F' %in% kostki) {
+    if ('wilk' %in% kostki){
+      if ('lis' %in% kostki) {
         NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -307,7 +312,7 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
         otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
-      if ('F' %in% kostki) { ## atak lisa
+      if ('lis' %in% kostki) { ## atak lisa
         NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -328,7 +333,7 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
 ```{r rzucaniefalse, echo=FALSE}
 rzuc_i_zareaguj <- function(stado, stado_glowne){
   otrzymane<-c(0,0,0,0,0,0,0)
-  kostki<-c('R','R')
+  kostki<-c('krolik','krolik')
   ##je?li stado puste nie trzeba sprawdza? drapie?nikow
   if (all(stado==0)){
     if (kostki[1]==kostki[2]){ ##sprawdzenie czy kostki stado? sobie r?wne
@@ -336,8 +341,8 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
     }
     ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
-    if ('W' %in% kostki){
-      if ('F' %in% kostki) {
+    if ('wilk' %in% kostki){
+      if ('lis' %in% kostki) {
         NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -350,7 +355,7 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
         otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
-      if ('F' %in% kostki) { ## atak lisa
+      if ('lis' %in% kostki) { ## atak lisa
         NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -385,8 +390,8 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
     }
     ## je?li nie stado? sobie rowne to nic nie dostajemy
   } else {
-    if ('W' %in% kostki){
-      if ('F' %in% kostki) {
+    if ('wilk' %in% kostki){
+      if ('lis' %in% kostki) {
         NoweStany <-atak_drapieznika(TRUE,TRUE,stado,stado_glowne) ##atak wilka z lisem!
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -399,7 +404,7 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
         otrzymane <- daj_ze_stada_glownego_ile_sie_da(otrzymane,stado,stado_glowne)
       }
     } else {
-      if ('F' %in% kostki) { ## atak lisa
+      if ('lis' %in% kostki) { ## atak lisa
         NoweStany <- atak_drapieznika(TRUE,FALSE,stado,stado_glowne)
         stado <- NoweStany$Stado
         stado_glowne <- NoweStany$Glowne
@@ -427,6 +432,8 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
 zagraj <- function() {
   stado_glowne <- c(60, 24, 20, 12, 6, 4, 2)
   stado <- c(0, 0, 0, 0, 0, 0, 0)
+  names(stado_glowne) <- nazwy
+  names(stado) <- nazwy
   kroki = 0
   repeat {
     if (!all(stado == 0)) {
@@ -483,7 +490,7 @@ zagraj <- function() {
 ```
 #**Czas gry**
 ```{r echo=FALSE}
-wyniki <- as.data.frame(replicate(10000,zagraj()))
+wyniki <- as.data.frame(replicate(10000,zagraj())) #chwilowo mniej dla wygody
 summary(wyniki) ##### jak robie summarise/ze to pisze ¿e ramka danych z zerow¹ liczba kolumn i 0 wierszami
 ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
                  col="blue", 
