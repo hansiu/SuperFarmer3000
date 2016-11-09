@@ -20,6 +20,7 @@ knitr::opts_chunk$set(warning=FALSE,message =FALSE)
 ```{r load_packages, include=FALSE}
 library(ggplot2)
 library('dplyr')
+library('testthat')
 ```
 #**Definicje niezbednych wartosci**  
 ##Stada
@@ -88,6 +89,10 @@ zakoncz_gre_jak_starcza <- function(stado){
 ```{r zakoncz-przyklad}
 zakoncz_gre_jak_starcza(stado)
 ```
+```{r zakoncz-test}
+a <- zakoncz_gre_jak_starcza
+expect_false(a)
+```
 ##Funkcja wyluskujaca wartosci wektora z zapisu w postaci napisu
 ```{r wektor_z_napisu}
 zrob_wektor_z_napisu <- function(co_zmienic){
@@ -139,8 +144,11 @@ NoweStany
 stado <- NoweStany$Stado
 stado_glowne <- NoweStany$Glowne
 ```
+```{r kon-test}
+expect_error(wez_konia_jak_starcza(stado))
+```
 ##Funkcja korzystajac z przygotowanej ramki danych dokonuje wymiany, jezeli ilosc zwierzat w stadzie i stadzie glownym jest wystarczajaca
-```{r wymiana}
+```{r wymiana-tworzenie}
 ##przyjmuje wartosci z - jakie zwierze chcemy wymienic oraz na - na jakie zwirzaki chcemy wymienic (jesli wiecej niz jedno nalezy wpisac je z "+" pomiedzy)
 wymiana <- function(z = NA,na = NA,stado,stado_glowne){
   ##filtruje nasza ramke danych najpierw ze wzgledu na zwierze wymieniane, pozniej ze   wzgledu na wybrane zwierzeta, ktore chcemy uzyskac
@@ -167,10 +175,15 @@ wymiana <- function(z = NA,na = NA,stado,stado_glowne){
   }
   return(list(Stado=stado,Glowne=stado_glowne))
 }
+```
+```{r wymiana-przyklad}
 NoweStany <- wymiana('swinia','kon',stado,stado_glowne)
 NoweStany
 stado <- NoweStany$Stado
 stado_glowne <- NoweStany$Glowne
+```
+```{r wymiana-test}
+expect_false(wymiana('kon',stado,stado_glowne))
 ```
 #**Funkcje rzutow**  
 ##Rzut kostkami
@@ -247,7 +260,7 @@ stado_glowne <- NoweStany$Glowne
 NoweStany
 ```
 ##Dokonywanie rzutu i akcji z nim zwiazanych
-```{r rzucanie}
+```{r rzucanie - tworzenie}
 rzuc_i_zareaguj <- function(stado, stado_glowne){
   NoweStany=list(Stado=stado,Glowne=stado_glowne)
   otrzymane<-c(0,0,0,0,0,0,0)
@@ -278,7 +291,7 @@ rzuc_i_zareaguj <- function(stado, stado_glowne){
   return(list(Stado=stado,Glowne=stado_glowne))
 }
 ```
-```{r}
+```{r rzucanie-przyklad}
 NoweStany <- rzuc_i_zareaguj(stado, stado_glowne)
 NoweStany
 stado <- NoweStany$Stado
@@ -366,19 +379,12 @@ zagraj(nasza_strategia)
 #**Czas gry**
 ```{r echo=FALSE}
 wyniki <- as.data.frame(replicate(100,zagraj(nasza_strategia))) #chwilowo mniej dla wygody
-summary(wyniki) ##### jak robie summarise/ze to pisze ?e ramka danych z zerow? liczba kolumn i 0 wierszami
+summary(wyniki) 
 ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
                  col="blue", 
                  fill="green") + 
   labs(title="Rozklad czasu gry") +
   labs(x="Czas gry [kroki]", y="Liczba gier")
-
-## jak to usuwamy to trzeba i library(microbenchmark usun??)
-#mierz_czas <- microbenchmark({zagraj()}, times=10000)
-#boxplot(mierz_czas, xlab="Pojedyncza gra - zagraj()", ylab='Czas pojedynczej gry',main='Czas trwania gry SuperFarmer')
-#autoplot(mierz_czas, main='Czas trwania gry SuperFarmer')
-#qplot(y=time,data=mierz_czas,color='red',xlab="zagraj()", ylab="Czas gry",main='Czas trwania gry SuperFarmer') + scale_y_log10()
-#print(mierz_czas)
 
 ```
 ```{r eval=FALSE, echo=FALSE}
