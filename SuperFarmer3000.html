@@ -160,6 +160,7 @@ $(document).ready(function () {
 <li><a href="#funkcja-liczaca-ile-otrzymamy-ze-stada-glownego-z-tego-co-nam-sie-nalezy"><span class="toc-section-number">2.1</span> Funkcja liczaca ile otrzymamy ze stada glownego, z tego co nam sie nalezy</a></li>
 <li><a href="#funkcja-wykonujaca-czynnosc-przekazywania-zwierzat-miedzy-stadem-a-stadem-glownym"><span class="toc-section-number">2.2</span> Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym</a></li>
 <li><a href="#funkcja-sprawdzajaca-czy-stac-nas-na-wygrana-i-zakanczajaca-gre"><span class="toc-section-number">2.3</span> Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre</a></li>
+<li><a href="#funkcja-wyluskujaca-wartosci-wektora-z-zapisu-w-postaci-napisu"><span class="toc-section-number">2.4</span> Funkcja wyluskujaca wartosci wektora z zapisu w postaci napisu</a></li>
 </ul></li>
 <li><a href="#ramka-danych-do-wymian"><span class="toc-section-number">3</span> <strong>Ramka danych do wymian</strong></a><ul>
 <li><a href="#tworzenie-ramki-danych"><span class="toc-section-number">3.1</span> Tworzenie ramki danych</a></li>
@@ -253,6 +254,13 @@ stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
 <span class="kw">zakoncz_gre_jak_starcza</span>(stado)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
+<div id="funkcja-wyluskujaca-wartosci-wektora-z-zapisu-w-postaci-napisu" class="section level2">
+<h2><span class="header-section-number">2.4</span> Funkcja wyluskujaca wartosci wektora z zapisu w postaci napisu</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">zrob_wektor_z_napisu &lt;-<span class="st"> </span>function(co_zmienic){
+  do_zamiany &lt;-<span class="st"> </span><span class="kw">as.character</span>(co_zmienic)
+  <span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(do_zamiany,<span class="st">','</span>)))
+}</code></pre></div>
+</div>
 </div>
 <div id="ramka-danych-do-wymian" class="section level1">
 <h1><span class="header-section-number">3</span> <strong>Ramka danych do wymian</strong></h1>
@@ -289,9 +297,9 @@ stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne</code></pre></div>
   ##dla kazdej mozliwej wymiany zawartej w naszym data.frame sprawdzamy, czy nas stac
   ##jesli nas stac, to wymianiamy
   for(i in <span class="dv">1</span>:x){
-    if((<span class="kw">all</span>(stado &gt;=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(konik[i,<span class="st">&quot;Co_z_tego&quot;</span>]),<span class="st">','</span>))))) &amp;<span class="st"> </span>(<span class="kw">all</span>(stado_glowne &gt;=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(konik[i,<span class="st">&quot;Za_ile&quot;</span>]),<span class="st">','</span>)))))){
-      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>((<span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(konik[i,<span class="st">&quot;Co_z_tego&quot;</span>]),<span class="st">','</span>)))),<span class="st">'-'</span>,stado,stado_glowne)
-      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>((<span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(konik[i,<span class="st">&quot;Za_ile&quot;</span>]),<span class="st">','</span>)))),<span class="st">'+'</span>,NoweStany$Stado,NoweStany$Glowne)
+    if((<span class="kw">all</span>(stado &gt;=<span class="st"> </span><span class="kw">zrob_wektor_z_napisu</span>(konik[i,<span class="st">&quot;Co_z_tego&quot;</span>]))) &amp;<span class="st"> </span>(<span class="kw">all</span>(stado_glowne &gt;=<span class="st"> </span><span class="kw">zrob_wektor_z_napisu</span>(konik[i,<span class="st">&quot;Za_ile&quot;</span>])))){
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">zrob_wektor_z_napisu</span>(konik[i,<span class="st">&quot;Co_z_tego&quot;</span>]),<span class="st">'-'</span>,stado,stado_glowne)
+      NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(<span class="kw">zrob_wektor_z_napisu</span>(konik[i,<span class="st">&quot;Za_ile&quot;</span>]),<span class="st">'+'</span>,NoweStany$Stado,NoweStany$Glowne)
       stado &lt;-<span class="st"> </span>NoweStany$Stado
       stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
     }
@@ -319,19 +327,15 @@ wymiana &lt;-<span class="st"> </span>function(<span class="dt">z =</span> <span
     nasza_wymiana &lt;-<span class="st"> </span><span class="kw">filter</span>(wymieniany_zwierzak, Na_co %in%<span class="st"> </span>na)
   }
   ##uzyskanie z ramki danych wartosci wektorow zaplaty i uzyskanych zwirzat
-  zaplata &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(nasza_wymiana$Za_ile),<span class="st">&quot;,&quot;</span>)))
-  uzysk &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(nasza_wymiana$Co_z_tego),<span class="st">&quot;,&quot;</span>)))
+  zaplata &lt;-<span class="st"> </span><span class="kw">zrob_wektor_z_napisu</span>(nasza_wymiana$Za_ile)
+  uzysk &lt;-<span class="st"> </span><span class="kw">zrob_wektor_z_napisu</span>(nasza_wymiana$Co_z_tego)
+  ##sprawdzenie czy nas stac i czy mozna wziac ze stada glownego
+  if(<span class="kw">all</span>(stado &gt;=<span class="st"> </span>zaplata) &amp;<span class="st"> </span><span class="kw">all</span>(stado_glowne &gt;=<span class="st"> </span>uzysk)){
   ##dodaje i odejmuje odpowiednie wartosci ze stada i stada glownego
   NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(zaplata,<span class="st">'-'</span>,stado,stado_glowne)
   NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(uzysk,<span class="st">'+'</span>,NoweStany$Stado,NoweStany$Glowne)
   stado &lt;-<span class="st"> </span>NoweStany$Stado
   stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
-  ##Tutaj dodajemy warunek, zeby nie wymienialo sie, gdy juz nie mozna.
-  if(!<span class="kw">all</span>(stado&gt;=<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)) ||<span class="st"> </span>!<span class="kw">all</span>(stado_glowne&gt;=<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))){
-    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(zaplata,<span class="st">'+'</span>,stado,stado_glowne)
-    NoweStany &lt;-<span class="st"> </span><span class="kw">dodaj_lub_odejmij_zwierzeta</span>(uzysk,<span class="st">'-'</span>,NoweStany$Stado,NoweStany$Glowne)
-    stado &lt;-<span class="st"> </span>NoweStany$Stado
-    stado_glowne &lt;-<span class="st"> </span>NoweStany$Glowne
   }
   <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">Stado=</span>stado,<span class="dt">Glowne=</span>stado_glowne))
 }
@@ -359,32 +363,28 @@ losuj_rzut_kostek &lt;-<span class="st"> </span>function(<span class="dt">a=</sp
 }
 k &lt;-<span class="st"> </span><span class="kw">losuj_rzut_kostek</span>()
 <span class="kw">cat</span>(k)</code></pre></div>
-<pre><code>## krolik swinia</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##zamiana wyniku rzutu na wektor analogiczny do wektor?w stad
-
-##########biecek cos mowil o switchach zeby je poprawic
-
-
+<pre><code>## krolik krolik</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##zamiana wyniku rzutu na wektor analogiczny do wektorow stad
 zamien_wynik_rzutu_na_wektor &lt;-<span class="st"> </span>function(wynik){
-  switch(wynik[<span class="dv">1</span>], ##Najpierw wynik z pierwszej kosci
-         <span class="dt">krolik=</span>{c1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">owca=</span>{c1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">swinia=</span>{c1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">krowa=</span>{c1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         {c1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)}
+  c1 &lt;-<span class="st"> </span>switch(wynik[<span class="dv">1</span>], ##Najpierw wynik z pierwszej kosci
+         <span class="dt">krolik=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">owca=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">swinia=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">krowa=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
   )
-  switch(wynik[<span class="dv">2</span>], ##Pozniej wynik z drugiej kosci
-         <span class="dt">krolik=</span>{c2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">owca=</span>{c2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">swinia=</span>{c2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         <span class="dt">H=</span>{c2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)},
-         {c2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)}
+  c2 &lt;-<span class="st"> </span>switch(wynik[<span class="dv">2</span>], ##Pozniej wynik z drugiej kosci
+         <span class="dt">krolik=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">owca=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">swinia=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="dt">kon=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),
+         <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
   )
   z_rzutu &lt;-<span class="st"> </span>(c1+c2)
   <span class="kw">return</span>(z_rzutu)
 }
 <span class="kw">zamien_wynik_rzutu_na_wektor</span>(k)</code></pre></div>
-<pre><code>## [1] 1 0 1 0 0 0 0</code></pre>
+<pre><code>## [1] 2 0 0 0 0 0 0</code></pre>
 </div>
 <div id="przeprowadzenie-atakow-drapieznikow" class="section level2">
 <h2><span class="header-section-number">5.2</span> Przeprowadzenie atakow drapieznikow</h2>

@@ -50,8 +50,6 @@ daj_ze_stada_glownego_ile_sie_da <- function(sie_nalezy,stado,stado_glowne){
 }
 sie_nalezy <- c(1,25,0,0,0,5,0)
 daj_ze_stada_glownego_ile_sie_da(sie_nalezy,stado,stado_glowne)
-
-
 ```
 ##Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym
 ```{r wykonaj}
@@ -73,7 +71,6 @@ NoweStany <- dodaj_lub_odejmij_zwierzeta(co,'+',stado,stado_glowne)
 NoweStany
 stado <- NoweStany$Stado
 stado_glowne <- NoweStany$Glowne
-
 ```
 ##Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre
 ```{r zakoncz_gre_jak_starcza, result="hide"}
@@ -85,6 +82,13 @@ zakoncz_gre_jak_starcza <- function(stado){
   }
 }
 zakoncz_gre_jak_starcza(stado)
+```
+##Funkcja wyluskujaca wartosci wektora z zapisu w postaci napisu
+```{r wektor_z_napisu}
+zrob_wektor_z_napisu <- function(co_zmienic){
+  do_zamiany <- as.character(co_zmienic)
+  as.numeric(unlist(strsplit(do_zamiany,',')))
+}
 ```
 #**Ramka danych do wymian**   
 ## Tworzenie ramki danych
@@ -113,9 +117,9 @@ wez_konia_jak_starcza <- function(stado,stado_glowne){
   ##dla kazdej mozliwej wymiany zawartej w naszym data.frame sprawdzamy, czy nas stac
   ##jesli nas stac, to wymianiamy
   for(i in 1:x){
-    if((all(stado >= as.numeric(unlist(strsplit(as.character(konik[i,"Co_z_tego"]),','))))) & (all(stado_glowne >= as.numeric(unlist(strsplit(as.character(konik[i,"Za_ile"]),',')))))){
-      NoweStany <- dodaj_lub_odejmij_zwierzeta((as.numeric(unlist(strsplit(as.character(konik[i,"Co_z_tego"]),',')))),'-',stado,stado_glowne)
-      NoweStany <- dodaj_lub_odejmij_zwierzeta((as.numeric(unlist(strsplit(as.character(konik[i,"Za_ile"]),',')))),'+',NoweStany$Stado,NoweStany$Glowne)
+    if((all(stado >= zrob_wektor_z_napisu(konik[i,"Co_z_tego"]))) & (all(stado_glowne >= zrob_wektor_z_napisu(konik[i,"Za_ile"])))){
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(zrob_wektor_z_napisu(konik[i,"Co_z_tego"]),'-',stado,stado_glowne)
+      NoweStany <- dodaj_lub_odejmij_zwierzeta(zrob_wektor_z_napisu(konik[i,"Za_ile"]),'+',NoweStany$Stado,NoweStany$Glowne)
       stado <- NoweStany$Stado
       stado_glowne <- NoweStany$Glowne
     }
@@ -143,19 +147,15 @@ wymiana <- function(z = NA,na = NA,stado,stado_glowne){
     nasza_wymiana <- filter(wymieniany_zwierzak, Na_co %in% na)
   }
   ##uzyskanie z ramki danych wartosci wektorow zaplaty i uzyskanych zwirzat
-  zaplata <- as.numeric(unlist(strsplit(as.character(nasza_wymiana$Za_ile),",")))
-  uzysk <- as.numeric(unlist(strsplit(as.character(nasza_wymiana$Co_z_tego),",")))
+  zaplata <- zrob_wektor_z_napisu(nasza_wymiana$Za_ile)
+  uzysk <- zrob_wektor_z_napisu(nasza_wymiana$Co_z_tego)
+  ##sprawdzenie czy nas stac i czy mozna wziac ze stada glownego
+  if(all(stado >= zaplata) & all(stado_glowne >= uzysk)){
   ##dodaje i odejmuje odpowiednie wartosci ze stada i stada glownego
   NoweStany <- dodaj_lub_odejmij_zwierzeta(zaplata,'-',stado,stado_glowne)
   NoweStany <- dodaj_lub_odejmij_zwierzeta(uzysk,'+',NoweStany$Stado,NoweStany$Glowne)
   stado <- NoweStany$Stado
   stado_glowne <- NoweStany$Glowne
-  ##Tutaj dodajemy warunek, zeby nie wymienialo sie, gdy juz nie mozna.
-  if(!all(stado>=c(0,0,0,0,0,0,0)) || !all(stado_glowne>=c(0,0,0,0,0,0,0))){
-    NoweStany <- dodaj_lub_odejmij_zwierzeta(zaplata,'+',stado,stado_glowne)
-    NoweStany <- dodaj_lub_odejmij_zwierzeta(uzysk,'-',NoweStany$Stado,NoweStany$Glowne)
-    stado <- NoweStany$Stado
-    stado_glowne <- NoweStany$Glowne
   }
   return(list(Stado=stado,Glowne=stado_glowne))
 }
@@ -174,25 +174,21 @@ losuj_rzut_kostek <- function(a=kostka_zielona,b=kostka_czerwona){
 }
 k <- losuj_rzut_kostek()
 cat(k)
-##zamiana wyniku rzutu na wektor analogiczny do wektor?w stad
-
-##########biecek cos mowil o switchach zeby je poprawic
-
-
+##zamiana wyniku rzutu na wektor analogiczny do wektorow stad
 zamien_wynik_rzutu_na_wektor <- function(wynik){
-  switch(wynik[1], ##Najpierw wynik z pierwszej kosci
-         krolik={c1 <- c(1,0,0,0,0,0,0)},
-         owca={c1 <- c(0,1,0,0,0,0,0)},
-         swinia={c1 <- c(0,0,1,0,0,0,0)},
-         krowa={c1 <- c(0,0,0,1,0,0,0)},
-         {c1 <- c(0,0,0,0,0,0,0)}
+  c1 <- switch(wynik[1], ##Najpierw wynik z pierwszej kosci
+         krolik=c(1,0,0,0,0,0,0),
+         owca=c(0,1,0,0,0,0,0),
+         swinia=c(0,0,1,0,0,0,0),
+         krowa=c(0,0,0,1,0,0,0),
+         c(0,0,0,0,0,0,0)
   )
-  switch(wynik[2], ##Pozniej wynik z drugiej kosci
-         krolik={c2 <- c(1,0,0,0,0,0,0)},
-         owca={c2 <- c(0,1,0,0,0,0,0)},
-         swinia={c2 <- c(0,0,1,0,0,0,0)},
-         H={c2 <- c(0,0,0,0,1,0,0)},
-         {c2 <- c(0,0,0,0,0,0,0)}
+  c2 <- switch(wynik[2], ##Pozniej wynik z drugiej kosci
+         krolik=c(1,0,0,0,0,0,0),
+         owca=c(0,1,0,0,0,0,0),
+         swinia=c(0,0,1,0,0,0,0),
+         kon=c(0,0,0,0,1,0,0),
+         c(0,0,0,0,0,0,0)
   )
   z_rzutu <- (c1+c2)
   return(z_rzutu)
