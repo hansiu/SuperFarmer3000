@@ -56,6 +56,10 @@ daj_ze_stada_glownego_ile_sie_da <- function(tyle_chce_wziac,stado,stado_glowne)
 tyle_chce_wziac <- c(1,25,0,0,0,5,0)
 daj_ze_stada_glownego_ile_sie_da(tyle_chce_wziac,stado,stado_glowne)
 ```
+```{r licz-test}
+otrzymane <- daj_ze_stada_glownego_ile_sie_da(tyle_chce_wziac,stado,stado_glowne)
+expect_equivalent(otrzymane,(c(1,24,0,0,0,4,0)))
+```
 ##Funkcja wykonujaca czynnosc przekazywania zwierzat miedzy stadem a stadem glownym
 ```{r stanstad-tworzenie}
 dodaj_lub_odejmij_zwierzeta <- function(co, jak='+',stado,stado_glowne){
@@ -75,6 +79,9 @@ NoweStany <- dodaj_lub_odejmij_zwierzeta(co,'+',stado,stado_glowne)
 NoweStany
 stado <- NoweStany$Stado
 stado_glowne <- NoweStany$Glowne
+```
+```{r stanstad-test}
+expect_is(NoweStany,"list")
 ```
 ##Funkcja sprawdzajaca czy stac nas na wygrana i zakanczajaca gre
 ```{r zakoncz-tworzenie}
@@ -100,6 +107,12 @@ zrob_wektor_z_napisu <- function(co_zmienic){
   as.numeric(unlist(strsplit(do_zamiany,',')))
 }
 ```
+```{r wektor_z_napisu-test}
+co_zmienic <- "0,0,0,0,1,0,1"
+x <- zrob_wektor_z_napisu(co_zmienic)
+expect_is(x,"numeric")
+expect_equivalent(x,(c(0,0,0,0,1,0,1)))
+```
 #**Ramka danych do wymian**   
 ## Tworzenie ramki danych
 ```{r dane_do_wymian,results="hide",include=FALSE}
@@ -117,6 +130,10 @@ co_z_tego <- c("0,1,0,0,0,0,0","0,0,1,0,0,0,0","0,0,0,1,0,0,0","0,0,0,0,0,1,0","
 dane_wymian <- data.frame(co,na_co,za_ile,co_z_tego)
 colnames(dane_wymian) = c("Co","Na_co","Za_ile","Co_z_tego")
 head(dane_wymian,12)
+```
+```{r dane_wymian-teste}
+expect_is(dane_wymian,"data.frame")
+expect_equal((ncol(dane_wymian)),4)
 ```
 #**Funkcje wymiany**  
 ##Funkcja sprawdzajaca czy jest juz mozliwe wziecie konia
@@ -212,6 +229,10 @@ zamien_wynik_rzutu_na_wektor <- function(wynik){
 ```{r zamiana-przyklad}
 zamien_wynik_rzutu_na_wektor(k)
 ```
+```{r zamiana-test}
+y <- zamien_wynik_rzutu_na_wektor(k)
+expect_is(y,"numeric")
+```
 ##Przeprowadzenie atakow drapieznikow
 ```{r atak-tworzenie}
 atak_drapieznika <- function(lis = FALSE, wilk = FALSE,stado,stado_glowne){
@@ -286,7 +307,6 @@ stado_glowne <- NoweStany$Glowne
 ```
 #**Przeprowadzenie calej gry**
 ```{r zagraj-tworzenie}
-
 zagraj <- function(Strategia=NULL) {
   nazwy <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
   stado_glowne <- c(60, 24, 20, 12, 6, 4, 2)
@@ -310,7 +330,6 @@ zagraj <- function(Strategia=NULL) {
   }
 }
 ```
-
 #**Strategia**  
 ```{r strategia}
 nasza_strategia_1 <- function(stado,stado_glowne){
@@ -318,7 +337,7 @@ nasza_strategia_1 <- function(stado,stado_glowne){
   if (!all(NoweStany$Stado == 0)) {
     NoweStany <- wez_konia_jak_starcza(NoweStany$Stado, NoweStany$Glowne)
     for (i in rev(which(NoweStany$Glowne[1:4]==0))){
-      #jak juz mamy pe³no - wymieniamy na wy¿sze
+      #jak juz mamy pelno - wymieniamy na wyzsze
       NoweStany <- wymiana(names(NoweStany$Glowne[i]),names(NoweStany$Glowne[i+1]), NoweStany$Stado, NoweStany$Glowne)
     }
     if (NoweStany$Stado['krolik'] > 6) {
@@ -337,7 +356,7 @@ nasza_strategia_1 <- function(stado,stado_glowne){
           wymiana('owca', 'maly_pies', NoweStany$Stado, NoweStany$Glowne)
       }
       if ((NoweStany$Stado['swinia'] > 0) &
-          (NoweStany$Stado['maly_pies'])) {
+          (NoweStany$Stado['maly_pies'] == 0)) {
         NoweStany <- wymiana('swinia', 'owca+maly_pies', NoweStany$Stado, NoweStany$Glowne)
         
       }
@@ -362,4 +381,7 @@ ggplot(data=wyniki, aes(wyniki)) + geom_histogram(binwidth = 1,
   labs(title="Rozklad czasu gry") +
   labs(x="Czas gry [kroki]", y="Liczba gier")
 
+```
+```{r wyniki-test}
+expect_equal((nrow(wyniki)),10000)
 ```
